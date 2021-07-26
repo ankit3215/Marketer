@@ -32,16 +32,14 @@ const Login = () => {
   const dispatch = useDispatch();
   const [gLoading, setgLoading] = useState(false);
 
-  
+
   const handleGoogleLogin = async () => {
     setgLoading(true);
+    
     try {
       await loginWithGoogle(dispatch);
     } catch (error) {
       switch (error.code) {
-        case "auth/email-not-registered":
-          errorAlert(dispatch, "Email not Registered. Try signing up");
-          break;
         case "auth/popup-closed-by-user":
           errorAlert(dispatch, "Connection closed");
           break;

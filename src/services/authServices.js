@@ -20,7 +20,6 @@ export const authVerifyUser = async (email, password) => {
 export const googleAuth = async () => {
     const provider = new firebase.auth.GoogleAuthProvider();
     const gData = await firebase.auth().signInWithPopup(provider);
-
     return gData;
 }
 
@@ -34,6 +33,9 @@ export const isTokenAvailable = () => {
     return accessToken;
 }
 
+export const resetPasswordRequest = async (email) => {
+   return await firebase.auth().sendPasswordResetEmail(email);
+}
 
 
 export const checkUserStatus = async () => {
