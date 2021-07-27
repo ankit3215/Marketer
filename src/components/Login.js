@@ -13,6 +13,8 @@ import {
 } from "../redux/actionCreators/authActions";
 import "./login.css";
 import { Center } from "@chakra-ui/react";
+import { useHistory } from "react-router-dom";
+import { isTokenAvailable } from "../services/authServices";
 
 
 const styles = makeStyles((theme) => ({
@@ -34,13 +36,16 @@ const Login = () => {
   const classes = styles();
   const dispatch = useDispatch();
   const [gLoading, setgLoading] = useState(false);
-
+  const history=useHistory();
 
   const handleGoogleLogin = async () => {
     setgLoading(true);
     
     try {
       await loginWithGoogle(dispatch);
+      if(isTokenAvailable()){
+        history.push('/Dashboard')
+      }
     } catch (error) {
       switch (error.code) {
         case "auth/popup-closed-by-user":
