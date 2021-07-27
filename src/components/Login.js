@@ -1,5 +1,4 @@
 import {
-  Typography,
   makeStyles,
   Button,
   Grid,
@@ -12,7 +11,6 @@ import {
   loginWithGoogle
 } from "../redux/actionCreators/authActions";
 import "./login.css";
-import { Center } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
 import { isTokenAvailable } from "../services/authServices";
 
