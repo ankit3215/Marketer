@@ -46,7 +46,15 @@ const Sidebar = ({history}) => {
           <Link to="/mailer" class="w3-bar-item w3-button" style={{margin:"5px" , padding:"15px"}}>
             <img src="/img/mail.svg" alt="mail"/> Mailers
           </Link>
-          <button onClick={handleClick} class="w3-bar-item w3-button" style={{margin:"5px" , padding:"15px",marginTop:"240px"}}>
+          <button onClick={handleClick} class="w3-bar-item w3-button" 
+          style={{
+            margin:"5px" ,
+             padding:"15px",
+            // marginTop:"240px",
+            position:"fixed",
+             bottom:"0",
+             left:"0",
+             }}>
             <img src="/img/log-out.svg" alt="log"/> Logout
           </button>
         </div>
