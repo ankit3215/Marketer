@@ -14,6 +14,7 @@ import {
 import "./login.css";
 import { Center } from "@chakra-ui/react";
 
+
 const styles = makeStyles((theme) => ({
   heading: {
     fontWeight: 500,
@@ -24,6 +25,8 @@ const styles = makeStyles((theme) => ({
   button: {
     padding: "1em",
     textTransform: "capitalize",
+    right: -930,
+    top: -450
   },
 }));
 
@@ -54,32 +57,21 @@ const Login = () => {
 
   return (
     <div className="login1">
-        <div className="login">
-        <Center><Typography
-        variant="h5"
-        className={classes.heading}
-        gutterBottom={true}
-      >
-        Login
-      </Typography></Center>
-          
-          <br />
-          <br />
-          <Grid container spacing={1} justify="center">
+          <Grid container spacing={1}>
             {gLoading ? (
-              <CircularProgress size={25} thickness={5} color="primary" />
+              <CircularProgress size={25} thickness={5} color="secondary" />
             ) : (
-              <Button
+              <Button className={classes.button}
                 onClick={handleGoogleLogin}
-                variant="outlined"
-                color="secondary"
+                variant="contained"
+                color="primary"
+                disableElevation
               >
                 Login with Google
               </Button>
               
             )}
           </Grid>
-        </div>
     </div>
   );
 };

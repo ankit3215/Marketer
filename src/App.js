@@ -4,8 +4,11 @@ import { useEffect, useLayoutEffect } from "react";
 import { hideAlert } from "./redux/actionCreators/alertActions";
 import { setUserData } from "./redux/actionCreators/authActions";
 import { Alert } from "@material-ui/lab";
-import Login from './components/Login'
+import Login from './components/Login';
 import { BrowserRouter as Router,Switch, Route } from "react-router-dom";
+import PrivateRoute from './routers/PrivateRoute';
+import PublicRoute from './routers/PublicRoute';
+import Dashboard from './components/Dashboard';
 
 const App = () => {
   const alert = useSelector((state) => state.alert);
@@ -40,7 +43,8 @@ const App = () => {
       )}
       <Router>
       <Switch>
-      <Route exact path='/' component={Login} />
+      <PublicRoute path="/" component={Login} exact={true} />
+      <PrivateRoute path="/Dashboard" component={Dashboard} />
       </Switch>
       </Router>
     </div>
