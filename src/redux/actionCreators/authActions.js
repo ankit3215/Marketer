@@ -35,13 +35,14 @@ const setUserData = async (dispatch) => {
 };
 
 
-const logOutUser = async (dispatch, userId) => {
+const logOutUser = async (dispatch, userId,history) => {
   await removeUserAccessToken(userId);
   removeAuthToken();
 
   dispatch({
     type: actionKeys.LOGOUT_USER,
   });
+   history.push("/")
 };
 
 

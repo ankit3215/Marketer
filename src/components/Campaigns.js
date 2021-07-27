@@ -1,16 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Dashboard = props => {
+const Campaigns = props => {
     return (
         <div>
-            this is dashboard
+            this is a campaign
         </div>
     )
 }
 
-Dashboard.propTypes = {
+Campaigns.propTypes = {
 
 }
 
-export default Dashboard
+export default Campaigns

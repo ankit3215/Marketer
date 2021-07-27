@@ -1,16 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Dashboard = props => {
+const Mailer = props => {
     return (
         <div>
-            this is dashboard
+            this is mailer
         </div>
     )
 }
 
-Dashboard.propTypes = {
+Mailer.propTypes = {
 
 }
 
-export default Dashboard
+export default Mailer

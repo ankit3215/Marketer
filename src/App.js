@@ -8,7 +8,7 @@ import Login from './components/Login';
 import { BrowserRouter as Router,Switch, Route } from "react-router-dom";
 import PrivateRoute from './routers/PrivateRoute';
 import PublicRoute from './routers/PublicRoute';
-import Dashboard from './components/Dashboard';
+import Sidebar from './components/Sidebar';
 
 const App = () => {
   const alert = useSelector((state) => state.alert);
@@ -44,7 +44,7 @@ const App = () => {
       <Router>
       <Switch>
       <PublicRoute path="/" component={Login} exact={true} />
-      <PrivateRoute path="/Dashboard" component={Dashboard} />
+      <PrivateRoute path="/Dashboard" component={Sidebar} />
       </Switch>
       </Router>
     </div>
