@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 const Client = props => {
     return (
-        <div>
+        <div style={{marginTop:"10px"}}>
             this is client
         </div>
     )

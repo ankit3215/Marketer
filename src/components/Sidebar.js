@@ -27,7 +27,7 @@ const Sidebar = ({ history }) => {
       <div>
         <div
           class="w3-sidebar w3-light-white w3-bar-block"
-          style={{ width: "20%" }}
+          style={{ position:"fixed", width: "20%",top: "0",left: "0"}}
         >
           <h3 class="w3-bar-item " style={{ top: "48px", left: "20px" }}>
             {" "}
@@ -80,12 +80,14 @@ const Sidebar = ({ history }) => {
         </div>
 
         <div style={{ marginLeft: "20%" }}>
+          <div style={{ marginTop: "0px" }} >
           <Switch>
             <Route exact path="/" component={Dashboard} />
             <Route path="/client" component={Client} />
             <Route path="/campaigns" component={Campaigns} />
             <Route path="/mailer" component={Mailer} />
           </Switch>
+          </div>
         </div>
       </div>
     </Router>
