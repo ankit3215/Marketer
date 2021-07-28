@@ -35,5 +35,4 @@ export const removeUserAccessToken = async (userId) => {
 export const FetchClient = async () => {
   return await db.collection('client').get()
 }
-
 export default db
