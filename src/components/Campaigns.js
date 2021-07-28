@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 const Campaigns = props => {
     return (
-        <div>
+        <div style={{marginTop:"30px"}}>
             this is a campaign
         </div>
     )
