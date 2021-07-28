@@ -82,12 +82,15 @@ const Client = (props) => {
                         <TableCell>{client.client_name}</TableCell>
                         <TableCell>{client.client_email}</TableCell>
                         <TableCell>
-                          <IconButton component='span'>
-                            {/* <EditIcon onClick={() => setOpenModal(true)} /> */}
+                          <IconButton>
+                            {' '}
                             <EditIcon />
+                          </IconButton>
+
+                          <IconButton>
+                            {' '}
                             <DeleteIcon />
                           </IconButton>
-                          {/* {openModal && <Modal closeModal={setOpenModal} />} */}
                         </TableCell>
                       </TableRow>
                     ))}
