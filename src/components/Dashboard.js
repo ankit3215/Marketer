@@ -1,16 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Navbar from './Navbar'
 
-const Dashboard = props => {
-    return (
-        <div>
-            this is dashboard
-        </div>
-    )
+const Dashboard = (props) => {
+  return (
+    <div>
+      {/* <Navbar page='Dashboard' /> */}
+      this is dashboard
+    </div>
+  )
 }
 
-Dashboard.propTypes = {
-
-}
+Dashboard.propTypes = {}
 
 export default Dashboard
