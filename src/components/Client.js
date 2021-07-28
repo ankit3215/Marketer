@@ -99,7 +99,7 @@ const Client = (props) => {
           <div>
             <Container className={classes.upload}>
               <strong>Upload Clients</strong>
-              <p>uplodadas</p>
+              <h1>uplodadas</h1>
             </Container>
           </div>
         </div>
