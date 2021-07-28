@@ -50,7 +50,7 @@ const Sidebar = ({history}) => {
           style={{
             margin:"5px" ,
              padding:"15px",
-            // marginTop:"240px",
+             marginTop:"240px",
             position:"fixed",
              bottom:"0",
              left:"0",
