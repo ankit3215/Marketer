@@ -19,18 +19,19 @@ import Modal from './Modal'
 import Navbar from './Navbar'
 import { useDispatch, useSelector } from 'react-redux'
 import { clientList } from '../redux/actionCreators/clientAction'
+import './CSS/mailer.css'
 
 const useStyles = makeStyles(() => ({
   table: {
     width: '600px',
     height: '620px',
-    marginTop: '30px',
+    marginTop: '50px',
     marginLeft: '15px',
   },
   upload: {
     width: '410px',
     height: '620px',
-    marginTop: '30px',
+    marginTop: '50px',
     marginLeft: '50px',
   },
 }))
