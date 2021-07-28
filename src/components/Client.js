@@ -15,7 +15,7 @@ import PropTypes from 'prop-types'
 import Checkbox from '@material-ui/core/Checkbox'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
-import Modal from './Modal'
+// import Modal from '../common/Modal'
 import Navbar from './Navbar'
 import { useDispatch, useSelector } from 'react-redux'
 import { clientList } from '../redux/actionCreators/clientAction'
@@ -38,6 +38,7 @@ const useStyles = makeStyles(() => ({
 const Client = (props) => {
   // const [openModal, setOpenModal] = useState(false)
   const dispatch = useDispatch()
+
   const client = useSelector((state) => state.ClientReducer)
   // console.log(client)
   const classes = useStyles()
@@ -82,12 +83,21 @@ const Client = (props) => {
                         <TableCell>{client.client_name}</TableCell>
                         <TableCell>{client.client_email}</TableCell>
                         <TableCell>
-                          <IconButton component='span'>
-                            {/* <EditIcon onClick={() => setOpenModal(true)} /> */}
+                          {/* <IconButton component='span'>
+                            <EditIcon onClick={() => setOpenModal(true)} />
                             <EditIcon />
                             <DeleteIcon />
                           </IconButton>
-                          {/* {openModal && <Modal closeModal={setOpenModal} />} */}
+                          {openModal && <Modal closeModal={setOpenModal} />} */}
+                          <IconButton>
+                            {' '}
+                            <EditIcon />
+                          </IconButton>
+
+                          <IconButton>
+                            {' '}
+                            <DeleteIcon />
+                          </IconButton>
                         </TableCell>
                       </TableRow>
                     ))}
