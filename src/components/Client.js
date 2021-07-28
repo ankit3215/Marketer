@@ -20,13 +20,27 @@ import Navbar from './Navbar'
 import { useDispatch, useSelector } from 'react-redux'
 import { clientList } from '../redux/actionCreators/clientAction'
 
-const Client = props => {
-    return (
-        <div >
-            this is client
-        </div>
-    )
-}
+const useStyles = makeStyles(() => ({
+  table: {
+    width: '600px',
+    height: '620px',
+    marginTop: '30px',
+    marginLeft: '15px',
+  },
+  upload: {
+    width: '410px',
+    height: '620px',
+    marginTop: '30px',
+    marginLeft: '50px',
+  },
+}))
+
+const Client = (props) => {
+  // const [openModal, setOpenModal] = useState(false)
+  const dispatch = useDispatch()
+  const client = useSelector((state) => state.ClientReducer)
+  // console.log(client)
+  const classes = useStyles()
 
   useEffect(() => {
     dispatch(clientList())
