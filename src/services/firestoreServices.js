@@ -25,4 +25,8 @@ export const searchForAccessToken = async (token) => {
 export const removeUserAccessToken = async (userId) => {
     return await db.collection('userInfo').doc(userId).update({"accessToken" : ""});
 }
+
+export const FetchClient = async () => {
+    return await db.collection('client').get();
+}
 export default db;

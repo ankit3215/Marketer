@@ -8,3 +8,7 @@ export const LOGOUT_USER = "LOGOUT_USER";
 export const SUCCESS_ALERT = "SUCCESS_ALERT";
 export const ERROR_ALERT = "ERROR_ALERT";
 export const HIDE_ALERT = "HIDE_ALERT";
+
+//   
+export const GET_CLIENT = "GET_CLIENT";
+export const GET_CAMPAIGNS = "GET_CAMPAIGNS";
