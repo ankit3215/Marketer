@@ -1,6 +1,10 @@
 import React,{useMemo} from 'react'
 import {useDropzone} from 'react-dropzone';
 import uploadCloud from '../images/upload-cloud.png';
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles'
+import { createMuiTheme } from '@material-ui/core/styles'
+import { ThemeProvider } from '@material-ui/styles';
 
 const baseStyle = {
   flex: 1,
@@ -32,6 +36,26 @@ const rejectStyle = {
 };
 
 function Upload(props) {
+    const theme = createMuiTheme({
+        palette: {
+          action: {
+            disabledBackground: '#5F048A',
+            disabled: '#FFFFFF'
+          }
+        }
+      });
+    const useStyles = makeStyles(() => ({
+        upload: {
+            width: '200px',
+            height: '48px',
+            opacity: '0.4',
+            borderRadius: '10px',
+            textAlign: 'center',
+            marginTop: '20px',
+            marginLeft: '75px'
+            
+        },
+      }))
     const {
         getRootProps,
         getInputProps,
@@ -39,6 +63,8 @@ function Upload(props) {
         isDragAccept,
         isDragReject
       } = useDropzone({accept: 'xlsx/*'});
+    const classes = useStyles()
+
 
       const style = useMemo(() => ({
         ...baseStyle,
@@ -55,7 +81,13 @@ function Upload(props) {
         <div {...getRootProps({style})}>
           <input {...getInputProps()} />
           <img src={uploadCloud} alt='upload cloud'/>
+          <h5>Select File</h5>
         </div>
+        <p style={{textAlign: 'center'}}>You can only upload <strong>.xlsx</strong> and <strong>.csv</strong></p>
+        <p>Note : Excel Upload needs a specific format to upload data. Please go through the given template before upload.</p>
+        <ThemeProvider theme={theme}>
+            <Button variant="contained" className={classes.upload} disabled>UPLOAD</Button>
+        </ThemeProvider>
         </div> 
     )
 }
