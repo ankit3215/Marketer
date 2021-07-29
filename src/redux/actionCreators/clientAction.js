@@ -9,7 +9,7 @@ export const clientList = () => async (dispatch) => {
   data.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
     console.log(doc.id, ' => ', doc.data())
-    client.push(doc.data())
+    client.push({ id: doc.id, data: doc.data() })
   })
 
   dispatch({
@@ -17,31 +17,32 @@ export const clientList = () => async (dispatch) => {
     payload: client,
   })
 }
-export const clientList1 = () => async (dispatch) => {
-  let data = await FetchClient()
+// export const clientList1 = () => async (dispatch) => {
+//   let data = await FetchClient()
 
-  // console.log(data)
-  let client = []
-  data.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-    console.log(doc.id, ' => ', doc.data())
-    client.push({ id: doc.id, data: doc.data() })
-  })
+//   // console.log(data)
+//   let client = []
+//   data.forEach((doc) => {
+//     // doc.data() is never undefined for query doc snapshots
+//     console.log(doc.id, ' => ', doc.data())
+//     client.push({ id: doc.id, data: doc.data() })
+//   })
 
-  dispatch({
-    type: actionKeys.GET_CLIENT1,
-    payload: client,
-  })
-}
+//   dispatch({
+//     type: actionKeys.GET_CLIENT1,
+//     payload: client,
+//   })
+// }
 
 export const editClient = (userData) => (dispatch) => {
   // console.log(userData)
   EditClient(userData)
     .then(() => {
       dispatch({
-        type: 'UPDATED',
+        type: actionKeys.UPDATE_CLIENT,
         payload: userData,
       })
+      dispatch(clientList())
     })
     .catch((err) => {})
 

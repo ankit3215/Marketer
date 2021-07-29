@@ -18,7 +18,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import Modal from '../common/Modal'
 import Navbar from './Navbar'
 import { useDispatch, useSelector } from 'react-redux'
-import { clientList1, editClient } from '../redux/actionCreators/clientAction'
+import { clientList, editClient } from '../redux/actionCreators/clientAction'
 import './CSS/client.css'
 
 const useStyles = makeStyles(() => ({
@@ -48,7 +48,7 @@ const Client = (props) => {
   const classes = useStyles()
 
   useEffect(() => {
-    dispatch(clientList1())
+    dispatch(clientList())
     // console.log(client.clients[0])
   }, [])
 
@@ -104,7 +104,7 @@ const Client = (props) => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {client.clients1.map((client) => (
+                    {client.clients.map((client) => (
                       <TableRow>
                         <TableCell padding='checkbox'>
                           <Checkbox />
