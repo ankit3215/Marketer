@@ -22,7 +22,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import FilterListIcon from '@material-ui/icons/FilterList'
 import EditIcon from '@material-ui/icons/Edit'
 import { useDispatch, useSelector } from 'react-redux'
-import { clientList } from '../redux/actionCreators/clientAction'
+import { clientList,editClient } from '../redux/actionCreators/clientAction'
 import Modal from '../common/Modal'
 
 const headCells = [
@@ -110,9 +110,11 @@ export default function MailerTable() {
   const [selected, setSelected] = React.useState([]);
   const [isModal, setIsModal] = React.useState(false);
   const [formData, setFormData] = React.useState({
-    name: '',
-    email: '',
+    client_name: '',
+    client_email: '',
   })
+  const [UserID, setUserID] = React.useState('')
+
 
   const dispatch = useDispatch();
   const client = useSelector((state) => state.ClientReducer);
@@ -128,7 +130,7 @@ export default function MailerTable() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = client.clients.map((n) => n.client_name)
+      const newSelecteds = client.clients.map((n) => n.data.client_name)
       // debugger
       setSelected(newSelecteds)
       return
@@ -143,13 +145,16 @@ export default function MailerTable() {
   const onSubmit = (e) => {
     e.preventDefault()
     console.log(formData)
+    dispatch(editClient({ id: UserID, data: formData }))
+    toggle()
   }
 
   const toggle = () => {
     setIsModal(!isModal)
   }
   const openModal = (row) => {
-    setFormData({ ...formData, name: row.client_name, email: row.client_email })
+    setFormData({ ...formData, client_name: row.data.client_name, client_email: row.data.client_email })
+    setUserID(row.id)
     setIsModal(!isModal)
   }
 
@@ -203,7 +208,7 @@ export default function MailerTable() {
                 client &&
                   client.clients &&
                   client.clients.map((row, index) => {
-                    const isItemSelected = isSelected(row.client_name)
+                    const isItemSelected = isSelected(row.data.client_name)
                     const labelId = `enhanced-table-checkbox-${index}`
 
                     return (
@@ -213,14 +218,14 @@ export default function MailerTable() {
                         role='checkbox'
                         aria-checked={isItemSelected}
                         tabIndex={-1}
-                        key={row.client_name}
+                        key={row.data.client_name}
                         selected={isItemSelected}
                       >
                         <TableCell padding='checkbox'>
                           <Checkbox
                             checked={isItemSelected}
                             onClick={(event) =>
-                              handleClick(event, row.client_name)
+                              handleClick(event, row.data.client_name)
                             }
                             inputProps={{ 'aria-labelledby': labelId }}
                           />
@@ -231,9 +236,9 @@ export default function MailerTable() {
                           scope='row'
                           padding='none'
                         >
-                          {row.client_name}
+                          {row.data.client_name}
                         </TableCell>
-                        <TableCell align='right'>{row.client_email}</TableCell>
+                        <TableCell align='right'>{row.data.client_email}</TableCell>
                         <TableCell align='right'>
                           <IconButton onClick={() => openModal(row)}>
                             {' '}
@@ -267,8 +272,8 @@ export default function MailerTable() {
             <br />
             <input
               type='text'
-              name='name'
-              value={formData.name}
+              name='client_name'
+              value={formData.client_name}
               onChange={(e) => onChange(e)}
             />
             <br />
@@ -276,8 +281,8 @@ export default function MailerTable() {
             <br />
             <input
               type='text'
-              name='email'
-              value={formData.email}
+              name='client_email'
+              value={formData.client_email}
               onChange={(e) => onChange(e)}
             />
             <br />
