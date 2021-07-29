@@ -1,4 +1,3 @@
-  
 import { useState, useEffect } from 'react'
 import {
   Container,
@@ -25,13 +24,13 @@ const useStyles = makeStyles(() => ({
   table: {
     width: '600px',
     height: '620px',
-    marginTop: '30px',
+    marginTop: '50px',
     marginLeft: '15px',
   },
   upload: {
     width: '410px',
     height: '620px',
-    marginTop: '30px',
+    marginTop: '50px',
     marginLeft: '50px',
   },
 }))
