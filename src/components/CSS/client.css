@@ -8,7 +8,7 @@ ul {
 li {
   float: left;
   /* margin: 5px;
-    padding: 5px; */
+      padding: 5px; */
 }
 
 .nav1 {
@@ -30,10 +30,10 @@ li {
 }
 .nav2 {
   /* margin-top: 10px;
-    font-family: Karla;
-    font-weight: Bold;
-    font-size: 16px;
-    line-height: 19px; */
+      font-family: Karla;
+      font-weight: Bold;
+      font-size: 16px;
+      line-height: 19px; */
   position: absolute;
   width: 200px;
   height: 18px;
@@ -61,23 +61,23 @@ li {
 .split {
   width: 50%;
   /* position: fixed;
-    z-index: 1;
-    */
+      z-index: 1;
+      */
   overflow-x: hidden;
 }
 
 /* Control the left side */
 .left {
   /* padding: 10px;
-    margin-left: 10px;
-    font-family: Karla;
-    font-style: Regular;
-    font-size: 20px;
-    line-height: 36px; */
+      margin-left: 10px;
+      font-family: Karla;
+      font-style: Regular;
+      font-size: 20px;
+      line-height: 36px; */
   position: absolute;
   /* padding: 10px; */
   /* width: 332px;
-height: 36px; */
+  height: 36px; */
   left: 270px;
   top: 90px;
 
@@ -96,11 +96,11 @@ height: 36px; */
 /* Control the right side */
 .right {
   /* padding: 10px;
-    margin-left: 10px;
-    font-family: Karla;
-    font-style: Regular;
-    font-size: 20px;
-    line-height: 36px; */
+      margin-left: 10px;
+      font-family: Karla;
+      font-style: Regular;
+      font-size: 20px;
+      line-height: 36px; */
   position: absolute;
   width: 435px;
   height: 40px;
@@ -125,55 +125,40 @@ height: 36px; */
   width: 200px;
   height: 48px;
   left: 300px;
-  top: 655px;
+  top: 640px;
   background: linear-gradient(269.51deg, #8f1fc4 1.37%, #5f048a 98.48%);
   /* background: linear-gradient(to bottom, #33ccff 0%, #ff99cc 100%); */
   /* Linear 2 */
 
   /* font-family: Karla;
-font-style: normal;
-font-weight: bold;
-font-size: 18px;
-line-height: 20px;
-
-letter-spacing: 0.1em;
-text-transform: uppercase;
-
-color: #FFFFFF;
-background-color: #5F048A;
-background: linear-gradient(269.51deg, #8F1FC4 1.37%, #5F048A 98.48%);
-border-radius: 10px; */
-
-font-family: Karla;
-font-style: normal;
-font-weight: bold;
-font-size: 18px;
-line-height: 20px;
-/* identical to box height, or 111% */
-
-letter-spacing: 0.1em;
-text-transform: uppercase;
-
-color: #FFFFFF;
-border-radius: 10px;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 20px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  background-color: #5F048A;
+  background: linear-gradient(269.51deg, #8F1FC4 1.37%, #5F048A 98.48%);
+  border-radius: 10px; */
 }
 
 /*   
-  li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-  }
-  
-  li a:hover:not(.active) {
-    background-color: #111;
-  }
-  
-  .active {
-    background-color: #04AA6D;
-  } */
+    li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+    
+    li a:hover:not(.active) {
+      background-color: #111;
+    }
+    
+    .active {
+      background-color: #04AA6D;
+    } */
 
 .wrapper {
   position: absolute;
