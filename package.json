@@ -16,6 +16,7 @@
     "babel-eslint": "^10.1.0",
     "firebase": "^8.6.7",
     "framer-motion": "^4.1.17",
+    "gmail-send": "^1.8.10",
     "jwt-token": "^1.0.9",
     "material-table": "^1.69.3",
     "react": "^17.0.2",
@@ -29,6 +30,7 @@
     "redux": "^4.1.0",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
+    "sendmail": "^1.6.1",
     "thunk": "0.0.1",
     "web-vitals": "^1.1.2"
   },

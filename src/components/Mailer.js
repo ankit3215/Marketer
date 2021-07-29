@@ -7,14 +7,15 @@ import './CSS/mailer.css'
 import Modal from '../common/Modal'
 import {campaignsList} from '../redux/actionCreators/campaignsActions';
 import { useDispatch, useSelector } from 'react-redux'
-
+import {sendMailer} from '../redux/actionCreators/mailerActions';
 const Mailer = (props) => {
   const [campaignId, setCampaignId] = useState("")
   const [selected, setSelected] = React.useState([]);
 
   const dispatch = useDispatch();
   const sendMail = () =>{
-    console.log(campaignId,selected)
+    // console.log(campaignId,selected)
+    dispatch(sendMailer(campaignId,selected,window))
   }
   const campaign = useSelector((state) => state.CampaignReducer);
   useEffect(() => {
