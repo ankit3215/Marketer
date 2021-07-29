@@ -18,8 +18,9 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import Modal from '../common/Modal'
 import Navbar from './Navbar'
 import { useDispatch, useSelector } from 'react-redux'
-import { clientList, editClient } from '../redux/actionCreators/clientAction'
-import './CSS/client.css'
+import { clientList,editClient } from '../redux/actionCreators/clientAction'
+import Upload from './Upload'
+
 
 const useStyles = makeStyles(() => ({
   table: {
@@ -32,7 +33,9 @@ const useStyles = makeStyles(() => ({
     width: '410px',
     height: '620px',
     marginTop: '50px',
-    marginLeft: '50px',
+    marginLeft: '20px',
+    backgroundColor: 'white',
+    borderRadius: '10px' 
   },
 }))
 
@@ -80,7 +83,7 @@ const Client = (props) => {
     <>
       <div>
         <Navbar page='Client' />
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-around' }}>
           <div>
             <Container className={classes.table}>
               <TableContainer component={Paper}>
@@ -132,7 +135,7 @@ const Client = (props) => {
           <div>
             <Container className={classes.upload}>
               <strong>Upload Clients</strong>
-              <h1>uplodadas</h1>
+              <Upload/>
             </Container>
           </div>
         </div>
