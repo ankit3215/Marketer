@@ -106,7 +106,7 @@ export default function MailerTable() {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
-  const [isModal, setIsModal] = React.useState(true);
+  const [isModal, setIsModal] = React.useState(false);
   const [formData, setFormData] = React.useState({
     name:"",
     email:''
@@ -114,7 +114,6 @@ export default function MailerTable() {
 
   const dispatch = useDispatch();
   const client = useSelector((state) => state.ClientReducer);
-  console.log(client);
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -183,7 +182,7 @@ export default function MailerTable() {
     <div className={classes.root}>
       <Paper className={classes.paper}>
      
-        <TableContainer style={{ maxHeight: 400 }}>
+        <TableContainer style={{ maxHeight: 482 }}>
           <Table 
           stickyHeader
             className={classes.table}

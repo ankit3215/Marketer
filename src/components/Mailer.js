@@ -25,19 +25,10 @@ const Mailer = (props) => {
       <div className='tble'>
         <MailerTable />
       </div>
-      <div className='sendMailer'>
-        <button>SEND MAILER</button>
+      <div >
+        <button className='sendMailer'>SEND MAILER</button>
       </div>
-      {/* <Modal className="modal">
-    <div className="wrapper">
-            <div className="card">
-              <button className="closeButton">
-                X
-              </button>
-              <div>ssssssssssssssssssssssssssssssssssssssssssssssssss</div>
-            </div>
-          </div>
-    </Modal> */}
+    
     </div>
   )
 }

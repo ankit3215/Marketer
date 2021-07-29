@@ -125,7 +125,7 @@ height: 36px; */
   width: 200px;
   height: 48px;
   left: 300px;
-  top: 640px;
+  top: 655px;
   background: linear-gradient(269.51deg, #8f1fc4 1.37%, #5f048a 98.48%);
   /* background: linear-gradient(to bottom, #33ccff 0%, #ff99cc 100%); */
   /* Linear 2 */
@@ -143,6 +143,19 @@ color: #FFFFFF;
 background-color: #5F048A;
 background: linear-gradient(269.51deg, #8F1FC4 1.37%, #5F048A 98.48%);
 border-radius: 10px; */
+
+font-family: Karla;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+line-height: 20px;
+/* identical to box height, or 111% */
+
+letter-spacing: 0.1em;
+text-transform: uppercase;
+
+color: #FFFFFF;
+border-radius: 10px;
 }
 
 /*   
