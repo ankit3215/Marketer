@@ -104,19 +104,18 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function MailerTable() {
-  const classes = useStyles()
-  const [order, setOrder] = React.useState('asc')
-  const [orderBy, setOrderBy] = React.useState('calories')
-  const [selected, setSelected] = React.useState([])
-  const [isModal, setIsModal] = React.useState(true)
+  const classes = useStyles();
+  const [order, setOrder] = React.useState('asc');
+  const [orderBy, setOrderBy] = React.useState('calories');
+  const [selected, setSelected] = React.useState([]);
+  const [isModal, setIsModal] = React.useState(false);
   const [formData, setFormData] = React.useState({
     name: '',
     email: '',
   })
 
-  const dispatch = useDispatch()
-  const client = useSelector((state) => state.ClientReducer)
-  console.log(client)
+  const dispatch = useDispatch();
+  const client = useSelector((state) => state.ClientReducer);
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc'
     setOrder(isAsc ? 'desc' : 'asc')
@@ -179,9 +178,10 @@ export default function MailerTable() {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <TableContainer style={{ maxHeight: 400 }}>
-          <Table
-            stickyHeader
+     
+        <TableContainer style={{ maxHeight: 482 }}>
+          <Table 
+          stickyHeader
             className={classes.table}
             aria-labelledby='tableTitle'
             size='small'
