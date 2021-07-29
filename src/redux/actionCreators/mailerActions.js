@@ -1,6 +1,6 @@
 import * as actionKeys from '../actionKeys'
 import db,{  } from '../../services/firestoreServices'
-const sendmail = require('sendmail')();
+import {mailerAlert} from './alertActions';
 
 
 export const sendMailer = (campaign,clients,window) => async (dispatch) => {
@@ -29,5 +29,5 @@ export const sendMailer = (campaign,clients,window) => async (dispatch) => {
        }).then(
      message => console.log(message)
    );
-   
+     mailerAlert(dispatch,"Mail send")
   }

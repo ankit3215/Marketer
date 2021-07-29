@@ -16,6 +16,8 @@ const Mailer = (props) => {
   const sendMail = () =>{
     // console.log(campaignId,selected)
     dispatch(sendMailer(campaignId,selected,window))
+    setCampaignId("")
+    setSelected([])
   }
   const campaign = useSelector((state) => state.CampaignReducer);
   useEffect(() => {
