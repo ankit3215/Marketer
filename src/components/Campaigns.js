@@ -171,7 +171,7 @@ onChange={(e) => setMessage(e.target.value)}
     
     </Card>
 
-    <div style={{marginTop:"-40px",backgroundColor:"gray"}}>
+    <div style={{marginTop:"0px",backgroundColor:"gray"}}>
           <p>.</p>
       </div>
 

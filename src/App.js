@@ -12,47 +12,44 @@ import Sidebar from './components/Sidebar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
-  const alert = useSelector((state) => state.alert);
-  const dispatch = useDispatch();
+  const alert = useSelector((state) => state.alert)
+  const dispatch = useDispatch()
 
   useLayoutEffect(() => {
-    setUserData(dispatch);
-  }, [dispatch]);
+    setUserData(dispatch)
+  }, [dispatch])
 
   useEffect(() => {
     setTimeout(() => {
       if (alert.isRequired) {
-        hideAlert(dispatch);
+        hideAlert(dispatch)
       }
-    }, 2000);
-  });
+    }, 2000)
+  })
   return (
     <div>
       {alert.isRequired && (
         <Alert
-          variant="filled"
+          variant='filled'
           severity={alert.alertType}
           style={{
-            width: "40%",
-            position: "absolute",
-            right: "10%",
-            top: "7%",
+            width: '40%',
+            position: 'absolute',
+            right: '10%',
+            top: '7%',
           }}
         >
           {alert.message}
         </Alert>
       )}
       <Router>
-      <Switch>
-      <PublicRoute path="/" component={Login} exact={true} />
-      <PrivateRoute path="/Dashboard" component={Sidebar} />
-      </Switch>
+        <Switch>
+          <PublicRoute path='/' component={Login} exact={true} />
+          <PrivateRoute path='/Dashboard' component={Sidebar} />
+        </Switch>
       </Router>
     </div>
-  );
-};
+  )
+}
 
-export default App;
-
-
-
+export default App
