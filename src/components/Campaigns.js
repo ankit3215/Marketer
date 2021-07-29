@@ -14,12 +14,13 @@ const Campaigns = () => {
 
     const auth = useSelector((state) => state.auth.userInfo.userId);
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
 
   const [loader, setLoader] = useState(false);
   const regexp = /[a-z]/gi;
-  const ent=/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+  // const ent=/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+  const ent=/[a-z]/gi;
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoader(true);
@@ -39,20 +40,20 @@ const Campaigns = () => {
     // if(name.length<3){
     //   toast.error("small name")
     // }
-    if(!email || !email.match(ent)){
-      toast.error("Email is required and it should be of email type");
+    if(!subject || !subject.match(ent)){
+      toast.error("Subject is required and it should be of string type");
       
     }
     if(!message){
       toast.error("message is required");
     }
 
-    if(name.match(regexp) && email.match(ent) && message){
+    if(name.match(regexp) && subject.match(ent) && message.length>10){
 
     db.collection("cont")
       .add({
         name: name,
-        email: email,
+        subject: subject,
         message: message,
         createdAt: Date(Date.now()).toString(),
         auth
@@ -68,16 +69,20 @@ const Campaigns = () => {
     
 
     setName("");
-    setEmail("");
+    setSubject("");
     setMessage("");
     }
   };
 
   return (
     <div className="ra">
-      <p className="ra">All Campaigns  <span className="pa">Create Campaigns</span></p>
+      <div style={{marginTop:"30px"}}>
+
+      </div>
+      <p className="camps">Campaigns</p>
+      <p className="ras">All Campaigns  <span className="pa">Create Campaigns</span></p>
       
-    <Card style={{backgroundColor:"white",paddingLeft:"30px",paddingRight:"100px",marginTop:"50px",marginLeft:"10px",marginRight:"30px",borderRadius:"10px"}}>
+    <Card style={{backgroundColor:"white",paddingLeft:"30px",paddingRight:"100px",marginTop:"24px",marginLeft:"30px",marginRight:"30px",borderRadius:"10px"}}>
     <Container>
 
    
@@ -87,24 +92,24 @@ const Campaigns = () => {
       
         <Row style={{marginTop:"30px"}}>
           <Col>
-          <p style={{marginBottom:"3px",fontFamily:"karla",fontSize:"14px",fontWeight:"400"}}>Campaign Name</p>
+          <p style={{marginBottom:"8px",fontFamily:"karla",fontSize:"14px",fontWeight:"400",marginLeft:"-10px",height:"16px",width:"156px"}}>Campaign Name</p>
           <Form.Group className="plc" >
-            <Form.Control style={{marginLeft:"-12px"}} type="text" placeholder="Campaign Name"  value={name} id="ram"
+            <Form.Control style={{marginLeft:"-12px",width:"515px",height:"48px"}} type="text" placeholder="Campaign Name"  value={name} id="ram"
         onChange={(e) => setName(e.target.value)}/>
           </Form.Group>
           </Col>
 
           <Col>
-          <p style={{marginBottom:"3px",fontFamily:"karla",fontSize:"14px",fontWeight:"400"}}>Subject</p>
+          <p style={{marginBottom:"8px",fontFamily:"karla",fontSize:"14px",fontWeight:"400",height:"16px",width:"156px",marginLeft:"57px"}}>Subject</p>
           <Form.Group className="plc">
-            <Form.Control  style={{marginLeft:"12px"}} type="text" placeholder="Subject"  value={email}
-        onChange={(e) => setEmail(e.target.value)}/>
+            <Form.Control  style={{marginLeft:"58px",width:"515px",height:"48px"}} type="text" placeholder="Subject"  value={subject}
+        onChange={(e) => setSubject(e.target.value)}/>
           </Form.Group>
           </Col>
         </Row>
 
         <Row>
-        <label style={{fontFamily:"karla",fontSize:"14px",fontWeight:"400"}}>Content</label>
+        <label style={{fontFamily:"karla",fontSize:"14px",fontWeight:"400",marginTop:"24px"}}>Content</label>
      
 
 <Form.Group className="plc">
@@ -135,11 +140,14 @@ onChange={(e) => setMessage(e.target.value)}
       <button
         type="submit"
 
-        style={{marginTop:"420px"}}
+        style={{marginTop:"300px"}}
         
       >
         SUBMIT
       </button>
+      <div style={{marginBottom:"-10px"}}>
+          <p>.</p>
+      </div>
 
      
 
