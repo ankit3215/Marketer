@@ -45,4 +45,9 @@ export const EditClient = async (userData) => {
   return await db.collection('client').doc(userData.id).update(userData.data)
 }
 
+export const DeleteClient = async (id) => {
+  // console.log(userData)
+  return await db.collection('client').doc(id).delete()
+}
+
 export default db
