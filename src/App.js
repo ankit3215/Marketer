@@ -9,7 +9,7 @@ import { BrowserRouter as Router,Switch, Route } from "react-router-dom";
 import PrivateRoute from './routers/PrivateRoute';
 import PublicRoute from './routers/PublicRoute';
 import Sidebar from './components/Sidebar';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.css';
 
 const App = () => {
   const alert = useSelector((state) => state.alert)
