@@ -1,5 +1,6 @@
 import React,{useMemo} from 'react'
 import {useDropzone} from 'react-dropzone';
+import uploadCloud from '../images/upload-cloud.png';
 
 const baseStyle = {
   flex: 1,
@@ -9,12 +10,13 @@ const baseStyle = {
   padding: '20px',
   borderWidth: 2,
   borderRadius: 2,
-  borderColor: '#eeeeee',
+  borderColor: '#A1A4B2',
   borderStyle: 'dashed',
-  backgroundColor: '#fafafa',
+  backgroundColor: '#FFFFFF',
   color: '#bdbdbd',
   outline: 'none',
-  transition: 'border .24s ease-in-out'
+  transition: 'border .24s ease-in-out',
+  marginTop: '40px'
 };
 
 const activeStyle = {
@@ -52,7 +54,7 @@ function Upload(props) {
         <div className="container">
         <div {...getRootProps({style})}>
           <input {...getInputProps()} />
-          <p>Drag 'n' drop some files here, or click to select files</p>
+          <img src={uploadCloud} alt='upload cloud'/>
         </div>
         </div> 
     )
