@@ -15,11 +15,11 @@ import PropTypes from 'prop-types'
 import Checkbox from '@material-ui/core/Checkbox'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
-import Modal from './Modal'
+import Modal from '../common/Modal'
 import Navbar from './Navbar'
 import { useDispatch, useSelector } from 'react-redux'
-import { clientList } from '../redux/actionCreators/clientAction'
-import './CSS/mailer.css'
+import { clientList1, editClient } from '../redux/actionCreators/clientAction'
+import './CSS/client.css'
 
 const useStyles = makeStyles(() => ({
   table: {
@@ -40,12 +40,40 @@ const Client = (props) => {
   // const [openModal, setOpenModal] = useState(false)
   const dispatch = useDispatch()
   const client = useSelector((state) => state.ClientReducer)
+  const [isModal, setisModal] = useState(false)
+  const [UserData, setUserData] = useState({})
+  const [UserID, setUserID] = useState('')
   // console.log(client)
   const classes = useStyles()
 
   useEffect(() => {
-    dispatch(clientList())
+    dispatch(clientList1())
+    // console.log(client.clients[0])
   }, [])
+
+  const onChange = (e) => {
+    setUserData({ ...UserData, [e.target.name]: e.target.value })
+  }
+
+  const toggle = () => {
+    setisModal(!isModal)
+  }
+
+  const openModal = (row) => {
+    setUserData({
+      ...UserData,
+      client_name: row.data.client_name,
+      client_email: row.data.client_email,
+    })
+    setUserID(row.id)
+    setisModal(!isModal)
+  }
+
+  const onSubmit = (e) => {
+    e.preventDefault()
+    dispatch(editClient({ id: UserID, data: UserData }))
+    toggle()
+  }
 
   return (
     <>
@@ -75,15 +103,15 @@ const Client = (props) => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {client.clients.map((client) => (
+                    {client.clients1.map((client) => (
                       <TableRow>
                         <TableCell padding='checkbox'>
                           <Checkbox />
                         </TableCell>
-                        <TableCell>{client.client_name}</TableCell>
-                        <TableCell>{client.client_email}</TableCell>
+                        <TableCell>{client.data.client_name}</TableCell>
+                        <TableCell>{client.data.client_email}</TableCell>
                         <TableCell>
-                          <IconButton>
+                          <IconButton onClick={() => openModal(client)}>
                             {' '}
                             <EditIcon />
                           </IconButton>
@@ -108,6 +136,33 @@ const Client = (props) => {
           </div>
         </div>
       </div>
+      <Modal on={isModal} toggle={toggle}>
+        {isModal && (
+          <form onSubmit={(e) => onSubmit(e)}>
+            {/* <span>Edit client</span> */}
+            <label>Client Name:</label>
+            <br />
+            <input
+              type='text'
+              name='client_name'
+              value={UserData.client_name}
+              onChange={(e) => onChange(e)}
+            />
+            <br />
+            <label>Last name:</label>
+            <br />
+            <input
+              type='text'
+              name='client_email'
+              value={UserData.client_email}
+              onChange={(e) => onChange(e)}
+            />
+            <br />
+            <br />
+            <button type='submit'>Submit</button>
+          </form>
+        )}
+      </Modal>
     </>
   )
 }

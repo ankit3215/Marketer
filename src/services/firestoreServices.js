@@ -36,4 +36,9 @@ export const FetchClient = async () => {
   return await db.collection('client').get()
 }
 
+export const EditClient = async (userData) => {
+  // console.log(userData)
+  return await db.collection('client').doc(userData.id).update(userData.data)
+}
+
 export default db
