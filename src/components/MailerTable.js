@@ -22,7 +22,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import FilterListIcon from '@material-ui/icons/FilterList'
 import EditIcon from '@material-ui/icons/Edit'
 import { useDispatch, useSelector } from 'react-redux'
-import { clientList,editClient } from '../redux/actionCreators/clientAction'
+import { clientList,editClient,deleteClient } from '../redux/actionCreators/clientAction'
 import Modal from '../common/Modal'
 const headCells = [
   {
@@ -148,6 +148,10 @@ export default function MailerTable({selected,setSelected}) {
     toggle()
   }
 
+  const handleDelete = (row) =>{
+    dispatch(deleteClient(row.id))
+  }
+
   const toggle = () => {
     setIsModal(!isModal)
   }
@@ -244,7 +248,7 @@ export default function MailerTable({selected,setSelected}) {
                             <EditIcon />
                           </IconButton>
 
-                          <IconButton>
+                          <IconButton onClick={() =>handleDelete(row)}>
                             {' '}
                             <DeleteIcon />
                           </IconButton>
