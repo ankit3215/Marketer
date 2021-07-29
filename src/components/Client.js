@@ -119,7 +119,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function MailerTable() {
+export default function ClientTable() {
   const classes = useStyles()
   const [order, setOrder] = React.useState('asc')
   const [orderBy, setOrderBy] = React.useState('calories')
