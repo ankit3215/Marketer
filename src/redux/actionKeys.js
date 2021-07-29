@@ -11,4 +11,4 @@ export const HIDE_ALERT = 'HIDE_ALERT'
 
 //
 export const GET_CLIENT = 'GET_CLIENT'
-export const GET_CAMPAIGNS = 'GET_CAMPAIGNS'
+export const GET_CLIENT1 = 'GET_CLIENT1'
