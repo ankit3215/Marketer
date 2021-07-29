@@ -24,7 +24,6 @@ import EditIcon from '@material-ui/icons/Edit'
 import { useDispatch, useSelector } from 'react-redux'
 import { clientList,editClient } from '../redux/actionCreators/clientAction'
 import Modal from '../common/Modal'
-
 const headCells = [
   {
     id: 'client_name',
@@ -103,11 +102,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function MailerTable() {
+export default function MailerTable({selected,setSelected}) {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
-  const [selected, setSelected] = React.useState([]);
+  // const [selected, setSelected] = React.useState([]);
   const [isModal, setIsModal] = React.useState(false);
   const [formData, setFormData] = React.useState({
     client_name: '',
@@ -130,7 +129,7 @@ export default function MailerTable() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = client.clients.map((n) => n.data.client_name)
+      const newSelecteds = client.clients.map((n) => n.id)
       // debugger
       setSelected(newSelecteds)
       return
@@ -208,7 +207,7 @@ export default function MailerTable() {
                 client &&
                   client.clients &&
                   client.clients.map((row, index) => {
-                    const isItemSelected = isSelected(row.data.client_name)
+                    const isItemSelected = isSelected(row.id)
                     const labelId = `enhanced-table-checkbox-${index}`
 
                     return (
@@ -225,7 +224,7 @@ export default function MailerTable() {
                           <Checkbox
                             checked={isItemSelected}
                             onClick={(event) =>
-                              handleClick(event, row.data.client_name)
+                              handleClick(event, row.id)
                             }
                             inputProps={{ 'aria-labelledby': labelId }}
                           />
