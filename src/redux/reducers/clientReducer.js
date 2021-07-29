@@ -25,6 +25,11 @@ const ClientReducer = (state = initialState, action) => {
           item.id === payload.id ? payload : item
         ),
       }
+    case actionKeys.DELETE_CLIENT:
+      return {
+        ...state,
+        clients: state.clients.filter((client) => client.id !== payload),
+      }
     default:
       return state
   }

@@ -12,3 +12,4 @@ export const HIDE_ALERT = 'HIDE_ALERT'
 //
 export const GET_CLIENT = 'GET_CLIENT'
 export const UPDATE_CLIENT = 'UPDATE_CLIENT'
+export const DELETE_CLIENT = 'DELETE_CLIENT'
