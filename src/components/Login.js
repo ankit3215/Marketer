@@ -31,7 +31,7 @@ const styles = makeStyles((theme) => ({
     fontFamily: "'Karla', sans- serif",
   },
   link: {
-    textDecoration: "none",
+    textDecoration: 'none',
   },
   Icon : {
     height : '35px',
@@ -48,20 +48,20 @@ const styles = makeStyles((theme) => ({
     borderRadius : "8px",
     fontFamily: "'Karla', sans- serif"
   },
-}));
+}))
 
 const Login = () => {
-  const classes = styles();
-  const dispatch = useDispatch();
-  const [gLoading, setgLoading] = useState(false);
-  const history=useHistory();
+  const classes = styles()
+  const dispatch = useDispatch()
+  const [gLoading, setgLoading] = useState(false)
+  const history = useHistory()
 
   const handleGoogleLogin = async () => {
-    setgLoading(true);
-    
+    setgLoading(true)
+
     try {
-      await loginWithGoogle(dispatch);
-      if(isTokenAvailable()){
+      await loginWithGoogle(dispatch)
+      if (isTokenAvailable()) {
         history.push('/Dashboard')
       }
     } catch (error) {
@@ -70,13 +70,13 @@ const Login = () => {
           errorAlert(dispatch, "Connection closed by client");
           break;
         default:
-          console.log(error);
-          break;
+          console.log(error)
+          break
       }
     }
 
-    setgLoading(false);
-  };
+    setgLoading(false)
+  }
 
   return (
     <div className="login1">
@@ -111,7 +111,7 @@ const Login = () => {
         </Grid>
       </Grid>
     </div>
-  );
-};
+  )
+}
 
-export default memo(Login);
+export default memo(Login)

@@ -1,3 +1,4 @@
+
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useLayoutEffect } from "react";
 import { hideAlert } from "./redux/actionCreators/alertActions";
@@ -10,25 +11,25 @@ import PublicRoute from './routers/PublicRoute';
 import Sidebar from './components/Sidebar';
 
 const App = () => {
-  const alert = useSelector((state) => state.alert);
-  const dispatch = useDispatch();
+  const alert = useSelector((state) => state.alert)
+  const dispatch = useDispatch()
 
   useLayoutEffect(() => {
-    setUserData(dispatch);
-  }, [dispatch]);
+    setUserData(dispatch)
+  }, [dispatch])
 
   useEffect(() => {
     setTimeout(() => {
       if (alert.isRequired) {
-        hideAlert(dispatch);
+        hideAlert(dispatch)
       }
-    }, 2000);
-  });
+    }, 2000)
+  })
   return (
     <>
       {alert.isRequired && (
         <Alert
-          variant="filled"
+          variant='filled'
           severity={alert.alertType}
           style={{
             width: "20%",
@@ -41,16 +42,13 @@ const App = () => {
         </Alert>
       )}
       <Router>
-      <Switch>
-      <PublicRoute path="/" component={Login} exact={true} />
-      <PrivateRoute path="/Dashboard" component={Sidebar} />
-      </Switch>
+        <Switch>
+          <PublicRoute path='/' component={Login} exact={true} />
+          <PrivateRoute path='/Dashboard' component={Sidebar} />
+        </Switch>
       </Router>
     </>
   );
 };
 
-export default App;
-
-
-
+export default App

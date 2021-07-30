@@ -22,16 +22,8 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import FilterListIcon from '@material-ui/icons/FilterList'
 import EditIcon from '@material-ui/icons/Edit'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  clientList,
-  editClient,
-  deleteClient,
-} from '../redux/actionCreators/clientAction'
+import { clientList,editClient,deleteClient } from '../redux/actionCreators/clientAction'
 import Modal from '../common/Modal'
-import Navbar from './Navbar'
-import Upload from './Upload'
-import { Container } from '@material-ui/core'
-
 const headCells = [
   {
     id: 'client_name',
@@ -43,7 +35,7 @@ const headCells = [
     id: 'client_email',
     numeric: true,
     disablePadding: false,
-    label: 'Email ID',
+    label: 'EmailID',
   },
   { id: 'actions', numeric: true, disablePadding: false, label: 'Actions' },
 ]
@@ -88,16 +80,14 @@ EnhancedTableHead.propTypes = {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
-    height: 520,
-    marginTop: '90px',
+    width: '100%',
   },
   paper: {
     width: '100%',
     marginBottom: theme.spacing(1),
   },
   table: {
-    minWidth: 525,
+    minWidth: 750,
   },
   visuallyHidden: {
     border: 0,
@@ -110,29 +100,23 @@ const useStyles = makeStyles((theme) => ({
     top: 20,
     width: 1,
   },
-  upload: {
-    width: '410px',
-    height: 520,
-    marginLeft: '20px',
-    backgroundColor: 'white',
-    borderRadius: '10px',
-  },
 }))
 
-export default function ClientTable() {
-  const classes = useStyles()
-  const [order, setOrder] = React.useState('asc')
-  const [orderBy, setOrderBy] = React.useState('calories')
-  const [selected, setSelected] = React.useState([])
-  const [isModal, setIsModal] = React.useState(false)
+export default function MailerTable({selected,setSelected}) {
+  const classes = useStyles();
+  const [order, setOrder] = React.useState('asc');
+  const [orderBy, setOrderBy] = React.useState('calories');
+  // const [selected, setSelected] = React.useState([]);
+  const [isModal, setIsModal] = React.useState(false);
   const [formData, setFormData] = React.useState({
     client_name: '',
     client_email: '',
   })
   const [UserID, setUserID] = React.useState('')
 
-  const dispatch = useDispatch()
-  const client = useSelector((state) => state.ClientReducer)
+
+  const dispatch = useDispatch();
+  const client = useSelector((state) => state.ClientReducer);
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc'
     setOrder(isAsc ? 'desc' : 'asc')
@@ -145,7 +129,7 @@ export default function ClientTable() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = client.clients.map((n) => n.data.client_name)
+      const newSelecteds = client.clients.map((n) => n.id)
       // debugger
       setSelected(newSelecteds)
       return
@@ -164,21 +148,17 @@ export default function ClientTable() {
     toggle()
   }
 
+  const handleDelete = (row) =>{
+    dispatch(deleteClient(row.id))
+  }
+
   const toggle = () => {
     setIsModal(!isModal)
   }
   const openModal = (row) => {
-    setFormData({
-      ...formData,
-      client_name: row.data.client_name,
-      client_email: row.data.client_email,
-    })
+    setFormData({ ...formData, client_name: row.data.client_name, client_email: row.data.client_email })
     setUserID(row.id)
     setIsModal(!isModal)
-  }
-
-  const handleDelete = (row) => {
-    dispatch(deleteClient(row.id))
   }
 
   const handleClick = (event, name) => {
@@ -205,11 +185,11 @@ export default function ClientTable() {
 
   return (
     <div className={classes.root}>
-      <Navbar page='Clients' />
       <Paper className={classes.paper}>
+     
         <TableContainer style={{ maxHeight: 482 }}>
-          <Table
-            stickyHeader
+          <Table 
+          stickyHeader
             className={classes.table}
             aria-labelledby='tableTitle'
             size='small'
@@ -231,7 +211,7 @@ export default function ClientTable() {
                 client &&
                   client.clients &&
                   client.clients.map((row, index) => {
-                    const isItemSelected = isSelected(row.data.client_name)
+                    const isItemSelected = isSelected(row.id)
                     const labelId = `enhanced-table-checkbox-${index}`
 
                     return (
@@ -241,14 +221,14 @@ export default function ClientTable() {
                         role='checkbox'
                         aria-checked={isItemSelected}
                         tabIndex={-1}
-                        key={row.id}
+                        key={row.data.client_name}
                         selected={isItemSelected}
                       >
                         <TableCell padding='checkbox'>
                           <Checkbox
                             checked={isItemSelected}
                             onClick={(event) =>
-                              handleClick(event, row.data.client_name)
+                              handleClick(event, row.id)
                             }
                             inputProps={{ 'aria-labelledby': labelId }}
                           />
@@ -261,16 +241,14 @@ export default function ClientTable() {
                         >
                           {row.data.client_name}
                         </TableCell>
-                        <TableCell align='right'>
-                          {row.data.client_email}
-                        </TableCell>
+                        <TableCell align='right'>{row.data.client_email}</TableCell>
                         <TableCell align='right'>
                           <IconButton onClick={() => openModal(row)}>
                             {' '}
                             <EditIcon />
                           </IconButton>
 
-                          <IconButton onClick={() => handleDelete(row)}>
+                          <IconButton onClick={() =>handleDelete(row)}>
                             {' '}
                             <DeleteIcon />
                           </IconButton>
@@ -288,12 +266,7 @@ export default function ClientTable() {
           </Table>
         </TableContainer>
       </Paper>
-      <div>
-        <Container className={classes.upload}>
-          <strong>Upload Clients</strong>
-          <Upload />
-        </Container>
-      </div>
+
       <Modal on={isModal} toggle={toggle}>
         {isModal && (
           <form onSubmit={(e) => onSubmit(e)}>
