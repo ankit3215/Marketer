@@ -9,7 +9,7 @@ import {useSelector} from 'react-redux';
         <Route {...rest} render={props => (
             isTokenAvailable() ?
                 <Component {...props} />
-                : <Redirect to="/Dashboard" />
+                : <Redirect to="/" />
         )} />
     );
 };

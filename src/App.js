@@ -46,9 +46,13 @@ const App = () => {
         <Switch>
           <PublicRoute path='/' component={Login} restricted={true} exact={true} />
 
-         {auth.isLoggedIn && <PrivateRoute path='/' component={Sidebar} />}
+          <PrivateRoute 
+            path='/' 
+            component={
+              auth.isLoggedIn ? Sidebar : 'null'
+          } 
+          />
         
-
         </Switch>
       </Router>
     </>
