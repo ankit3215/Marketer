@@ -33,7 +33,8 @@
     "redux-thunk": "^2.3.0",
     "sendmail": "^1.6.1",
     "thunk": "0.0.1",
-    "web-vitals": "^1.1.2"
+    "web-vitals": "^1.1.2",
+    "xlsx": "^0.17.0"
   },
   "scripts": {
     "start": "react-scripts start",
