@@ -4,13 +4,14 @@ import { hideAlert } from "./redux/actionCreators/alertActions";
 import { setUserData } from "./redux/actionCreators/authActions";
 import { Alert } from "@material-ui/lab";
 import Login from './components/Login';
-import { BrowserRouter as Router,Switch } from "react-router-dom";
+import { BrowserRouter as Router,Switch,Route } from "react-router-dom";
 import PrivateRoute from './routers/PrivateRoute';
 import PublicRoute from './routers/PublicRoute';
 import Sidebar from './components/Sidebar';
 
 const App = () => {
   const alert = useSelector((state) => state.alert)
+  const auth = useSelector((state) => state.auth)
   const dispatch = useDispatch()
 
   useLayoutEffect(() => {
@@ -44,7 +45,10 @@ const App = () => {
       <Router>
         <Switch>
           <PublicRoute path='/' component={Login} restricted={true} exact={true} />
-          <PrivateRoute path='/Dashboard' component={Sidebar} />
+
+         {auth.isLoggedIn && <PrivateRoute path='/' component={Sidebar} />}
+        
+
         </Switch>
       </Router>
     </>

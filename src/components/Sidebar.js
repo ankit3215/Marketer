@@ -137,6 +137,7 @@ const Sidebar = ({ history }) => {
               <Route path='/campaigns' component={Campaigns} />
               <Route path='/create' component={CreateCampaigns} />
               <Route path='/mailer' component={Mailer} />
+              <Route path='*' component={Dashboard} />
             </Switch>
           </div>
         </div>
