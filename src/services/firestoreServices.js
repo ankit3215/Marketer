@@ -35,7 +35,9 @@ export const removeUserAccessToken = async (userId) => {
 export const FetchClient = async () => {
   return await db.collection('client').get()
 }
-
+export const FetchCompaign = async () => {
+  return await db.collection('campaign').get()
+}
 export const FetchCampaigns = async () => {
   return await db.collection('campaign').get()
 }

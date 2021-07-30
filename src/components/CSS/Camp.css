@@ -1,0 +1,346 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"); */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html, body {
+    width: 100%;
+    height: 100%;
+    background-color:rgb(200, 205, 245,0.3);
+    /* background: repeating-linear-gradient( #8F1FC4, #8F1FC4 1.37%,#5F048A, #5F048A 98.48%); */
+    
+  } 
+  
+  
+  
+  body,
+  input,
+  textarea,
+  button {
+    font-family: "Inter", sans-serif;
+  }
+  
+  .app {
+    width: 400px;
+    margin: 0 auto;
+    height: 100vh;
+  }
+  
+  
+  
+  
+  .form > button {
+    /* padding: 20px; */
+    border: none;
+    font-family: karla;
+    /* background-color:linear-gradient(#8F1FC4 1.37%); */
+    background: repeating-linear-gradient( #8F1FC4, #8F1FC4 1.37%, #5F048A, #5F048A 98.48%);
+  
+    font-weight: 700;
+    font-size: 18px;
+    border-radius: 3px;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    margin-left: -10px;
+    width: 200px;
+    height: 48px;
+    border-radius: 10px;
+    padding-top: -200px;
+  }
+  
+  .btn1{
+     /* padding: 20px; */
+     border: none;
+     font-family: karla;
+     /* background-color:linear-gradient(#8F1FC4 1.37%); */
+     background: repeating-linear-gradient( #8F1FC4, #8F1FC4 1.37%, #5F048A, #5F048A 98.48%);
+   
+     font-weight: 700;
+     font-size: 18px;
+     border-radius: 3px;
+     color: #fff;
+     cursor: pointer;
+     transition: 0.2s ease-in-out;
+     margin-left: 10px;
+     width: 200px;
+     height: 48px;
+     border-radius: 10px;
+     padding-top: -200px;
+  }
+  
+  
+  
+  .plc ::placeholder{
+    font-family: karla;
+    font-size: 16px;
+    font-weight: 400;
+    margin-left: 5px;
+  }
+  
+  .pa{
+    font-family: karla;
+    font-weight: 700;
+    font-size: 20px;
+  }
+  
+  .ra{
+    margin-top: 24px;
+    font-family: karla;
+    font-weight: 400;
+    font-size: 20px;
+    background-color:rgb(200, 205, 245,0.3);
+    /* background: repeating-linear-gradient( #8F1FC4, #8F1FC4 1.37%, #5F048A, #5F048A 98.48%); */
+    /* background: linear-gradient(90deg, rgba(143, 31, 196,1), rgba(45,4,138,1)); */
+  
+    /* margin-left: 30px; */
+    /* width: 332px; */
+    /* height: 36px; */
+    /* background: repeating-linear-gradient( #8F1FC4, #8F1FC4 0%, #5F048A, #5F048A 100%); */
+  
+  
+  }
+   .camps{
+    width:172px;
+    height: 36px;
+    /* margin-top: 30px; */
+    margin-left: 30px;
+    font-family: karla;
+    font-weight: 400;
+    font-size: 28px;
+    margin-top: 25px;
+    
+  } 
+  
+  .ras{
+  
+    margin-top: 2px;
+    font-family: karla;
+    font-weight: 400;
+    font-size: 20px;
+    margin-left: 60px;
+  
+  }
+  
+  .plc{
+    margin-left: -15px;
+    /* border-radius: 10px; */
+    border-color: none;
+  }
+  
+  .area{
+    border-radius: 10px;
+  }
+  
+  ul {
+    list-style-type: none;
+    overflow: hidden;
+  
+    background-color: #e5e5e5;
+  }
+  
+  li {
+    float: left;
+    /* margin: 5px;
+      padding: 5px; */
+  }
+  
+  .nav1 {
+    position: absolute;
+    width: 172px;
+    height: 36px;
+    left: 300px;
+    top: 30px;
+  
+    font-family: Karla;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 32px;
+    line-height: 37px;
+  
+    /* Primary Text */
+  
+    color: #333333;
+  }
+  .nav2 {
+    /* margin-top: 10px;
+      font-family: Karla;
+      font-weight: Bold;
+      font-size: 16px;
+      line-height: 19px; */
+    position: absolute;
+    width: 200px;
+    height: 18px;
+    left: 1210px;
+    top: 39px;
+  
+    font-family: Karla;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 19px;
+  
+    /* Primary Text */
+  
+    color: #333333;
+  }
+  .nav3 {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    left: 1155px;
+    top: 30px;
+  }
+  
+  .split {
+    width: 50%;
+    /* position: fixed;
+      z-index: 1;
+      */
+    overflow-x: hidden;
+  }
+  
+  /* Control the left side */
+  .left {
+    /* padding: 10px;
+      margin-left: 10px;
+      font-family: Karla;
+      font-style: Regular;
+      font-size: 20px;
+      line-height: 36px; */
+    position: absolute;
+    /* padding: 10px; */
+    /* width: 332px;
+  height: 36px; */
+    left: 270px;
+    top: 90px;
+  
+    font-family: Karla;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 36px;
+    /* identical to box height, or 180% */
+  
+    /* Primary Text */
+  
+    color: #333333;
+  }
+  
+  /* Control the right side */
+  .right {
+    /* padding: 10px;
+      margin-left: 10px;
+      font-family: Karla;
+      font-style: Regular;
+      font-size: 20px;
+      line-height: 36px; */
+    position: absolute;
+    width: 435px;
+    height: 40px;
+    left: 920px;
+    top: 90px;
+  }
+  .tble {
+    position: absolute;
+    width: 1020px;
+    height: 482px;
+    left: 300px;
+    top: 150px;
+    background: #ffffff;
+    /* Border stroke */
+  
+    border: 1px solid #dadada;
+    box-sizing: border-box;
+    border-radius: 10px;
+  }
+  .sendMailer {
+    position: absolute;
+    width: 200px;
+    height: 48px;
+    left: 300px;
+    top: 655px;
+    background: linear-gradient(269.51deg, #8f1fc4 1.37%, #5f048a 98.48%);
+    /* background: linear-gradient(to bottom, #33ccff 0%, #ff99cc 100%); */
+    /* Linear 2 */
+  
+    /* font-family: Karla;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 20px;
+  
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  
+  color: #FFFFFF;
+  background-color: #5F048A;
+  background: linear-gradient(269.51deg, #8F1FC4 1.37%, #5F048A 98.48%);
+  border-radius: 10px; */
+  
+  font-family: Karla;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 20px;
+  /* identical to box height, or 111% */
+  
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  
+  color: #FFFFFF;
+  border-radius: 10px;
+  }
+  
+  /*   
+    li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+    
+    li a:hover:not(.active) {
+      background-color: #111;
+    }
+    
+    .active {
+      background-color: #04AA6D;
+    } */
+  
+  .wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .card {
+    position: relative;
+    background: white;
+    border-radius: 5px;
+    padding: 15px;
+    min-width: 320px;
+    z-index: 10;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+    margin-bottom: 100px;
+  }
+  
+  .closeButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  
+  
+  .form{
+    margin-left: 50px;
+  }

@@ -7,6 +7,11 @@ const CampaignReducer = (state = initialState, action) => {
   const { type, payload } = action
 
   switch (type) {
+    case actionKeys.GET_Compaign:
+      return {
+        ...state,
+        campaigns: payload,
+      }
     case actionKeys.GET_CAMPAIGNS:
       return {
         ...state,
