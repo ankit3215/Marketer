@@ -1,4 +1,3 @@
-import React from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useLayoutEffect } from "react";
 import { hideAlert } from "./redux/actionCreators/alertActions";
@@ -26,16 +25,16 @@ const App = () => {
     }, 2000);
   });
   return (
-    <div>
+    <>
       {alert.isRequired && (
         <Alert
           variant="filled"
           severity={alert.alertType}
           style={{
-            width: "40%",
+            width: "20%",
             position: "absolute",
-            right: "10%",
-            top: "7%",
+            right: "5%",
+            top: "5%",
           }}
         >
           {alert.message}
@@ -47,7 +46,7 @@ const App = () => {
       <PrivateRoute path="/Dashboard" component={Sidebar} />
       </Switch>
       </Router>
-    </div>
+    </>
   );
 };
 
