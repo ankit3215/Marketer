@@ -34,7 +34,7 @@ const App = () => {
           style={{
             width: '40%',
             position: 'absolute',
-            right: '10%',
+            right: '5%',
             top: '7%',
           }}
         >

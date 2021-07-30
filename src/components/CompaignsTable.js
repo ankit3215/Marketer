@@ -22,22 +22,32 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import FilterListIcon from '@material-ui/icons/FilterList'
 import EditIcon from '@material-ui/icons/Edit'
 import { useDispatch, useSelector } from 'react-redux'
-import { clientList,editClient,deleteClient } from '../redux/actionCreators/clientAction'
+import { CompaignList } from '../redux/actionCreators/compaignsAction'
 import Modal from '../common/Modal'
+
 const headCells = [
   {
-    id: 'client_name',
+    id: 'compaign_name',
     numeric: false,
     disablePadding: true,
-    label: 'Client Name',
+    label: 'Compaign Name',
   },
   {
-    id: 'client_email',
+    id: 'compaign_subject',
     numeric: true,
     disablePadding: false,
-    label: 'EmailID',
+    label: 'Subject',
   },
-  { id: 'actions', numeric: true, disablePadding: false, label: 'Actions' },
+  {
+    id: 'compaign_content',
+    numeric: true,
+    disablePadding: false,
+    label: 'Content',
+  },
+  { id: 'actions', 
+    numeric: true, 
+    disablePadding: false, 
+    label: 'Actions' },
 ]
 
 function EnhancedTableHead(props) {
@@ -57,7 +67,7 @@ function EnhancedTableHead(props) {
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
+            align='left'
             padding={headCell.disablePadding ? 'none' : 'normal'}
           >
             <TableSortLabel>{headCell.label}</TableSortLabel>
@@ -102,11 +112,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function MailerTable({selected,setSelected}) {
+export default function CompaignsTable() {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
-  // const [selected, setSelected] = React.useState([]);
+  const [selected, setSelected] = React.useState([]);
   const [isModal, setIsModal] = React.useState(false);
   const [formData, setFormData] = React.useState({
     client_name: '',
@@ -116,7 +126,7 @@ export default function MailerTable({selected,setSelected}) {
 
 
   const dispatch = useDispatch();
-  const client = useSelector((state) => state.ClientReducer);
+  const {campaigns} = useSelector((state) => state.CampaignReducer);
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc'
     setOrder(isAsc ? 'desc' : 'asc')
@@ -124,12 +134,13 @@ export default function MailerTable({selected,setSelected}) {
   }
 
   useEffect(() => {
-    dispatch(clientList())
+    dispatch(CompaignList())
   }, [])
-
+  // console.log("bbbb",campaigns)
+  
   const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = client.clients.map((n) => n.id)
+    if (event?.target?.checked) {
+      const newSelecteds = campaigns?.map((n) => n?.data?.name)
       // debugger
       setSelected(newSelecteds)
       return
@@ -143,13 +154,9 @@ export default function MailerTable({selected,setSelected}) {
 
   const onSubmit = (e) => {
     e.preventDefault()
-    console.log(formData)
-    dispatch(editClient({ id: UserID, data: formData }))
+    // console.log(formData)
+    // dispatch(editClient({ id: UserID, data: formData }))
     toggle()
-  }
-
-  const handleDelete = (row) =>{
-    dispatch(deleteClient(row.id))
   }
 
   const toggle = () => {
@@ -202,53 +209,33 @@ export default function MailerTable({selected,setSelected}) {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={client && client.clients && client.clients.length}
+              rowCount={campaigns && campaigns.length}
             />
             <TableBody>
               {
                 //   stableSort(client.clients, getComparator(order, orderBy))
                 //     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                client &&
-                  client.clients &&
-                  client.clients.map((row, index) => {
-                    const isItemSelected = isSelected(row.id)
+                campaigns?.map((row, index) => {
+                    const isItemSelected = isSelected(row.data.name)
                     const labelId = `enhanced-table-checkbox-${index}`
 
                     return (
-                      <TableRow
-                        hover
-                        style={{ height: 5 }}
-                        role='checkbox'
-                        aria-checked={isItemSelected}
-                        tabIndex={-1}
-                        key={row.id}
-                        selected={isItemSelected}
-                      >
+                      <TableRow key={row?.id} hover style={{ height: 5 }} role='checkbox' aria-checked={isItemSelected} tabIndex={-1} key={row.data.client_name} selected={isItemSelected} >
                         <TableCell padding='checkbox'>
-                          <Checkbox
-                            checked={isItemSelected}
-                            onClick={(event) =>
-                              handleClick(event, row.id)
-                            }
-                            inputProps={{ 'aria-labelledby': labelId }}
-                          />
+                          <Checkbox checked={isItemSelected} onClick={(event) => handleClick(event, row.data.client_name) } inputProps={{ 'aria-labelledby': labelId }} />
                         </TableCell>
-                        <TableCell
-                          component='th'
-                          id={labelId}
-                          scope='row'
-                          padding='none'
-                        >
-                          {row.data.client_name}
+                        <TableCell component='th' id={labelId} scope='row' padding='none' >
+                          {row.data.name}
                         </TableCell>
-                        <TableCell align='right'>{row.data.client_email}</TableCell>
-                        <TableCell align='right'>
+                        <TableCell align='left'>{row.data.subject}</TableCell>
+                        <TableCell align='left'>{row.data.content}</TableCell>
+                        <TableCell align='left'>
                           <IconButton onClick={() => openModal(row)}>
-                            {' '}
+                            {/* {' '} */}
                             <EditIcon />
                           </IconButton>
 
-                          <IconButton onClick={() =>handleDelete(row)}>
+                          <IconButton>
                             {' '}
                             <DeleteIcon />
                           </IconButton>

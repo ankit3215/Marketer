@@ -15,3 +15,4 @@ export const UPDATE_CLIENT = 'UPDATE_CLIENT'
 export const DELETE_CLIENT = 'DELETE_CLIENT'
 // export const GET_CAMPAIGNS = 'GET_CAMPAIGNS'
 export const GET_CAMPAIGNS = 'GET_CAMPAIGNS'
+export const GET_Compaign = "Get_Compaign"

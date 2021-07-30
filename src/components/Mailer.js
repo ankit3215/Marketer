@@ -18,6 +18,7 @@ const Mailer = (props) => {
     dispatch(sendMailer(campaignId,selected,window))
     setCampaignId("")
     setSelected([])
+    document.getElementById('campaign').value = "Choose a Campaigns"
   }
   const campaign = useSelector((state) => state.CampaignReducer);
   useEffect(() => {
@@ -35,7 +36,7 @@ const Mailer = (props) => {
           <span style={{ marginLeft: '100px' }}>
             Select Campaigns
             <select id="campaign" style={{ marginLeft: '20px' }} onChange={() => setCampaignId(document.getElementById('campaign').value)} >
-              <option >Choose a Campaigns</option>
+              <option value="Choose a Campaigns" >Choose a Campaigns</option>
               {campaign&&campaign.campaigns.map(e =>{
                 return <option value={e.id}>{e.data.name}</option>
               })}

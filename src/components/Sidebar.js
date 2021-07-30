@@ -10,9 +10,10 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import Dashboard from './Dashboard'
 import Client from './Client'
-import Campaigns from './Campaigns'
 import Mailer from './Mailer'
 import { logOutUser } from '../redux/actionCreators/authActions'
+import CreateCampaigns from './CreateCampaigns'
+import Campaigns from './Campaigns'
 
 const Sidebar = ({ history }) => {
   const auth = useSelector((state) => state.auth)
@@ -134,6 +135,7 @@ const Sidebar = ({ history }) => {
               <Route exact path='/' component={Dashboard} />
               <Route path='/client' component={Client} />
               <Route path='/campaigns' component={Campaigns} />
+              <Route path='/create' component={CreateCampaigns} />
               <Route path='/mailer' component={Mailer} />
             </Switch>
           </div>
