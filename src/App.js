@@ -1,11 +1,10 @@
-
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useLayoutEffect } from "react";
 import { hideAlert } from "./redux/actionCreators/alertActions";
 import { setUserData } from "./redux/actionCreators/authActions";
 import { Alert } from "@material-ui/lab";
 import Login from './components/Login';
-import { BrowserRouter as Router,Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router,Switch } from "react-router-dom";
 import PrivateRoute from './routers/PrivateRoute';
 import PublicRoute from './routers/PublicRoute';
 import Sidebar from './components/Sidebar';
@@ -25,6 +24,7 @@ const App = () => {
       }
     }, 2000)
   })
+  
   return (
     <>
       {alert.isRequired && (
@@ -43,7 +43,7 @@ const App = () => {
       )}
       <Router>
         <Switch>
-          <PublicRoute path='/' component={Login} exact={true} />
+          <PublicRoute path='/' component={Login} restricted={true} exact={true} />
           <PrivateRoute path='/Dashboard' component={Sidebar} />
         </Switch>
       </Router>

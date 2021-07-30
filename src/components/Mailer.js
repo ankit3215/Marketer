@@ -28,10 +28,10 @@ const Mailer = (props) => {
     <div className='mailer'>
       <Navbar page='Mailers' />
       <div style={{ display: 'flex' }}>
-        <div class='split left'>
+        <div className='split left'>
           <span style={{ marginLeft: '30px' }}> All Campaigns </span>
         </div>
-        <div class='split right'>
+        <div className='split right'>
           <span style={{ marginLeft: '100px' }}>
             Select Campaigns
             <select

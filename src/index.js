@@ -4,9 +4,9 @@ import './index.css';
 import App from './App';
 import {Provider} from "react-redux";
 import store from "./redux/store/store";
-import { ThemeProvider, createMuiTheme } from "@material-ui/core";
+import { createTheme, ThemeProvider} from "@material-ui/core";
 
-let theme = createMuiTheme({
+let theme = createTheme({
   palette: {
     primary: {
       main: '#8F1FC3',
