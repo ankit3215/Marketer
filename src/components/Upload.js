@@ -159,14 +159,29 @@ function Upload(props) {
           <p>Your file has been uploaded successfully!</p>
         </>
       )}
-      <Link
-        to='/file/book.xlsx'
-        target='_blank'
-        className={classes.link}
-        download
-      >
-        <img src={download} alt='download' /> Download Template
-      </Link>
+      {!displayPreview ? (
+        <Link
+          to='/file/book.xlsx'
+          target='_blank'
+          className={classes.link}
+          download
+        >
+          <img src={download} alt='download' /> Download Template
+        </Link>
+      ) : (
+        <h6
+          style={{
+            cursor: 'pointer',
+            textAlign: 'center',
+            font: 'Karla',
+            fontSize: '14px',
+          }}
+          onClick={() => setDisplayPreview(!displayPreview)}
+        >
+          Change
+        </h6>
+      )}
+
       <br />
       <ThemeProvider theme={theme}>
         <Button
