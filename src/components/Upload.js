@@ -3,13 +3,16 @@ import { useDropzone } from 'react-dropzone'
 import uploadCloud from '../images/upload-cloud.png'
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
-import  createTheme  from '@material-ui/core/styles/createTheme'
+import createTheme from '@material-ui/core/styles/createTheme'
 import { ThemeProvider } from '@material-ui/styles'
 import IconPark from '../images/icon-park.png'
 import * as XLSX from 'xlsx'
 import { addDocument } from '../services/firestoreServices'
 import { useSelector, useDispatch } from 'react-redux'
 import { clientList } from '../redux/actionCreators/clientAction'
+import { Link } from 'react-router-dom'
+import download from '../images/download.jpeg'
+
 const baseStyle = {
   flex: 1,
   display: 'flex',
@@ -68,6 +71,10 @@ function Upload(props) {
       marginLeft: '75px',
       background: 'linear-gradient(269.51deg, #8F1FC4 1.37%, #5F048A 98.48%)',
       color: '#FFFFFF',
+    },
+    link: {
+      textDecoration: 'none',
+      color: '#5F048A',
     },
   }))
   const {
@@ -152,6 +159,15 @@ function Upload(props) {
           <p>Your file has been uploaded successfully!</p>
         </>
       )}
+      <Link
+        to='/file/book.xlsx'
+        target='_blank'
+        className={classes.link}
+        download
+      >
+        <img src={download} alt='download' /> Download Template
+      </Link>
+      <br />
       <ThemeProvider theme={theme}>
         <Button
           variant='contained'
