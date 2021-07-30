@@ -241,7 +241,7 @@ export default function ClientTable() {
                         role='checkbox'
                         aria-checked={isItemSelected}
                         tabIndex={-1}
-                        key={row.data.client_name}
+                        key={row.id}
                         selected={isItemSelected}
                       >
                         <TableCell padding='checkbox'>

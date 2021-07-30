@@ -14,7 +14,7 @@ const Navbar = ({ page }) => {
           {displayName}
         </li>
         <li className='nav3' style={{ float: 'right' }}>
-        <Avatar style={{backgroundColor:"#D1A402"}}>{displayName[0]}</Avatar>
+        <Avatar style={{backgroundColor:"#D1A402"}}>{displayName&&displayName[0]}</Avatar>
         </li>
       </ul>
     </>

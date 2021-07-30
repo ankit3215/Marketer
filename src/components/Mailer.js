@@ -1,26 +1,26 @@
-import React,{useEffect,useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import Navbar from './Navbar'
 import MailerTable from './MailerTable'
 import NativeSelect from '@material-ui/core/NativeSelect'
 import './CSS/mailer.css'
 import Modal from '../common/Modal'
-import {campaignsList} from '../redux/actionCreators/campaignsActions';
+import { campaignsList } from '../redux/actionCreators/campaignsActions'
 import { useDispatch, useSelector } from 'react-redux'
-import {sendMailer} from '../redux/actionCreators/mailerActions';
+import { sendMailer } from '../redux/actionCreators/mailerActions'
 const Mailer = (props) => {
-  const [campaignId, setCampaignId] = useState("")
-  const [selected, setSelected] = React.useState([]);
+  const [campaignId, setCampaignId] = useState('')
+  const [selected, setSelected] = React.useState([])
 
-  const dispatch = useDispatch();
-  const sendMail = () =>{
+  const dispatch = useDispatch()
+  const sendMail = () => {
     // console.log(campaignId,selected)
-    dispatch(sendMailer(campaignId,selected,window))
-    setCampaignId("")
+    dispatch(sendMailer(campaignId, selected, window))
+    setCampaignId('')
     setSelected([])
     document.getElementById('campaign').value = "Choose a Campaigns"
   }
-  const campaign = useSelector((state) => state.CampaignReducer);
+  const campaign = useSelector((state) => state.CampaignReducer)
   useEffect(() => {
     dispatch(campaignsList())
   }, [])
@@ -29,10 +29,10 @@ const Mailer = (props) => {
     <div className='mailer'>
       <Navbar page='Mailers' />
       <div style={{ display: 'flex' }}>
-        <div class='split left'>
+        <div className='split left'>
           <span style={{ marginLeft: '30px' }}> All Campaigns </span>
         </div>
-        <div class='split right'>
+        <div className='split right'>
           <span style={{ marginLeft: '100px' }}>
             Select Campaigns
             <select id="campaign" style={{ marginLeft: '20px' }} onChange={() => setCampaignId(document.getElementById('campaign').value)} >
@@ -47,10 +47,11 @@ const Mailer = (props) => {
       <div className='tble'>
         <MailerTable selected={selected} setSelected={setSelected} />
       </div>
-      <div style={{marginBottom:"15px"}}>
-        <button className='sendMailer' onClick={sendMail} >SEND MAILER</button>
+      <div style={{ marginBottom: '15px' }}>
+        <button className='sendMailer' onClick={sendMail}>
+          SEND MAILER
+        </button>
       </div>
-    
     </div>
   )
 }

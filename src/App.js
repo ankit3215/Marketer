@@ -1,14 +1,13 @@
-import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useLayoutEffect } from 'react'
-import { hideAlert } from './redux/actionCreators/alertActions'
-import { setUserData } from './redux/actionCreators/authActions'
-import { Alert } from '@material-ui/lab'
-import Login from './components/Login'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import PrivateRoute from './routers/PrivateRoute'
-import PublicRoute from './routers/PublicRoute'
-import Sidebar from './components/Sidebar'
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useLayoutEffect } from "react";
+import { hideAlert } from "./redux/actionCreators/alertActions";
+import { setUserData } from "./redux/actionCreators/authActions";
+import { Alert } from "@material-ui/lab";
+import Login from './components/Login';
+import { BrowserRouter as Router,Switch } from "react-router-dom";
+import PrivateRoute from './routers/PrivateRoute';
+import PublicRoute from './routers/PublicRoute';
+import Sidebar from './components/Sidebar';
 
 const App = () => {
   const alert = useSelector((state) => state.alert)
@@ -25,17 +24,18 @@ const App = () => {
       }
     }, 2000)
   })
+  
   return (
-    <div>
+    <>
       {alert.isRequired && (
         <Alert
           variant='filled'
           severity={alert.alertType}
           style={{
-            width: '40%',
-            position: 'absolute',
-            right: '5%',
-            top: '7%',
+            width: "20%",
+            position: "absolute",
+            right: "5%",
+            top: "5%",
           }}
         >
           {alert.message}
@@ -43,12 +43,12 @@ const App = () => {
       )}
       <Router>
         <Switch>
-          <PublicRoute path='/' component={Login} exact={true} />
+          <PublicRoute path='/' component={Login} restricted={true} exact={true} />
           <PrivateRoute path='/Dashboard' component={Sidebar} />
         </Switch>
       </Router>
-    </div>
-  )
-}
+    </>
+  );
+};
 
 export default App

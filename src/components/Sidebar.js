@@ -27,10 +27,10 @@ const Sidebar = ({ history }) => {
     <Router>
       <div>
         <div
-          class='w3-sidebar w3-light-white w3-bar-block'
+          className='w3-sidebar w3-light-white w3-bar-block'
           style={{ position: 'fixed', width: '20%', top: '0', left: '0' }}
         >
-          <h3 class='w3-bar-item ' style={{ top: '48px', left: '20px' }}>
+          <h3 className='w3-bar-item ' style={{ top: '48px', left: '20px' }}>
             {' '}
             <img
               width='200px'
@@ -40,8 +40,8 @@ const Sidebar = ({ history }) => {
             />{' '}
           </h3>
           <Link
-            to='/'
-            class='w3-bar-item w3-button'
+            to='/Dashboard'
+            className='w3-bar-item w3-button'
             style={{ marginTop: '20px', padding: '15px' }}
           >
             <span
@@ -58,7 +58,7 @@ const Sidebar = ({ history }) => {
 
           <Link
             to='/client'
-            class='w3-bar-item w3-button'
+            className='w3-bar-item w3-button'
             style={{ padding: '15px' }}
           >
             <span
@@ -75,7 +75,7 @@ const Sidebar = ({ history }) => {
           </Link>
           <Link
             to='/campaigns'
-            class='w3-bar-item w3-button'
+            className='w3-bar-item w3-button'
             style={{ padding: '15px' }}
           >
             <span
@@ -92,7 +92,7 @@ const Sidebar = ({ history }) => {
           </Link>
           <Link
             to='/mailer'
-            class='w3-bar-item w3-button'
+            className='w3-bar-item w3-button'
             style={{ padding: '15px' }}
           >
             <span
@@ -109,7 +109,7 @@ const Sidebar = ({ history }) => {
           </Link>
           <button
             onClick={handleClick}
-            class='w3-bar-item w3-button'
+            className='w3-bar-item w3-button'
             style={{
               padding: '15px',
               marginTop: '240px',
@@ -132,7 +132,7 @@ const Sidebar = ({ history }) => {
         <div style={{ marginLeft: '20%' }}>
           <div style={{ marginTop: '0px' }}>
             <Switch>
-              <Route exact path='/' component={Dashboard} />
+              <Route exact path='/Dashboard' component={Dashboard} />
               <Route path='/client' component={Client} />
               <Route path='/campaigns' component={Campaigns} />
               <Route path='/create' component={CreateCampaigns} />
