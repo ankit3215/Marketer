@@ -91,6 +91,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     height: 520,
     marginTop: '90px',
+    marginLeft: '15px'
   },
   paper: {
     width: '100%',

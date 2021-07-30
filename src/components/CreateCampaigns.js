@@ -148,7 +148,7 @@ const CreateCampaigns = (props) => {
             All Campaigns - <strong>Create Campaign</strong> */}
 
       <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
-         <Link color="inherit" href="/" className="ras" style={{marginLeft:"30px"}}>
+         <Link color="inherit" href="/" className="ras" style={{marginLeft:"44px"}}>
            All Campaigns
         </Link>
         <Link color="inherit" href="/getting-started/installation/" className="ras" style={{fontWeight:"700",marginLeft:"0px"}}>
@@ -168,19 +168,19 @@ const CreateCampaigns = (props) => {
                 </p>
                 {/* <input type='text' placeholder='Campaign Name' value={name}  onChange={(e) => setName(e.target.value)}/> */}
               <Form.Group className="plc" >
-            <Form.Control style={{marginLeft:"-2px",width:"400px",height:"48px",borderRadius:"10px"}} type="text" placeholder="Campaign Name"  value={name} id="ram"
+            <Form.Control style={{borderStyle:"solid",borderWidth:"1px",marginLeft:"-2px",width:"400px",height:"48px",borderRadius:"10px"}} type="text" placeholder="Campaign Name"  value={name} id="ram"
             onChange={(e) => setName(e.target.value)}/>
           </Form.Group>
                       
               </Grid>
               <Grid item>
                 <p>
-                  <strong style={{marginBottom:"8px",fontFamily:"karla",fontSize:"14px",fontWeight:"400",height:"16px",width:"156px",marginLeft:"29px"}}>Subject</strong>
+                  <strong style={{marginBottom:"8px",fontFamily:"karla",fontSize:"14px",fontWeight:"400",height:"16px",width:"156px",marginLeft:"-24px"}}>Subject</strong>
                 </p>
                 {/* <input type='text' placeholder='Subject'  value={subject}  onChange={(e) => setSubject(e.target.value)} /> */}
 
                            <Form.Group className="plc">
-          <Form.Control  style={{marginLeft:"-10px",width:"400px",height:"48px",borderRadius:"10px"}} type="text" placeholder="Subject"  value={subject}
+          <Form.Control  style={{borderStyle:"solid",borderWidth:"1px",marginLeft:"-10px",width:"400px",height:"48px",borderRadius:"10px"}} type="text" placeholder="Subject"  value={subject}
       onChange={(e) => setSubject(e.target.value)}/>          </Form.Group>
               </Grid>
             </Grid>
@@ -191,7 +191,7 @@ const CreateCampaigns = (props) => {
               </p>
               {/* <input type='text' placeholder='Enter your content'  value={content}  onChange={(e) => setContent(e.target.value)} /> */}
                <Form.Group className="plc">
-             <Form.Control as="textarea" style={{borderRadius:"10px",height:"140px",width:"900px",marginLeft:"25px"}}rows={3} 
+             <Form.Control as="textarea" style={{borderStyle:"solid",borderWidth:"1px",borderRadius:"10px",height:"140px",width:"900px",marginLeft:"25px"}}rows={3} 
  
               placeholder="Enter your content"
              value={content}
@@ -201,7 +201,7 @@ const CreateCampaigns = (props) => {
               {/* </Grid> */}
             </div>
             <Button
-              style={{marginTop:"140px",borderRadius:"10px"}}
+              style={{marginTop:"140px",borderRadius:"10px",marginLeft: '10px'}}
               variant='contained'
               color='primary'
               type='submit'
