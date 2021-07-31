@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }))
 
-const Client = props => {
+const Test = props => {
     const classes = useStyles()
     const [campaignId, setCampaignId] = useState('')
   const [selected, setSelected] = React.useState([])
@@ -97,8 +97,8 @@ const Client = props => {
     )
 }
 
-Client.propTypes = {
+Test.propTypes = {
 
 }
 
-export default Client
+export default Test

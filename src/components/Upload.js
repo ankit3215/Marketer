@@ -125,7 +125,9 @@ function Upload(props) {
         })
 
         dispatch(clientList())
+
         setSuccessful(true)
+        props.toggle()
       })
       .catch((error) => {
         console.log(error)
