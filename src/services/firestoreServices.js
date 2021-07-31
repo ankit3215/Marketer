@@ -52,4 +52,20 @@ export const DeleteClient = async (id) => {
   return await db.collection('client').doc(id).delete()
 }
 
+export const getCampaignById = async (id) => {
+  return await db.collection("campaign").doc(id).get();
+}
+
+export const getClientEmailById = async (clientIds) => {
+  let clientData = []
+  let querySnapshot = await db.collection("client").get()
+
+   querySnapshot.forEach((doc) => {
+       if(clientIds.includes((doc.id).toString()))
+       clientData.push(doc.data().client_email);
+   });
+
+   return clientData;
+}
+
 export default db
