@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import Navbar from './Navbar'
-import MailerTable from './MailerTable'
-import NativeSelect from '@material-ui/core/NativeSelect'
+import Navbar from '../../common/Navbar'
+import MailerTable from '../tables/MailerTable'
 import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './CSS/mailer.css'
-import Modal from '../common/Modal'
-import { campaignsList } from '../redux/actionCreators/campaignsActions'
+import '../CSS/mailer.css'
+import { campaignsList } from '../../redux/actionCreators/campaignsActions'
 import { useDispatch, useSelector } from 'react-redux'
-import { sendMailer } from '../redux/actionCreators/mailerActions'
+import { sendMailer } from '../../redux/actionCreators/mailerActions'
 import {
   CircularProgress,
 } from "@material-ui/core";
@@ -34,7 +32,6 @@ const Mailer = (props) => {
   useEffect(() => {
     dispatch(campaignsList())
   }, [])
-  // console.log(campaignId,selected);
   return (
     <div className='mailer'>
       <ToastContainer/>
@@ -63,10 +60,6 @@ const Mailer = (props) => {
          {on ?<><CircularProgress size={25} thickness={5} color="primary" /> Sending... </>: "SEND MAILER"}
         </button>
       </div>
-    
-      
-    
-
     </div>
   )
 }

@@ -12,7 +12,7 @@ import { errorAlert } from "../redux/actionCreators/alertActions";
 import {
   loginWithGoogle
 } from "../redux/actionCreators/authActions";
-import "./login.css";
+import "./CSS/login.css";
 import { useHistory } from "react-router-dom";
 import Logo from "../images/Logo.png";
 import GoogleIcon from "../images/Google_Icon.svg";

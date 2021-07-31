@@ -8,12 +8,12 @@ import {
   withRouter,
 } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import Dashboard from './Dashboard'
-import Client from './Client'
-import Mailer from './Mailer'
+import Dashboard from './screens/Dashboard'
+import Client from './screens/Client'
+import Mailer from './screens/Mailer'
 import { logOutUser } from '../redux/actionCreators/authActions'
-import CreateCampaigns from './CreateCampaigns'
-import Campaigns from './Campaigns'
+import CreateCampaigns from './screens/CreateCampaigns'
+import Campaigns from './screens/Campaigns'
 
 const Sidebar = ({ history }) => {
   const auth = useSelector((state) => state.auth)

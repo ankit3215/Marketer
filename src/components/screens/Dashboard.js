@@ -14,10 +14,10 @@ import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
 // import Rectangle from "../images/Rectangle.png";
 import { Directions } from "@material-ui/icons";
 import PropTypes from "prop-types";
-import Navbar from "./Navbar";
-import "./CSS/mailer.css";
-import { CompaignList } from "../redux/actionCreators/compaignsAction";
-import { clientList } from "../redux/actionCreators/clientAction";
+import Navbar from "../../common/Navbar";
+import "../CSS/mailer.css";
+import { CompaignList } from "../../redux/actionCreators/compaignsAction";
+import { clientList } from "../../redux/actionCreators/clientAction";
 
 const Dashboard = (props) => {
   const dispatch = useDispatch();

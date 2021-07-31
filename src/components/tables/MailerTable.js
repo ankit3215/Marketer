@@ -1,78 +1,20 @@
 import React, { useEffect,useState } from 'react'
 import PropTypes from 'prop-types'
-import clsx from 'clsx'
-import { lighten, makeStyles } from '@material-ui/core/styles'
+import {  makeStyles } from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableContainer from '@material-ui/core/TableContainer'
-import TableHead from '@material-ui/core/TableHead'
-import TablePagination from '@material-ui/core/TablePagination'
 import TableRow from '@material-ui/core/TableRow'
-import TableSortLabel from '@material-ui/core/TableSortLabel'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
 import Paper from '@material-ui/core/Paper'
 import Checkbox from '@material-ui/core/Checkbox'
 import IconButton from '@material-ui/core/IconButton'
-import Tooltip from '@material-ui/core/Tooltip'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Switch from '@material-ui/core/Switch'
 import DeleteIcon from '@material-ui/icons/Delete'
-import FilterListIcon from '@material-ui/icons/FilterList'
 import EditIcon from '@material-ui/icons/Edit'
 import { useDispatch, useSelector } from 'react-redux'
-import { clientList,editClient,deleteClient } from '../redux/actionCreators/clientAction'
-import Modal from '../common/Modal'
-const headCells = [
-  {
-    id: 'client_name',
-    numeric: false,
-    disablePadding: true,
-    label: 'Client Name',
-  },
-  {
-    id: 'client_email',
-    numeric: true,
-    disablePadding: false,
-    label: 'EmailID',
-  },
-  { id: 'actions', numeric: true, disablePadding: false, label: 'Actions' },
-]
-
-function EnhancedTableHead(props) {
-  const {  onSelectAllClick, numSelected, rowCount } = props
-
-  return (
-    <TableHead>
-      <TableRow>
-        <TableCell padding='checkbox'>
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'select all desserts' }}
-          />
-        </TableCell>
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
-            padding={headCell.disablePadding ? 'none' : 'normal'}
-          >
-            <TableSortLabel>{headCell.label}</TableSortLabel>
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  )
-}
-
-EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  rowCount: PropTypes.number.isRequired,
-}
+import { clientList,editClient,deleteClient } from '../../redux/actionCreators/clientAction'
+import Modal from '../../common/Modal'
+import EnhancedTableHead from './EnhancedTableHead';
 
 const useStyles = makeStyles((theme) => ({
   root: {

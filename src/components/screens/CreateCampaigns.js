@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import Navbar from './Navbar';
+import Navbar from '../../common/Navbar';
 import { useSelector } from "react-redux";
 // import MailerTable from './MailerTable'
 // import NativeSelect from '@material-ui/core/NativeSelect'
@@ -10,10 +10,10 @@ import { useSelector } from "react-redux";
 // import { useDispatch, useSelector } from 'react-redux'
 // import { sendMailer } from '../redux/actionCreators/mailerActions'
 import {Form} from 'react-bootstrap';
-import  db from '../services/firestoreServices';
+import  db from '../../services/firestoreServices';
 import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import "./CSS/Camp.css";
+import "../CSS/Camp.css";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
