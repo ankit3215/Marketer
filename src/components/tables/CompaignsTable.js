@@ -22,30 +22,32 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import FilterListIcon from '@material-ui/icons/FilterList'
 import EditIcon from '@material-ui/icons/Edit'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  clientList,
-  editClient,
-  deleteClient,
-} from '../redux/actionCreators/clientAction'
-import Modal from '../common/Modal'
-import Navbar from './Navbar'
-import Upload from './Upload'
-import { Container } from '@material-ui/core'
+import { CompaignList } from '../../redux/actionCreators/compaignsAction'
+import Modal from '../../common/Modal'
 
 const headCells = [
   {
-    id: 'client_name',
+    id: 'compaign_name',
     numeric: false,
     disablePadding: true,
-    label: 'Client Name',
+    label: 'Compaign Name',
   },
   {
-    id: 'client_email',
+    id: 'compaign_subject',
     numeric: true,
     disablePadding: false,
-    label: 'Email ID',
+    label: 'Subject',
   },
-  { id: 'actions', numeric: true, disablePadding: false, label: 'Actions' },
+  {
+    id: 'compaign_content',
+    numeric: true,
+    disablePadding: false,
+    label: 'Content',
+  },
+  { id: 'actions', 
+    numeric: true, 
+    disablePadding: false, 
+    label: 'Actions' },
 ]
 
 function EnhancedTableHead(props) {
@@ -65,7 +67,7 @@ function EnhancedTableHead(props) {
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
+            align='left'
             padding={headCell.disablePadding ? 'none' : 'normal'}
           >
             <TableSortLabel>{headCell.label}</TableSortLabel>
@@ -88,17 +90,14 @@ EnhancedTableHead.propTypes = {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
-    height: 520,
-    marginTop: '90px',
-    marginLeft: '15px',
+    width: '100%',
   },
   paper: {
     width: '100%',
     marginBottom: theme.spacing(1),
   },
   table: {
-    minWidth: 525,
+    minWidth: 750,
   },
   visuallyHidden: {
     border: 0,
@@ -111,29 +110,23 @@ const useStyles = makeStyles((theme) => ({
     top: 20,
     width: 1,
   },
-  upload: {
-    width: '410px',
-    height: 520,
-    marginLeft: '20px',
-    backgroundColor: 'white',
-    borderRadius: '10px',
-  },
 }))
 
-export default function ClientTable() {
-  const classes = useStyles()
-  const [order, setOrder] = React.useState('asc')
-  const [orderBy, setOrderBy] = React.useState('calories')
-  const [selected, setSelected] = React.useState([])
-  const [isModal, setIsModal] = React.useState(false)
+export default function CompaignsTable() {
+  const classes = useStyles();
+  const [order, setOrder] = React.useState('asc');
+  const [orderBy, setOrderBy] = React.useState('calories');
+  const [selected, setSelected] = React.useState([]);
+  const [isModal, setIsModal] = React.useState(false);
   const [formData, setFormData] = React.useState({
     client_name: '',
     client_email: '',
   })
   const [UserID, setUserID] = React.useState('')
 
-  const dispatch = useDispatch()
-  const client = useSelector((state) => state.ClientReducer)
+
+  const dispatch = useDispatch();
+  const {campaigns} = useSelector((state) => state.CampaignReducer);
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc'
     setOrder(isAsc ? 'desc' : 'asc')
@@ -141,12 +134,13 @@ export default function ClientTable() {
   }
 
   useEffect(() => {
-    dispatch(clientList())
+    dispatch(CompaignList())
   }, [])
-
+  // console.log("bbbb",campaigns)
+  
   const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = client.clients.map((n) => n.data.client_name)
+    if (event?.target?.checked) {
+      const newSelecteds = campaigns?.map((n) => n?.data?.name)
       // debugger
       setSelected(newSelecteds)
       return
@@ -160,8 +154,8 @@ export default function ClientTable() {
 
   const onSubmit = (e) => {
     e.preventDefault()
-    console.log(formData)
-    dispatch(editClient({ id: UserID, data: formData }))
+    // console.log(formData)
+    // dispatch(editClient({ id: UserID, data: formData }))
     toggle()
   }
 
@@ -169,17 +163,9 @@ export default function ClientTable() {
     setIsModal(!isModal)
   }
   const openModal = (row) => {
-    setFormData({
-      ...formData,
-      client_name: row.data.client_name,
-      client_email: row.data.client_email,
-    })
+    setFormData({ ...formData, client_name: row.data.client_name, client_email: row.data.client_email })
     setUserID(row.id)
     setIsModal(!isModal)
-  }
-
-  const handleDelete = (row) => {
-    dispatch(deleteClient(row.id))
   }
 
   const handleClick = (event, name) => {
@@ -206,11 +192,11 @@ export default function ClientTable() {
 
   return (
     <div className={classes.root}>
-      <Navbar page='Clients' />
       <Paper className={classes.paper}>
+     
         <TableContainer style={{ maxHeight: 482 }}>
-          <Table
-            stickyHeader
+          <Table 
+          stickyHeader
             className={classes.table}
             aria-labelledby='tableTitle'
             size='small'
@@ -223,55 +209,33 @@ export default function ClientTable() {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={client && client.clients && client.clients.length}
+              rowCount={campaigns && campaigns.length}
             />
             <TableBody>
               {
                 //   stableSort(client.clients, getComparator(order, orderBy))
                 //     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                client &&
-                  client.clients &&
-                  client.clients.map((row, index) => {
-                    const isItemSelected = isSelected(row.data.client_name)
+                campaigns?.map((row, index) => {
+                    const isItemSelected = isSelected(row.data.name)
                     const labelId = `enhanced-table-checkbox-${index}`
 
                     return (
-                      <TableRow
-                        hover
-                        style={{ height: 5 }}
-                        role='checkbox'
-                        aria-checked={isItemSelected}
-                        tabIndex={-1}
-                        key={row.id}
-                        selected={isItemSelected}
-                      >
+                      <TableRow key={row?.id} hover style={{ height: 5 }} role='checkbox' aria-checked={isItemSelected} tabIndex={-1} key={row.data.client_name} selected={isItemSelected} >
                         <TableCell padding='checkbox'>
-                          <Checkbox
-                            checked={isItemSelected}
-                            onClick={(event) =>
-                              handleClick(event, row.data.client_name)
-                            }
-                            inputProps={{ 'aria-labelledby': labelId }}
-                          />
+                          <Checkbox checked={isItemSelected} onClick={(event) => handleClick(event, row.data.client_name) } inputProps={{ 'aria-labelledby': labelId }} />
                         </TableCell>
-                        <TableCell
-                          component='th'
-                          id={labelId}
-                          scope='row'
-                          padding='none'
-                        >
-                          {row.data.client_name}
+                        <TableCell component='th' id={labelId} scope='row' padding='none' >
+                          {row.data.name}
                         </TableCell>
-                        <TableCell align='right'>
-                          {row.data.client_email}
-                        </TableCell>
-                        <TableCell align='right'>
+                        <TableCell align='left'>{row.data.subject}</TableCell>
+                        <TableCell align='left'>{row.data.content}</TableCell>
+                        <TableCell align='left'>
                           <IconButton onClick={() => openModal(row)}>
-                            {' '}
+                            {/* {' '} */}
                             <EditIcon />
                           </IconButton>
 
-                          <IconButton onClick={() => handleDelete(row)}>
+                          <IconButton>
                             {' '}
                             <DeleteIcon />
                           </IconButton>
@@ -280,21 +244,16 @@ export default function ClientTable() {
                     )
                   })
               }
-              {client && client.clients && client.clients.length > 0 && (
+              {/* {client && client.clients && client.clients.length > 0 && (
                 <TableRow style={{ height: 33 * client.clients.length }}>
                   <TableCell colSpan={3} />
                 </TableRow>
-              )}
+              )} */}
             </TableBody>
           </Table>
         </TableContainer>
       </Paper>
-      <div>
-        <Container className={classes.upload}>
-          <strong>Upload Clients</strong>
-          <Upload />
-        </Container>
-      </div>
+
       <Modal on={isModal} toggle={toggle}>
         {isModal && (
           <form onSubmit={(e) => onSubmit(e)}>
