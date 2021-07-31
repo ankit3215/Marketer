@@ -14,6 +14,7 @@ import Mailer from './screens/Mailer'
 import { logOutUser } from '../redux/actionCreators/authActions'
 import CreateCampaigns from './screens/CreateCampaigns'
 import Campaigns from './screens/Campaigns'
+import Test from './screens/test'
 
 const Sidebar = ({ history }) => {
   const auth = useSelector((state) => state.auth)

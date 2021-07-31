@@ -111,7 +111,7 @@ const CreateCampaigns = (props) => {
 
     if(name.match(regexp) && subject.match(ent) && content.length>10){
 
-    db.collection("cont")
+    db.collection("campaign")
       .add({
         name: name,
         subject: subject,
