@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useState } from 'react'
 import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import { lighten, makeStyles } from '@material-ui/core/styles'
@@ -41,7 +41,7 @@ const headCells = [
 ]
 
 function EnhancedTableHead(props) {
-  const { classes, onSelectAllClick, numSelected, rowCount } = props
+  const {  onSelectAllClick, numSelected, rowCount } = props
 
   return (
     <TableHead>
@@ -69,12 +69,8 @@ function EnhancedTableHead(props) {
 }
 
 EnhancedTableHead.propTypes = {
-  classes: PropTypes.object.isRequired,
   numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
   onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
-  orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
 }
 
@@ -102,26 +98,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function MailerTable({selected,setSelected}) {
+export default function MailerTable({selected,setSelected,toast}) {
   const classes = useStyles();
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
-  // const [selected, setSelected] = React.useState([]);
-  const [isModal, setIsModal] = React.useState(false);
-  const [formData, setFormData] = React.useState({
+  const [isModal, setIsModal] = useState(false);
+  const [formData, setFormData] = useState({
     client_name: '',
     client_email: '',
   })
-  const [UserID, setUserID] = React.useState('')
+  const [UserID, setUserID] = useState('')
 
 
   const dispatch = useDispatch();
+
   const client = useSelector((state) => state.ClientReducer);
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc'
-    setOrder(isAsc ? 'desc' : 'asc')
-    setOrderBy(property)
-  }
+
 
   useEffect(() => {
     dispatch(clientList())
@@ -141,15 +131,17 @@ export default function MailerTable({selected,setSelected}) {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault()
     console.log(formData)
-    dispatch(editClient({ id: UserID, data: formData }))
+   await dispatch(editClient({ id: UserID, data: formData }))
+   toast.success("Edit Successfully")
     toggle()
   }
 
-  const handleDelete = (row) =>{
-    dispatch(deleteClient(row.id))
+  const handleDelete =async (row) =>{
+   await dispatch(deleteClient(row.id))
+    toast.error("Deleted Successfully")
   }
 
   const toggle = () => {
@@ -187,7 +179,7 @@ export default function MailerTable({selected,setSelected}) {
     <div className={classes.root}>
       <Paper className={classes.paper}>
      
-        <TableContainer style={{ maxHeight: 482 }}>
+        <TableContainer style={{ maxHeight: "390px" }}>
           <Table 
           stickyHeader
             className={classes.table}
@@ -196,18 +188,12 @@ export default function MailerTable({selected,setSelected}) {
             aria-label='enhanced table'
           >
             <EnhancedTableHead
-              classes={classes}
               numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
               rowCount={client && client.clients && client.clients.length}
             />
             <TableBody>
               {
-                //   stableSort(client.clients, getComparator(order, orderBy))
-                //     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 client &&
                   client.clients &&
                   client.clients.map((row, index) => {
@@ -257,11 +243,6 @@ export default function MailerTable({selected,setSelected}) {
                     )
                   })
               }
-              {/* {client && client.clients && client.clients.length > 0 && (
-                <TableRow style={{ height: 33 * client.clients.length }}>
-                  <TableCell colSpan={3} />
-                </TableRow>
-              )} */}
             </TableBody>
           </Table>
         </TableContainer>

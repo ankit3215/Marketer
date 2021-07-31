@@ -1,33 +1,26 @@
-import * as actionKeys from '../actionKeys'
-import db,{  } from '../../services/firestoreServices'
-import {mailerAlert} from './alertActions';
+import  {
+  getCampaignById,
+  getClientEmailById,
+} from "../../services/firestoreServices";
+import sendEmail from "../../services/emailServices";
 
+export const sendMailer =
+  (campaign, clients, window, toast, setOn) => async (dispatch) => {
+    try {
+      //get data for campaign by id
+      let docRef = await getCampaignById(campaign);
+      let campaignData = docRef.data();
 
-export const sendMailer = (campaign,clients,window) => async (dispatch) => {
-    //get data for campaaign
-    let docRef = await db.collection("campaign").doc(campaign).get();
-    let campaignData = docRef.data()
-    //get data for client
-    let clientData = []
-   let querySnapshot = await db.collection("client").get()
+      //get data for client Email by id
+      let clientEmail = await getClientEmailById(clients);
 
-    querySnapshot.forEach((doc) => {
-        if(clients.includes((doc.id).toString()))
-        clientData.push(doc.data().client_email);
-    });
+      // mail function
+     await sendEmail(clientEmail,campaignData,window);
 
-    
+     toast.success("Mail Send")
+     setOn(false) 
 
-    // console.log(clientData,campaignData.subject,campaignData.content);
-       // mail function 
-        window.Email.send({
-           SecureToken : "a66a457c-0910-429b-9643-b6a48a3c16c2",
-           To : clientData,
-           From : "reactjs137@gmail.com",
-           Subject : campaignData.subject,
-           Body : campaignData.content,
-       }).then(
-     message => console.log(message)
-   );
-     mailerAlert(dispatch,"Mail send")
-  }
+    } catch (error) {
+      toast.error("Something went wrong")
+    }
+  };
