@@ -47,9 +47,19 @@ export const EditClient = async (userData) => {
   return await db.collection('client').doc(userData.id).update(userData.data)
 }
 
+export const EditCampaign = async (userData) => {
+  // console.log(userData)
+  return await db.collection('campaign').doc(userData.id).update(userData.data)
+}
+
 export const DeleteClient = async (id) => {
   // console.log(userData)
   return await db.collection('client').doc(id).delete()
+}
+
+export const DeleteCampaign = async (id) => {
+  // console.log(userData)
+  return await db.collection('campaign').doc(id).delete()
 }
 
 export const getCampaignById = async (id) => {
