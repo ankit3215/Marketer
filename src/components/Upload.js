@@ -10,6 +10,9 @@ import * as XLSX from 'xlsx'
 import { addDocument } from '../services/firestoreServices'
 import { useSelector, useDispatch } from 'react-redux'
 import { clientList } from '../redux/actionCreators/clientAction'
+import { Link } from 'react-router-dom'
+import download from '../images/download.jpeg'
+
 const baseStyle = {
   flex: 1,
   display: 'flex',
@@ -152,6 +155,29 @@ function Upload(props) {
           <p>Your file has been uploaded successfully!</p>
         </>
       )}
+      {!displayPreview ? (
+        <Link
+          to='/file/book.xlsx'
+          target='_blank'
+          className={classes.link}
+          download
+        >
+          <img src={download} alt='download' /> Download Template
+        </Link>
+      ) : (
+        <h6
+          style={{
+            cursor: 'pointer',
+            textAlign: 'center',
+            font: 'Karla',
+            fontSize: '14px',
+          }}
+          onClick={() => setDisplayPreview(!displayPreview)}
+        >
+          Change
+        </h6>
+      )}
+      <br />
       <ThemeProvider theme={theme}>
         <Button
           variant='contained'
