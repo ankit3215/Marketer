@@ -141,6 +141,7 @@ const Navbar = ({ page }) => {
             required="true"
             value={auth.userInfo.displayName}
             onChange={(e) => setName(e.target.value)}
+            disabled
           />
            <br />
            <br />
