@@ -10,7 +10,7 @@ export const CompaignList = () => async (dispatch) => {
     // doc.data() is never undefined for query doc snapshots
     // console.log(doc.id, ' => ', doc.data())
     compaign.push({ id: doc.id, data: doc.data() })
-    console.log(compaign);
+    // console.log(compaign);
   })
 
   dispatch({
