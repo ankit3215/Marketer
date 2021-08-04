@@ -3,7 +3,7 @@ import { useDropzone } from 'react-dropzone'
 import uploadCloud from '../images/upload-cloud.png'
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
-import createTheme from '@material-ui/core/styles/createTheme'
+import  createTheme  from '@material-ui/core/styles/createTheme'
 import { ThemeProvider } from '@material-ui/styles'
 import IconPark from '../images/icon-park.png'
 import * as XLSX from 'xlsx'
@@ -72,10 +72,6 @@ function Upload(props) {
       background: 'linear-gradient(269.51deg, #8F1FC4 1.37%, #5F048A 98.48%)',
       color: '#FFFFFF',
     },
-    link: {
-      textDecoration: 'none',
-      color: '#5F048A',
-    },
   }))
   const {
     getRootProps,
@@ -125,9 +121,7 @@ function Upload(props) {
         })
 
         dispatch(clientList())
-
         setSuccessful(true)
-        props.toggle()
       })
       .catch((error) => {
         console.log(error)
