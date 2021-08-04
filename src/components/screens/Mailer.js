@@ -11,6 +11,7 @@ import { sendMailer } from '../../redux/actionCreators/mailerActions'
 import {
   CircularProgress,
 } from "@material-ui/core";
+import Test from './test';
 const Mailer = (props) => {
   const [campaignId, setCampaignId] = useState('')
   const [selected, setSelected] = React.useState([])
@@ -41,9 +42,9 @@ const Mailer = (props) => {
           <span style={{ marginLeft: '30px' }}> All Campaigns </span>
         </div>
         <div className='split right'>
-          <span style={{ marginLeft: '100px' }}>
+          <span style={{ marginLeft: '0px' }}>
             Select Campaigns
-            <select id="campaign" style={{ marginLeft: '20px' }} onChange={() => setCampaignId(document.getElementById('campaign').value)} >
+            <select id="campaign" style={{ marginLeft: '15px' }} onChange={() => setCampaignId(document.getElementById('campaign').value)} >
               <option value="Choose a Campaigns" >Choose a Campaigns</option>
               {campaign&&campaign.campaigns.map(e =>{
                 return <option value={e.id}>{e.data.name}</option>
@@ -53,7 +54,7 @@ const Mailer = (props) => {
         </div>
       </div>
       <div className='tble'>
-        <MailerTable selected={selected} setSelected={setSelected} toast={toast} />
+        <Test selected={selected} setSelected={setSelected} toast={toast} />
       </div>
       <div style={{ }}>
         <button className='sendMailer' onClick={sendMail} disabled={on}>

@@ -1,104 +1,451 @@
-import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
-import Navbar from '../../common/Navbar'
-import MailerTable from '../tables/MailerTable'
-import { toast,ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import '../CSS/mailer.css'
-import { campaignsList } from '../../redux/actionCreators/campaignsActions'
+import React, { useState, useRef,useEffect } from "react";
+import "antd/dist/antd.css";
+import "../../index.css";
+import { Table, Input, Button, Space } from "antd";
+import Highlighter from "react-highlight-words";
+import { SearchOutlined } from "@ant-design/icons";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 import { useDispatch, useSelector } from 'react-redux'
-import { sendMailer } from '../../redux/actionCreators/mailerActions'
-import {
-  CircularProgress,
-} from "@material-ui/core";
-import Button from '@material-ui/core/Button';
-import {Link} from 'react-router-dom';
-import Modal from '../../common/Modal';
-import { Container } from '@material-ui/core'
-import {  makeStyles } from '@material-ui/core/styles'
-import Upload from '../Upload';
-const useStyles = makeStyles((theme) => ({
-    upload: {
-      width: '410px',
-      height: 520,
-      marginLeft: '20px',
-      backgroundColor: 'white',
-      borderRadius: '10px',
-    },
-  }))
+import { clientList,editClient,deleteClient } from '../../redux/actionCreators/clientAction'
+const data = [
+  {
+    key: "1",
+    name: "John Brown",
+    age: 32,
+    address: "New York No. 1 Lake Park",
+  },
+  {
+    key: "2",
+    name: "Joe Black",
+    age: 42,
+    address: "London No. 1 Lake Park",
+  },
+  {
+    key: "3",
+    name: "Jim Green",
+    age: 32,
+    address: "Sidney No. 1 Lake Park",
+  },
+  {
+    key: "4",
+    name: "Jim Red",
+    age: 32,
+    address: "London No. 2 Lake Park",
+  },
+  {
+    key: "5",
+    name: "John Brown",
+    age: 32,
+    address: "New York No. 1 Lake Park",
+  },
+  {
+    key: "6",
+    name: "Joe Black",
+    age: 42,
+    address: "London No. 1 Lake Park",
+  },
+  {
+    key: "7",
+    name: "Jim Green",
+    age: 32,
+    address: "Sidney No. 1 Lake Park",
+  },
+  {
+    key: "8",
+    name: "Jim Red",
+    age: 32,
+    address: "London No. 2 Lake Park",
+  },
+  {
+    key: "9",
+    name: "John Brown",
+    age: 32,
+    address: "New York No. 1 Lake Park",
+  },
+  {
+    key: "10",
+    name: "Joe Black",
+    age: 42,
+    address: "London No. 1 Lake Park",
+  },
+  {
+    key: "11",
+    name: "Jim Green",
+    age: 32,
+    address: "Sidney No. 1 Lake Park",
+  },
+  {
+    key: "12",
+    name: "Jim Red",
+    age: 32,
+    address: "London No. 2 Lake Park",
+  },
+  {
+    key: "13",
+    name: "Joe Black",
+    age: 42,
+    address: "London No. 1 Lake Park",
+  },
+  {
+    key: "14",
+    name: "Jim Green",
+    age: 32,
+    address: "Sidney No. 1 Lake Park",
+  },
+  {
+    key: "15",
+    name: "Jim Red",
+    age: 32,
+    address: "London No. 2 Lake Park",
+  },
+  {
+    key: "16",
+    name: "Joe Black",
+    age: 42,
+    address: "London No. 1 Lake Park",
+  },
+  {
+    key: "17",
+    name: "Jim Green",
+    age: 32,
+    address: "Sidney No. 1 Lake Park",
+  },
+  {
+    key: "18",
+    name: "Jim Red",
+    age: 32,
+    address: "London No. 2 Lake Park",
+  },
+  {
+    key: "19",
+    name: "Joe Black",
+    age: 42,
+    address: "London No. 1 Lake Park",
+  },
+  {
+    key: "20",
+    name: "Jim Green",
+    age: 32,
+    address: "Sidney No. 1 Lake Park",
+  },
+  {
+    key: "21",
+    name: "Jim Red",
+    age: 32,
+    address: "London No. 2 Lake Park",
+  },
+  {
+    key: "22",
+    name: "Joe Black",
+    age: 42,
+    address: "London No. 1 Lake Park",
+  },
+  {
+    key: "23",
+    name: "Jim Green",
+    age: 32,
+    address: "Sidney No. 1 Lake Park",
+  },
+  {
+    key: "24",
+    name: "Jim Red",
+    age: 32,
+    address: "London No. 2 Lake Park",
+  },
+];
 
-const Test = props => {
-    const classes = useStyles()
-    const [campaignId, setCampaignId] = useState('')
-  const [selected, setSelected] = React.useState([])
-  const [on,setOn] = useState(false)
-  const dispatch = useDispatch()
-  const sendMail = async () => {
-    if(campaignId==='' ||selected.length === 0 || campaignId ==='Choose a Campaigns') {
-     return toast.error("Please select campaign and client")
-    }
-    setOn(!on)
-    await dispatch(sendMailer(campaignId, selected, window,toast,setOn))
-    setCampaignId('')
-    setSelected([])
-    document.getElementById('campaign').value = "Choose a Campaigns"
-    
-  }
-  const toggle =() =>{
-    setOn(!on)
-  }
-  const campaign = useSelector((state) => state.CampaignReducer)
- 
+const Test = ({selected,setSelected,toast}) => {
+  const [filter, setfilter] = useState({
+    searchText: "",
+    searchedColumn: "",
+  });
+
+  const dispatch = useDispatch();
+
+  const client = useSelector((state) => state.ClientReducer);
+
+
   useEffect(() => {
-    dispatch(campaignsList())
+    dispatch(clientList())
   }, [])
-    return (
-        <div className='mailer'>
-      <ToastContainer/>
-      <Navbar page='Clients' />
-      <div style={{ display: 'flex' }}>
-        <div className='split left'>
-          <span style={{ marginLeft: '30px' }}> All Clients </span>
-        </div>
-        <div className='split right'>
-          <span style={{ marginLeft: '250px' }}>
-            
-          <Button variant="contained" style={{backgroundColor:"#8e17c6",color:"white"}} onClick={()=>setOn(!on)}>
-             
-            Upload Client
+
+  const searchInput = useRef();
+
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+
+      console.log(
+        `selectedRowKeys: ${selectedRowKeys}`,
+        "selectedRows: ",
+        selectedRows
+      );
+    },
+    getCheckboxProps: (record) => ({
+      disabled: record.name === "Disabled User",
+      // Column configuration not to be checked
+      name: record.name,
+    }),
+  };
+
+  const handleSearch = (selectedKeys, confirm, dataIndex) => {
+    confirm();
+    setfilter({
+      ...filter,
+      searchText: selectedKeys[0],
+      searchedColumn: dataIndex,
+    });
+  };
+
+  const handleReset = (clearFilters) => {
+    clearFilters();
+    setfilter({ ...filter, searchText: "" });
+  };
+
+  const getColumnSearchProps = (dataIndex) => ({
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+    }) => (
+      <div style={{ padding: 8 }}>
+        <Input
+          ref={(node) => {
+            searchInput.current = node;
+          }}
+          placeholder={`Search ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={(e) =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
+          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+          style={{ marginBottom: 8, display: "block" }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+            icon={<SearchOutlined />}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Search
           </Button>
-            {/* <select id="campaign" style={{ marginLeft: '20px' }} onChange={() => setCampaignId(document.getElementById('campaign').value)} >
-              <option value="Choose a Campaigns" >Choose a Campaigns</option>
-              {campaign&&campaign.campaigns.map(e =>{
-                return <option value={e.id}>{e.data.name}</option>
-              })}
-            </select> */}
-          </span>
+          <Button
+            onClick={() => handleReset(clearFilters)}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Reset
+          </Button>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => {
+              confirm({ closeDropdown: false });
+              setfilter({
+                ...filter,
+                searchText: selectedKeys[0],
+                searchedColumn: dataIndex,
+              });
+            }}
+          >
+            Filter
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered) => (
+      <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
+    ),
+    onFilter: (value, record) =>
+      record[dataIndex]
+        ? record[dataIndex]
+            .toString()
+            .toLowerCase()
+            .includes(value.toLowerCase())
+        : "",
+    onFilterDropdownVisibleChange: (visible) => {
+      if (visible) {
+        setTimeout(() => searchInput.current.select(), 100);
+      }
+    },
+    render: (text) =>
+      filter.searchedColumn === dataIndex ? (
+        <Highlighter
+          highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+          searchWords={[filter.searchText]}
+          autoEscape
+          textToHighlight={text ? text.toString() : ""}
+        />
+      ) : (
+        text
+      ),
+  });
+  console.log(searchInput);
+  const columns = [
+    {
+      title: "Client Name",
+      dataIndex: "client_name",
+      key: "client_name",
+      width: "30%",
+      ...getColumnSearchProps("client_name"),
+    },
+    {
+      title: "client Email",
+      dataIndex: "client_email",
+      key: "client_email",
+      width: "20%",
+      ...getColumnSearchProps("client_email"),
+    },
+    {
+      title: "Action",
+      render: () => (
+        <div>
+          <IconButton onClick={() => console.log("edit")}>
+            {" "}
+            <EditIcon />
+          </IconButton>
+
+          <IconButton onClick={() => console.log("delete")}>
+            {" "}
+            <DeleteIcon />
+          </IconButton>
         </div>
-      </div>
-      <div className='tble'>
-        <MailerTable selected={selected} setSelected={setSelected} toast={toast} />
-      </div>
-      {/* <div style={{ }}>
-        <button className='sendMailer' onClick={sendMail} disabled={on}>
-         {on ?<><CircularProgress size={25} thickness={5} color="primary" /> Sending... </>: "SEND MAILER"}
-        </button>
-      </div> */}
-
-<Modal on={on} toggle={toggle}>
-        {on && (
-         <Container className={classes.upload}>
-         <strong>Upload Clients</strong>
-         <Upload toggle={toggle} />
-       </Container>
-        )}
-      </Modal>
+      )
+    },
+  ];
+  return (
+    <div className="tab">
+      <Table
+        style={{ maxHeight: "100px" }}
+        columns={columns}
+        dataSource={client&&client.clients }
+        rowSelection={{
+          ...rowSelection,
+        }}
+        pagination={false}
+        scroll={{ y: "350px" }}
+        size="middle"
+        loading={client&&client.clients&& client.clients.length>0?false:true}
+      />
     </div>
-    )
-}
+  );
+};
 
-Test.propTypes = {
+export default Test;
 
-}
+// export default class Test extends React.Component {
+//   state = {
+// searchText: '',
+// searchedColumn: '',
+//   };
 
-export default Test
+// getColumnSearchProps = dataIndex => ({
+//   filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+//     <div style={{ padding: 8 }}>
+//       <Input
+//         ref={node => {
+//           this.searchInput = node;
+//         }}
+//         placeholder={`Search ${dataIndex}`}
+//         value={selectedKeys[0]}
+//         onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+//         onPressEnter={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
+//         style={{ marginBottom: 8, display: 'block' }}
+//       />
+//       <Space>
+//         <Button
+//           type="primary"
+//           onClick={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
+//           icon={<SearchOutlined />}
+//           size="small"
+//           style={{ width: 90 }}
+//         >
+//           Search
+//         </Button>
+//         <Button onClick={() => this.handleReset(clearFilters)} size="small" style={{ width: 90 }}>
+//           Reset
+//         </Button>
+//         <Button
+//           type="link"
+//           size="small"
+//           onClick={() => {
+//             confirm({ closeDropdown: false });
+//             this.setState({
+//               searchText: selectedKeys[0],
+//               searchedColumn: dataIndex,
+//             });
+//           }}
+//         >
+//           Filter
+//         </Button>
+//       </Space>
+//     </div>
+//   ),
+//   filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
+//   onFilter: (value, record) =>
+//     record[dataIndex]
+//       ? record[dataIndex].toString().toLowerCase().includes(value.toLowerCase())
+//       : '',
+//   onFilterDropdownVisibleChange: visible => {
+//     if (visible) {
+//       setTimeout(() => this.searchInput.select(), 100);
+//     }
+//   },
+//   render: text =>
+//     this.state.searchedColumn === dataIndex ? (
+//       <Highlighter
+//         highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+//         searchWords={[this.state.searchText]}
+//         autoEscape
+//         textToHighlight={text ? text.toString() : ''}
+//       />
+//     ) : (
+//       text
+//     ),
+// });
+
+// handleSearch = (selectedKeys, confirm, dataIndex) => {
+//   confirm();
+//   this.setState({
+//     searchText: selectedKeys[0],
+//     searchedColumn: dataIndex,
+//   });
+// };
+
+// handleReset = clearFilters => {
+//   clearFilters();
+//   this.setState({ searchText: '' });
+// };
+
+//   render() {
+// const columns = [
+//   {
+//     title: 'Name',
+//     dataIndex: 'name',
+//     key: 'name',
+//     width: '30%',
+//     ...this.getColumnSearchProps('name'),
+//   },
+//   {
+//     title: 'Age',
+//     dataIndex: 'age',
+//     key: 'age',
+//     width: '20%',
+//     ...this.getColumnSearchProps('age'),
+//   },
+//   {
+//     title: 'Address',
+//     dataIndex: 'address',
+//     key: 'address',
+//     ...this.getColumnSearchProps('address'),
+//     sorter: (a, b) => a.address.length - b.address.length,
+//     sortDirections: ['descend', 'ascend'],
+//   },
+// ];
+//     return <Table columns={columns} dataSource={data} />;
+//   }
+// }
