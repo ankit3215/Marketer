@@ -230,7 +230,7 @@ export default function CompaignsTable() {
                         <TableCell padding='checkbox'>
                           <Checkbox checked={isItemSelected} onClick={(event) => handleClick(event, row?.data?.client_name) } inputProps={{ 'aria-labelledby': labelId }} />
                         </TableCell>
-                        <TableCell align='left'><img width="100px" height="100px" src={row?.data?.auth?.userInfo?.imageUrl}/></TableCell>
+                        <TableCell align='left'><img width="50px" height="50px" style={{borderRadius:"25px"}} src={row?.data?.auth?.userInfo?.imageUrl}/></TableCell>
                         <TableCell component='th' id={labelId} scope='row' padding='none' >
                           {row?.data?.name}
                         </TableCell>
