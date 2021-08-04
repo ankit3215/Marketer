@@ -8,7 +8,7 @@ export const campaignsList = () => async (dispatch) => {
   let campaign = []
   data.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
-    console.log(doc.id, ' => ', doc.data())
+    // console.log(doc.id, ' => ', doc.data())
     campaign.push({ id: doc.id, data: doc.data() })
   })
 

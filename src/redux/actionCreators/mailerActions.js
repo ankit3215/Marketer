@@ -7,6 +7,9 @@ import sendEmail from "../../services/emailServices";
 export const sendMailer =
   (campaign, clients, window, toast, setOn) => async (dispatch) => {
     try {
+
+      console.log("campaaign:",campaign);
+      console.log("client:",clients);
       //get data for campaign by id
       let docRef = await getCampaignById(campaign);
       let campaignData = docRef.data();
@@ -16,6 +19,8 @@ export const sendMailer =
 
       // mail function
      await sendEmail(clientEmail,campaignData,window);
+
+
 
      toast.success("Mail Send")
      setOn(false) 
