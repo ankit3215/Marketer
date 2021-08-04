@@ -157,17 +157,17 @@ function Upload(props) {
           console.log('_____', temp)
           // if (d.length === temp.length) {
           temp.forEach((row) => {
-            // if()
-            var hasMatch = false
-            for (var index = 0; index < client.clients.length; ++index) {
-              var client = client[index]
-              if (row.client_email === client.clients.client_email) {
-                console.log('tewttew', row.client_email)
-                // hasMatch = true
-                // break
-              }
-            }
-            // addDocument('client', row)
+            // // if()
+            // var hasMatch = false
+            // for (var index = 0; index < client.clients.length; ++index) {
+            //   var client = client[index]
+            //   if (row.client_email === client.clients.client_email) {
+            //     console.log('tewttew', row.client_email)
+            //     // hasMatch = true
+            //     // break
+            //   }
+            // }
+            addDocument('client', row)
           })
           dispatch(clientList())
           setSuccessful(true)
