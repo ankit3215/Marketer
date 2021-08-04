@@ -1,10 +1,12 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import './index.css'
-import App from './App'
-import { Provider } from 'react-redux'
-import store from './redux/store/store'
-import { createTheme, ThemeProvider } from '@material-ui/core'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import {Provider} from "react-redux";
+import store from "./redux/store/store";
+import  createTheme  from '@material-ui/core/styles/createTheme'
+import { ThemeProvider } from '@material-ui/styles'
+
 
 let theme = createTheme({
   palette: {

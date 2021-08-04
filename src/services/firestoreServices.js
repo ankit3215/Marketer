@@ -3,8 +3,12 @@ import firebase from '../firebase'
 const db = firebase.firestore()
 
 export const addDocument = async (collection, data) => {
-  const newDoc = await db.collection(collection).add(data)
-  return newDoc
+  try {
+    const newDoc = await db.collection(collection).add(data)
+    return newDoc
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export const updateDocument = async (collection, docId, newData) => {
@@ -47,35 +51,25 @@ export const EditClient = async (userData) => {
   return await db.collection('client').doc(userData.id).update(userData.data)
 }
 
-export const EditCampaign = async (userData) => {
-  // console.log(userData)
-  return await db.collection('campaign').doc(userData.id).update(userData.data)
-}
-
 export const DeleteClient = async (id) => {
   // console.log(userData)
   return await db.collection('client').doc(id).delete()
 }
 
-export const DeleteCampaign = async (id) => {
-  // console.log(userData)
-  return await db.collection('campaign').doc(id).delete()
-}
-
 export const getCampaignById = async (id) => {
-  return await db.collection("campaign").doc(id).get();
+  return await db.collection('campaign').doc(id).get()
 }
 
 export const getClientEmailById = async (clientIds) => {
   let clientData = []
-  let querySnapshot = await db.collection("client").get()
+  let querySnapshot = await db.collection('client').get()
 
-   querySnapshot.forEach((doc) => {
-       if(clientIds.includes((doc.id).toString()))
-       clientData.push(doc.data().client_email);
-   });
+  querySnapshot.forEach((doc) => {
+    if (clientIds.includes(doc.id.toString()))
+      clientData.push(doc.data().client_email)
+  })
 
-   return clientData;
+  return clientData
 }
 
 export default db
