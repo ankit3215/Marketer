@@ -28,6 +28,12 @@ import Modal from '../../common/Modal'
 
 const headCells = [
   {
+    id: 'compaign_image',
+    numeric: false,
+    disablePadding: true,
+    label: 'Compaign Pic',
+  },
+  {
     id: 'compaign_name',
     numeric: false,
     disablePadding: true,
@@ -138,7 +144,7 @@ export default function CompaignsTable() {
   useEffect(() => {
     dispatch(CompaignList())
   }, [])
-  // console.log("bbbb",campaigns)
+  console.log("bbbb",campaigns)
   
   const handleSelectAllClick = (event) => {
     if (event?.target?.checked) {
@@ -223,19 +229,20 @@ export default function CompaignsTable() {
                 //   stableSort(client.clients, getComparator(order, orderBy))
                 //     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 campaigns?.map((row, index) => {
-                    const isItemSelected = isSelected(row.data.name)
+                    const isItemSelected = isSelected(row?.data?.name)
                     const labelId = `enhanced-table-checkbox-${index}`
 
                     return (
                       <TableRow key={row.id} hover style={{ height: 5 }} role='checkbox' aria-checked={isItemSelected} tabIndex={-1} selected={isItemSelected} >
                         <TableCell padding='checkbox'>
-                          <Checkbox checked={isItemSelected} onClick={(event) => handleClick(event, row.data.client_name) } inputProps={{ 'aria-labelledby': labelId }} />
+                          <Checkbox checked={isItemSelected} onClick={(event) => handleClick(event, row?.data?.client_name) } inputProps={{ 'aria-labelledby': labelId }} />
                         </TableCell>
+                        <TableCell align='left'><img width="100px" height="100px" src={row?.data?.auth?.userInfo?.imageUrl}/></TableCell>
                         <TableCell component='th' id={labelId} scope='row' padding='none' >
-                          {row.data.name}
+                          {row?.data?.name}
                         </TableCell>
-                        <TableCell align='left'>{row.data.subject}</TableCell>
-                        <TableCell align='left'>{row.data.content}</TableCell>
+                        <TableCell align='left'>{row?.data?.subject}</TableCell>
+                        <TableCell align='left'>{row?.data?.content}</TableCell>
                         <TableCell align='left'>
                           <IconButton onClick={() => openModal(row)}>
                             {/* {' '} */}
