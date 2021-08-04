@@ -12,7 +12,7 @@ export const clientList = () => async (dispatch) => {
   let client = []
   data.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
-    console.log(doc.id, ' => ', doc.data())
+    // console.log(doc.id, ' => ', doc.data())
     client.push({ id: doc.id, data: doc.data() })
   })
 
