@@ -46,7 +46,8 @@ const rejectStyle = {
 function Upload(props) {
   const [temp, setTemp] = useState([])
   const user = useSelector((state) => state.auth.userInfo.userId)
-  const client = useSelector((state) => state.ClientReducer)
+  const clientArray = useSelector((state) => state.ClientReducer.clients)
+  // console.log(clientArray);
   const [displayPreview, setDisplayPreview] = useState(false)
   const [successful, setSuccessful] = useState(false)
   const dispatch = useDispatch()
@@ -118,7 +119,7 @@ function Upload(props) {
     })
     promise
       .then((d) => {
-        console.log('==========', d)
+        // console.log('==========', d)
         function duplicateCheck(arr, ele, start) {
           var result = -1
           for (let index = arr.length - 1; index >= start; index--) {
@@ -153,22 +154,39 @@ function Upload(props) {
 
           // addDocument('client', { ...row, addedBy: user })
         })
+        // console.log(temp);
         if (!flag) {
-          console.log('_____', temp)
+          // console.log('_____', temp)
           // if (d.length === temp.length) {
-          temp.forEach((row) => {
-            // // if()
+          var hasMatch = false
+          var ind
+          temp.forEach((row, i) => {
             // var hasMatch = false
-            // for (var index = 0; index < client.clients.length; ++index) {
-            //   var client = client[index]
-            //   if (row.client_email === client.clients.client_email) {
-            //     console.log('tewttew', row.client_email)
-            //     // hasMatch = true
-            //     // break
-            //   }
-            // }
-            addDocument('client', row)
+            if (clientArray) {
+              for (var index = 0; index < clientArray.length; ++index) {
+                var client = clientArray[index]
+                // console.log(client);
+                if (row.client_email === client.data.client_email) {
+                  // console.log('tewttew', row.client_email)
+                  ind = i
+                  hasMatch = true
+                  break
+                }
+              }
+            }
+            // addDocument('client', row)
           })
+          if (hasMatch) {
+            toast.error(
+              `duplicate values found in table and excel at index ${ind}`
+            )
+            return
+          }
+          if (!hasMatch) {
+            temp.forEach((row) => {
+              addDocument('client', row)
+            })
+          }
           dispatch(clientList())
           setSuccessful(true)
           props.toggle()
