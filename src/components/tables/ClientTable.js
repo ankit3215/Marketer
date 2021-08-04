@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function MailerTable({ selected, setSelected, toast }) {
+export default function ClientTable({ selected, setSelected, toast }) {
   const classes = useStyles()
   const [isModal, setIsModal] = useState(false)
   const [formData, setFormData] = useState({

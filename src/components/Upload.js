@@ -3,7 +3,7 @@ import { useDropzone } from 'react-dropzone'
 import uploadCloud from '../images/upload-cloud.png'
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
-import  createTheme  from '@material-ui/core/styles/createTheme'
+import createTheme from '@material-ui/core/styles/createTheme'
 import { ThemeProvider } from '@material-ui/styles'
 import IconPark from '../images/icon-park.png'
 import * as XLSX from 'xlsx'
@@ -12,6 +12,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { clientList } from '../redux/actionCreators/clientAction'
 import { Link } from 'react-router-dom'
 import download from '../images/download.jpeg'
+import { toast } from 'react-toastify'
 
 const baseStyle = {
   flex: 1,
@@ -43,6 +44,7 @@ const rejectStyle = {
 }
 
 function Upload(props) {
+  const [temp, setTemp] = useState([])
   const user = useSelector((state) => state.auth.userInfo.userId)
   const [displayPreview, setDisplayPreview] = useState(false)
   const [successful, setSuccessful] = useState(false)
@@ -115,13 +117,51 @@ function Upload(props) {
     })
     promise
       .then((d) => {
-        console.log(d)
-        d.forEach((row) => {
-          addDocument('client', { ...row, addedBy: user })
-        })
+        console.log('==========', d)
+        function duplicateCheck(arr, ele, start) {
+          var result = -1
+          for (let index = arr.length - 1; index >= start; index--) {
+            if (arr[index].client_email === ele) {
+              result = index
+            }
+          }
+          if (result > -1) {
+            var res = arr.findIndex((e) => e.client_email === ele)
+            if (res === result) {
+              return false
+            } else {
+              return true
+            }
+          } else {
+            return false
+          }
+        }
 
-        dispatch(clientList())
-        setSuccessful(true)
+        let flag = false
+        let dupIndex = -1
+        d.forEach((row, index) => {
+          // console.log('++++++', d[0].client_email)
+          var res = duplicateCheck(d, row.client_email, index)
+          if (res) {
+            toast(`Duplicate found at index ${index}`)
+            flag = true
+            dupIndex = index
+          } else {
+            temp.push({ ...row, addedBy: user })
+          }
+
+          // addDocument('client', { ...row, addedBy: user })
+        })
+        if (!flag) {
+          console.log('_____', temp)
+          // if (d.length === temp.length) {
+          temp.forEach((row) => {
+            addDocument('client', row)
+          })
+          dispatch(clientList())
+          setSuccessful(true)
+          props.toggle()
+        }
       })
       .catch((error) => {
         console.log(error)
