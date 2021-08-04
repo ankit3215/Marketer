@@ -9,163 +9,53 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import { useDispatch, useSelector } from 'react-redux'
 import { clientList,editClient,deleteClient } from '../../redux/actionCreators/clientAction'
-const data = [
-  {
-    key: "1",
-    name: "John Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
-  },
-  {
-    key: "2",
-    name: "Joe Black",
-    age: 42,
-    address: "London No. 1 Lake Park",
-  },
-  {
-    key: "3",
-    name: "Jim Green",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-  },
-  {
-    key: "4",
-    name: "Jim Red",
-    age: 32,
-    address: "London No. 2 Lake Park",
-  },
-  {
-    key: "5",
-    name: "John Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
-  },
-  {
-    key: "6",
-    name: "Joe Black",
-    age: 42,
-    address: "London No. 1 Lake Park",
-  },
-  {
-    key: "7",
-    name: "Jim Green",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-  },
-  {
-    key: "8",
-    name: "Jim Red",
-    age: 32,
-    address: "London No. 2 Lake Park",
-  },
-  {
-    key: "9",
-    name: "John Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
-  },
-  {
-    key: "10",
-    name: "Joe Black",
-    age: 42,
-    address: "London No. 1 Lake Park",
-  },
-  {
-    key: "11",
-    name: "Jim Green",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-  },
-  {
-    key: "12",
-    name: "Jim Red",
-    age: 32,
-    address: "London No. 2 Lake Park",
-  },
-  {
-    key: "13",
-    name: "Joe Black",
-    age: 42,
-    address: "London No. 1 Lake Park",
-  },
-  {
-    key: "14",
-    name: "Jim Green",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-  },
-  {
-    key: "15",
-    name: "Jim Red",
-    age: 32,
-    address: "London No. 2 Lake Park",
-  },
-  {
-    key: "16",
-    name: "Joe Black",
-    age: 42,
-    address: "London No. 1 Lake Park",
-  },
-  {
-    key: "17",
-    name: "Jim Green",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-  },
-  {
-    key: "18",
-    name: "Jim Red",
-    age: 32,
-    address: "London No. 2 Lake Park",
-  },
-  {
-    key: "19",
-    name: "Joe Black",
-    age: 42,
-    address: "London No. 1 Lake Park",
-  },
-  {
-    key: "20",
-    name: "Jim Green",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-  },
-  {
-    key: "21",
-    name: "Jim Red",
-    age: 32,
-    address: "London No. 2 Lake Park",
-  },
-  {
-    key: "22",
-    name: "Joe Black",
-    age: 42,
-    address: "London No. 1 Lake Park",
-  },
-  {
-    key: "23",
-    name: "Jim Green",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-  },
-  {
-    key: "24",
-    name: "Jim Red",
-    age: 32,
-    address: "London No. 2 Lake Park",
-  },
-];
+import Modal from '../../common/Modal'
+
 
 const Test = ({selected,setSelected,toast}) => {
   const [filter, setfilter] = useState({
     searchText: "",
     searchedColumn: "",
   });
+  const [isModal, setIsModal] = useState(false)
+
+  const [formData, setFormData] = useState({
+    client_name: '',
+    company_name: '',
+    phone_number: '',
+    client_email: '',
+    customer_type: '',
+  })
+  const [UserID, setUserID] = useState('')
+
+  const [data, setData] = useState([])
 
   const dispatch = useDispatch();
 
   const client = useSelector((state) => state.ClientReducer);
+ 
+  const openModal = (row) => {
+    setFormData({
+      ...formData,
+      client_name: row.client_name,
+      company_name: row.company_name,
+      phone_number: row.phone_number,
+      client_email: row.client_email,
+      customer_type: row.customer_type,
+    })
+    setUserID(row.key)
+    setIsModal(!isModal)
+  }
 
+  useEffect(() => {
+    if(client&&client.clients){
+     let clientData= client.clients.map(e => {
+        return {key : e.id,...e.data}
+      })
+      setData(clientData)
+      // console.log(clientData)
+    }
+  }, [client])
 
   useEffect(() => {
     dispatch(clientList())
@@ -173,9 +63,32 @@ const Test = ({selected,setSelected,toast}) => {
 
   const searchInput = useRef();
 
+  const handleDelete = async (row) => {
+    await dispatch(deleteClient(row.key))
+    toast.error('Deleted Successfully')
+  }
+
+  const toggle = () => {
+    setIsModal(!isModal)
+  }
+  const onChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  const onSubmit = async (e) => {
+    e.preventDefault()
+    console.log(formData)
+    await dispatch(editClient({ id: UserID, data: formData }))
+    toast.success('Edit Successfully')
+    toggle()
+  }
+
+
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
 
+
+      setSelected(selectedRowKeys)
       console.log(
         `selectedRowKeys: ${selectedRowKeys}`,
         "selectedRows: ",
@@ -287,29 +200,52 @@ const Test = ({selected,setSelected,toast}) => {
   console.log(searchInput);
   const columns = [
     {
-      title: "Client Name",
+      title: "Name",
       dataIndex: "client_name",
       key: "client_name",
       width: "30%",
       ...getColumnSearchProps("client_name"),
     },
     {
-      title: "client Email",
+      title: "Email",
       dataIndex: "client_email",
       key: "client_email",
       width: "20%",
       ...getColumnSearchProps("client_email"),
     },
     {
+      title: "Company Name",
+      dataIndex: "company_name",
+      key: "company_name",
+      width: "20%",
+     // ...getColumnSearchProps("company_name"),
+    },
+    {
+      title: "Customer Type",
+      dataIndex: "customer_type",
+      key: "customer_type",
+      width: "30%",
+      // ...getColumnSearchProps("customer_type"),
+    },
+    {
+      title: "Phone Number",
+      dataIndex: "phone_number",
+      key: "phone_number",
+      width: "30%",
+      // ...getColumnSearchProps("phone_number"),
+    },
+   
+    {
       title: "Action",
-      render: () => (
+      width: "20%",
+      render: (text,record) => (
         <div>
-          <IconButton onClick={() => console.log("edit")}>
+          <IconButton onClick={() => openModal(record)}>
             {" "}
             <EditIcon />
           </IconButton>
 
-          <IconButton onClick={() => console.log("delete")}>
+          <IconButton onClick={() =>  handleDelete(record)}>
             {" "}
             <DeleteIcon />
           </IconButton>
@@ -322,130 +258,73 @@ const Test = ({selected,setSelected,toast}) => {
       <Table
         style={{ maxHeight: "100px" }}
         columns={columns}
-        dataSource={client&&client.clients }
+        dataSource={data}
         rowSelection={{
           ...rowSelection,
         }}
         pagination={false}
         scroll={{ y: "350px" }}
         size="middle"
-        loading={client&&client.clients&& client.clients.length>0?false:true}
+        loading={data.length>0?false:true}
       />
+
+<Modal on={isModal} toggle={toggle}>
+        {isModal && (
+          <form onSubmit={(e) => onSubmit(e)}>
+            {/* <span>Edit client</span> */}
+            <label>Client Name:</label>
+            <br />
+            <input
+              type='text'
+              name='client_name'
+              value={formData.client_name}
+              onChange={(e) => onChange(e)}
+            />
+            <br />
+            <label>Company Name:</label>
+            <br />
+            <input
+              type='text'
+              name='company_name'
+              value={formData.company_name}
+              onChange={(e) => onChange(e)}
+            />
+            <br />
+            <label>Phone Number:</label>
+            <br />
+            <input
+              type='text'
+              name='phone_number'
+              value={formData.phone_number}
+              onChange={(e) => onChange(e)}
+            />
+            <br />
+            <label>Email:</label>
+            <br />
+            <input
+              type='text'
+              name='client_email'
+              value={formData.client_email}
+              onChange={(e) => onChange(e)}
+            />
+            <br />
+            <label>Customer Type:</label>
+            <br />
+            <input
+              type='text'
+              name='customer_type'
+              value={formData.customer_type}
+              onChange={(e) => onChange(e)}
+            />
+            <br />
+            <br />
+            <button type='submit'>Submit</button>
+          </form>
+        )}
+      </Modal>
     </div>
   );
 };
 
 export default Test;
 
-// export default class Test extends React.Component {
-//   state = {
-// searchText: '',
-// searchedColumn: '',
-//   };
-
-// getColumnSearchProps = dataIndex => ({
-//   filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
-//     <div style={{ padding: 8 }}>
-//       <Input
-//         ref={node => {
-//           this.searchInput = node;
-//         }}
-//         placeholder={`Search ${dataIndex}`}
-//         value={selectedKeys[0]}
-//         onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-//         onPressEnter={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
-//         style={{ marginBottom: 8, display: 'block' }}
-//       />
-//       <Space>
-//         <Button
-//           type="primary"
-//           onClick={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
-//           icon={<SearchOutlined />}
-//           size="small"
-//           style={{ width: 90 }}
-//         >
-//           Search
-//         </Button>
-//         <Button onClick={() => this.handleReset(clearFilters)} size="small" style={{ width: 90 }}>
-//           Reset
-//         </Button>
-//         <Button
-//           type="link"
-//           size="small"
-//           onClick={() => {
-//             confirm({ closeDropdown: false });
-//             this.setState({
-//               searchText: selectedKeys[0],
-//               searchedColumn: dataIndex,
-//             });
-//           }}
-//         >
-//           Filter
-//         </Button>
-//       </Space>
-//     </div>
-//   ),
-//   filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
-//   onFilter: (value, record) =>
-//     record[dataIndex]
-//       ? record[dataIndex].toString().toLowerCase().includes(value.toLowerCase())
-//       : '',
-//   onFilterDropdownVisibleChange: visible => {
-//     if (visible) {
-//       setTimeout(() => this.searchInput.select(), 100);
-//     }
-//   },
-//   render: text =>
-//     this.state.searchedColumn === dataIndex ? (
-//       <Highlighter
-//         highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-//         searchWords={[this.state.searchText]}
-//         autoEscape
-//         textToHighlight={text ? text.toString() : ''}
-//       />
-//     ) : (
-//       text
-//     ),
-// });
-
-// handleSearch = (selectedKeys, confirm, dataIndex) => {
-//   confirm();
-//   this.setState({
-//     searchText: selectedKeys[0],
-//     searchedColumn: dataIndex,
-//   });
-// };
-
-// handleReset = clearFilters => {
-//   clearFilters();
-//   this.setState({ searchText: '' });
-// };
-
-//   render() {
-// const columns = [
-//   {
-//     title: 'Name',
-//     dataIndex: 'name',
-//     key: 'name',
-//     width: '30%',
-//     ...this.getColumnSearchProps('name'),
-//   },
-//   {
-//     title: 'Age',
-//     dataIndex: 'age',
-//     key: 'age',
-//     width: '20%',
-//     ...this.getColumnSearchProps('age'),
-//   },
-//   {
-//     title: 'Address',
-//     dataIndex: 'address',
-//     key: 'address',
-//     ...this.getColumnSearchProps('address'),
-//     sorter: (a, b) => a.address.length - b.address.length,
-//     sortDirections: ['descend', 'ascend'],
-//   },
-// ];
-//     return <Table columns={columns} dataSource={data} />;
-//   }
-// }

@@ -1,7 +1,7 @@
 import * as actionKeys from '../actionKeys'
 const initialState = {
   clients: [],
-  // clients1: [],
+  // search: '',
 }
 
 const ClientReducer = (state = initialState, action) => {

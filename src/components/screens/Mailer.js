@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useRef } from 'react'
 import PropTypes from 'prop-types'
 import Navbar from '../../common/Navbar'
 import MailerTable from '../tables/MailerTable'
-import { toast,ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import '../CSS/mailer.css'
 import { campaignsList } from '../../redux/actionCreators/campaignsActions'
 import { useDispatch, useSelector } from 'react-redux'
@@ -13,29 +13,41 @@ import {
 } from "@material-ui/core";
 import Test from './test';
 const Mailer = (props) => {
+  const [filter, setfilter] = useState({
+    searchText: "",
+    searchedColumn: "",
+  });
   const [campaignId, setCampaignId] = useState('')
-  const [selected, setSelected] = React.useState([])
-  const [on,setOn] = useState(false)
+  const [selectedRowKeys, setSelected] = React.useState([])
+  const [on, setOn] = useState(false)
+  const resetRef = useRef()
   const dispatch = useDispatch()
   const sendMail = async () => {
-    if(campaignId==='' ||selected.length === 0 || campaignId ==='Choose a Campaigns') {
-     return toast.error("Please select campaign and client")
+    if (
+      campaignId === '' ||
+      selectedRowKeys.length === 0 ||
+      campaignId === 'Choose a Campaigns'
+    ) {
+      return toast.error('Please select campaign and client')
     }
     setOn(!on)
-    await dispatch(sendMailer(campaignId, selected, window,toast,setOn))
+    await dispatch(sendMailer(campaignId, selectedRowKeys, window, toast, setOn))
     setCampaignId('')
     setSelected([])
-    document.getElementById('campaign').value = "Choose a Campaigns"
+    document.getElementById('campaign').value = 'Choose a Campaigns'
     
   }
   const campaign = useSelector((state) => state.CampaignReducer)
- 
+
   useEffect(() => {
     dispatch(campaignsList())
   }, [])
+
+ 
+  console.log(selectedRowKeys);
   return (
     <div className='mailer'>
-      <ToastContainer/>
+      <ToastContainer />
       <Navbar page='Mailers' />
       <div style={{ display: 'flex' }}>
         <div className='split left'>
@@ -54,11 +66,18 @@ const Mailer = (props) => {
         </div>
       </div>
       <div className='tble'>
-        <Test selected={selected} setSelected={setSelected} toast={toast} />
+        <MailerTable selectedRowKeys={selectedRowKeys} setSelected={setSelected} toast={toast} ref={resetRef} />
       </div>
-      <div style={{ }}>
+      <div style={{}}>
         <button className='sendMailer' onClick={sendMail} disabled={on}>
-         {on ?<><CircularProgress size={25} thickness={5} color="primary" /> Sending... </>: "SEND MAILER"}
+          {on ? (
+            <>
+              <CircularProgress size={25} thickness={5} color='primary' />{' '}
+              Sending...{' '}
+            </>
+          ) : (
+            'SEND MAILER'
+          )}
         </button>
       </div>
     </div>
