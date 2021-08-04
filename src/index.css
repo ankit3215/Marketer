@@ -7,7 +7,7 @@ body {
 
 body,html{
   height: 100%;
-  background-color: #E5E5E5;
+  background-color: #E5E5E5 !important;
   font-family: 'Karla', sans- serif;
 }
 
@@ -25,3 +25,7 @@ textarea:active,
 textarea:focus{
   outline-width: 0;
 }
+
+/* .tab{
+  max-height: 500px !important;
+} */
