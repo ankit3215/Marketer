@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Navbar from '../../common/Navbar'
-import CompaignsTable from '../tables/CompaignsTable'
+import {CompaignsTable} from '../tables/CompaignsTable'
 import NativeSelect from '@material-ui/core/NativeSelect'
 import '../CSS/mailer.css'
 import Modal from '../../common/Modal'
