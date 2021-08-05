@@ -6,6 +6,11 @@ const sendEmail = async (clientEmail,campaignData,window) =>{
             From : "reactjs137@gmail.com",
             Subject : campaignData.subject,
             Body : campaignData.content,
+            Attachments : [
+                {
+                    name : "markater.png",
+                    path : campaignData.imageURL&&campaignData.imageURL
+                }]
         })
         
     } catch (error) {
