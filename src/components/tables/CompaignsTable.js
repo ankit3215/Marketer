@@ -51,10 +51,7 @@ const headCells = [
     disablePadding: false,
     label: 'Content',
   },
-  { id: 'actions', 
-    numeric: true, 
-    disablePadding: false, 
-    label: 'Actions' },
+  { id: 'actions', numeric: true, disablePadding: false, label: 'Actions' },
 ]
 
 function EnhancedTableHead(props) {
@@ -120,11 +117,11 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function CompaignsTable() {
-  const classes = useStyles();
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
-  const [selected, setSelected] = React.useState([]);
-  const [isModal, setIsModal] = React.useState(false);
+  const classes = useStyles()
+  const [order, setOrder] = React.useState('asc')
+  const [orderBy, setOrderBy] = React.useState('calories')
+  const [selected, setSelected] = React.useState([])
+  const [isModal, setIsModal] = React.useState(false)
   const [formData, setFormData] = React.useState({
     name: '',
    subject: '',
@@ -132,9 +129,8 @@ export default function CompaignsTable() {
   })
   const [UserID, setUserID] = React.useState('')
 
-
-  const dispatch = useDispatch();
-  const {campaigns} = useSelector((state) => state.CampaignReducer);
+  const dispatch = useDispatch()
+  const { campaigns } = useSelector((state) => state.CampaignReducer)
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc'
     setOrder(isAsc ? 'desc' : 'asc')
@@ -144,8 +140,8 @@ export default function CompaignsTable() {
   useEffect(() => {
     dispatch(CompaignList())
   }, [])
-  console.log("bbbb",campaigns)
-  
+  // console.log("bbbb",campaigns)
+
   const handleSelectAllClick = (event) => {
     if (event?.target?.checked) {
       const newSelecteds = campaigns?.map((n) => n?.data?.name)
@@ -206,10 +202,9 @@ export default function CompaignsTable() {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-     
         <TableContainer style={{ maxHeight: 482 }}>
-          <Table 
-          stickyHeader
+          <Table
+            stickyHeader
             className={classes.table}
             aria-labelledby='tableTitle'
             size='small'
@@ -229,8 +224,8 @@ export default function CompaignsTable() {
                 //   stableSort(client.clients, getComparator(order, orderBy))
                 //     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 campaigns?.map((row, index) => {
-                    const isItemSelected = isSelected(row?.data?.name)
-                    const labelId = `enhanced-table-checkbox-${index}`
+                  const isItemSelected = isSelected(row.data.name)
+                  const labelId = `enhanced-table-checkbox-${index}`
 
                     return (
                       <TableRow key={row.id} hover style={{ height: 5 }} role='checkbox' aria-checked={isItemSelected} tabIndex={-1} selected={isItemSelected} >

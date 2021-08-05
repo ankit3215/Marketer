@@ -158,10 +158,9 @@ function Upload(props) {
         if (!flag) {
           // console.log('_____', temp)
           // if (d.length === temp.length) {
-          var hasMatch=false
-          var ind;
-          temp.forEach((row,i) => {
-            
+          var hasMatch = false
+          var ind
+          temp.forEach((row, i) => {
             // var hasMatch = false
             if (clientArray) {
               for (var index = 0; index < clientArray.length; ++index) {
@@ -169,21 +168,23 @@ function Upload(props) {
                 // console.log(client);
                 if (row.client_email === client.data.client_email) {
                   // console.log('tewttew', row.client_email)
-                  ind=i;
+                  ind = i
                   hasMatch = true
                   break
                 }
-              }  
+              }
             }
             // addDocument('client', row)
           })
           if (hasMatch) {
-            toast.error(`duplicate values found in table and excel at index ${ind}` )
-            return;
+            toast.error(
+              `duplicate values found in table and excel at index ${ind}`
+            )
+            return
           }
           if (!hasMatch) {
-            temp.forEach((row)=>{
-              addDocument('client',row)
+            temp.forEach((row) => {
+              addDocument('client', row)
             })
           }
           dispatch(clientList())
