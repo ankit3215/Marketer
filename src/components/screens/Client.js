@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import Navbar from '../../common/Navbar'
 import ClientTable from '../tables/ClientTable'
@@ -67,9 +67,8 @@ const Client = (props) => {
           <span style={{ marginLeft: '30px' }}> All Clients </span>
         </div>
         <div className='split right'>
-          <input type='text' placeholder='Search...' />
           {/* <SearchIcon /> */}
-          <span style={{ marginLeft: '70px' }}>
+          <span style={{ marginLeft: '250px' }}>
             <Button
               variant='contained'
               style={{ backgroundColor: '#8e17c6', color: 'white' }}
