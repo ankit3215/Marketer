@@ -14,6 +14,7 @@ import Link from '@material-ui/core/Link'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
+import firebase from '../../firebase'
 
 import {
   Container,
@@ -66,35 +67,36 @@ const CreateCampaigns = (props) => {
   const regexp = /[a-z]/gi
 
   const onFileChange=async(e)=>{
-    debugger
     const file = e.target.files[0];
-    if(!file) return;
 
-    const name = file.name;
-    const fileUrl = await uploadFile(file, `campaignPic/${name}`);
+    const storageRef = firebase.storage().ref();
+    const fileRef = storageRef.child(`campaignPic/${name}`);
+    await fileRef.put(file);
+    setFileUrl(await fileRef.getDownloadURL());
 
-    
+    // if(!file) return;
+    // const name = file.name;
+    // const fileUrl = await uploadFile(file, `campaignPic/${name}`);
+    // const doc = db.collection("userInfo").doc(userId.toString());
+    // await doc
+    //   .update({
+    //     imageUrl: fileUrl,
+    //   })
+    //   .then(() => {
+    //     setFileUrl(fileUrl);
+    //     console.log("url updated in database");
+    //   })
+    //   .catch(() => {
+    //     console.log("some error occured");
+    //   });
 
-    const doc = db.collection("userInfo").doc(userId.toString());
-
-    await doc
-      .update({
-        imageUrl: fileUrl,
-      })
-      .then(() => {
-        setFileUrl(fileUrl);
-        console.log("url updated in database");
-      })
-      .catch(() => {
-        console.log("some error occured");
-      });
-
-      await doc.get().then((docRef) => {
-        setFileUrl1(docRef.data().url);
-      });
+    //   await doc.get().then((docRef) => {
+    //     setFileUrl1(docRef.data().url);
+    //   });
 
   }
   const ent = /[a-z]/gi
+
   const handleSubmit = (e) => {
     e.preventDefault()
     setLoader(true)
@@ -128,6 +130,7 @@ const CreateCampaigns = (props) => {
           content: content,
           createdAt: Date(Date.now()).toString(),
           auth,
+          imageURL:fileUrl
         })
         .then(() => {
           setLoader(false)
@@ -328,7 +331,7 @@ const CreateCampaigns = (props) => {
           )}</Avatar> */}
             <Button
               style={{
-                marginTop: '80px',
+                marginTop: '25px',
                 borderRadius: '10px',
                 marginLeft: '10px',
               }}

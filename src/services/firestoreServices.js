@@ -72,4 +72,16 @@ export const getClientEmailById = async (clientIds) => {
   return clientData
 }
 
+export const EditCampaign = async (userData) => {
+  // console.log(userData)
+  return await db.collection('campaign').doc(userData.id).update(userData.data)
+}
+
+export const DeleteCampaign = async (id) => {
+  // console.log(userData)
+  return await db.collection('campaign').doc(id).delete()
+}
+
+
+
 export default db

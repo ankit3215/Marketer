@@ -85,17 +85,9 @@ const MailerTable =({selectedRowKeys,setSelected,toast}) => {
 
 
   const rowSelection = {
-
     selectedRowKeys,
     onChange: (selectedRowKeys) => {
-
-
       setSelected(selectedRowKeys)
-      // console.log(
-      //   `selectedRowKeys: ${selectedRowKeys}`,
-      //   "selectedRows: ",
-      //   selectedRows
-      // );
     },
   };
 
@@ -109,7 +101,6 @@ const MailerTable =({selectedRowKeys,setSelected,toast}) => {
   };
 
   const handleReset = async(clearFilters) => {
-    console.log("helooooooooooooooooooooooooooooo");
    await clearFilters();
     setfilter({ ...filter, searchText: "" });
   };
