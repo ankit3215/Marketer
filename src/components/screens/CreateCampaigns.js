@@ -123,7 +123,7 @@ const CreateCampaigns = (props) => {
     }
 
     if (name.match(regexp) && subject.match(ent) && content) {
-      db.collection('campaign')
+      db.collection('conti')
         .add({
           name: name,
           subject: subject,
