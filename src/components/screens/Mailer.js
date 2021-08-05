@@ -54,7 +54,7 @@ const Mailer = (props) => {
           <span style={{ marginLeft: '30px' }}> All Campaigns </span>
         </div>
         <div className='split right'>
-          <span style={{ marginLeft: '0px' }}>
+          <span style={{ marginLeft: '100px' }}>
             Select Campaigns
             <select id="campaign" style={{ marginLeft: '15px' }} onChange={() => setCampaignId(document.getElementById('campaign').value)} >
               <option value="Choose a Campaigns" >Choose a Campaigns</option>
