@@ -23,6 +23,7 @@ import FilterListIcon from '@material-ui/icons/FilterList'
 import EditIcon from '@material-ui/icons/Edit'
 import { useDispatch, useSelector } from 'react-redux'
 import { CompaignList } from '../../redux/actionCreators/compaignsAction'
+import {editCampaign,deleteCampaign} from '../../redux/actionCreators/campaignsActions';
 import Modal from '../../common/Modal'
 
 const headCells = [
@@ -116,8 +117,9 @@ export default function CompaignsTable() {
   const [selected, setSelected] = React.useState([])
   const [isModal, setIsModal] = React.useState(false)
   const [formData, setFormData] = React.useState({
-    client_name: '',
-    client_email: '',
+    name: '',
+   subject: '',
+   content: '',
   })
   const [UserID, setUserID] = React.useState('')
 
@@ -150,8 +152,8 @@ export default function CompaignsTable() {
 
   const onSubmit = (e) => {
     e.preventDefault()
-    // console.log(formData)
-    // dispatch(editClient({ id: UserID, data: formData }))
+    console.log(formData)
+    dispatch(editCampaign({ id: UserID, data: formData }))
     toggle()
   }
 
@@ -159,11 +161,7 @@ export default function CompaignsTable() {
     setIsModal(!isModal)
   }
   const openModal = (row) => {
-    setFormData({
-      ...formData,
-      client_name: row.data.client_name,
-      client_email: row.data.client_email,
-    })
+    setFormData({ ...formData, name: row.data.name, subject: row.data.subject, content: row.data.content })
     setUserID(row.id)
     setIsModal(!isModal)
   }
@@ -187,6 +185,11 @@ export default function CompaignsTable() {
 
     setSelected(newSelected)
   }
+
+  const handleDelete =async (row) =>{
+    await dispatch(deleteCampaign(row.id))
+     
+   }
 
   const isSelected = (name) => selected.indexOf(name) !== -1
 
@@ -218,50 +221,32 @@ export default function CompaignsTable() {
                   const isItemSelected = isSelected(row.data.name)
                   const labelId = `enhanced-table-checkbox-${index}`
 
-                  return (
-                    <TableRow
-                      key={row?.id}
-                      hover
-                      style={{ height: 5 }}
-                      role='checkbox'
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.data.client_name}
-                      selected={isItemSelected}
-                    >
-                      <TableCell padding='checkbox'>
-                        <Checkbox
-                          checked={isItemSelected}
-                          onClick={(event) =>
-                            handleClick(event, row.data.client_name)
-                          }
-                          inputProps={{ 'aria-labelledby': labelId }}
-                        />
-                      </TableCell>
-                      <TableCell
-                        component='th'
-                        id={labelId}
-                        scope='row'
-                        padding='none'
-                      >
-                        {row.data.name}
-                      </TableCell>
-                      <TableCell align='left'>{row.data.subject}</TableCell>
-                      <TableCell align='left'>{row.data.content}</TableCell>
-                      <TableCell align='left'>
-                        <IconButton onClick={() => openModal(row)}>
-                          {/* {' '} */}
-                          <EditIcon />
-                        </IconButton>
+                    return (
+                      <TableRow key={row.id} hover style={{ height: 5 }} role='checkbox' aria-checked={isItemSelected} tabIndex={-1} selected={isItemSelected} >
+                        <TableCell padding='checkbox'>
+                          <Checkbox checked={isItemSelected} onClick={(event) => handleClick(event, row.data.client_name) } inputProps={{ 'aria-labelledby': labelId }} />
+                        </TableCell>
+                        <TableCell component='th' id={labelId} scope='row' padding='none' >
+                          {row.data.name}
+                        </TableCell>
+                        <TableCell align='left'>{row.data.subject}</TableCell>
+                        <TableCell align='left'>{row.data.content}</TableCell>
+                        <TableCell align='left'>
+                          <IconButton onClick={() => openModal(row)}>
+                            {/* {' '} */}
+                            <EditIcon />
+                          </IconButton>
 
-                        <IconButton>
-                          {' '}
-                          <DeleteIcon />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  )
-                })
+                        
+                          <IconButton onClick={() =>handleDelete(row)}>
+                            {' '}
+                            <DeleteIcon />
+                    
+                          </IconButton>
+                        </TableCell>
+                      </TableRow>
+                    )
+                  })
               }
               {/* {client && client.clients && client.clients.length > 0 && (
                 <TableRow style={{ height: 33 * client.clients.length }}>
@@ -277,21 +262,30 @@ export default function CompaignsTable() {
         {isModal && (
           <form onSubmit={(e) => onSubmit(e)}>
             {/* <span>Edit client</span> */}
-            <label>Client Name:</label>
+            <label>Campaign Name:</label>
             <br />
             <input
               type='text'
-              name='client_name'
-              value={formData.client_name}
+              name='name'
+              value={formData.name}
               onChange={(e) => onChange(e)}
             />
             <br />
-            <label>Last name:</label>
+            <label>Subject:</label>
             <br />
             <input
               type='text'
-              name='client_email'
-              value={formData.client_email}
+              name='subject'
+              value={formData.subject}
+              onChange={(e) => onChange(e)}
+            />
+            <br />
+            <label>Content:</label>
+            <br />
+            <input
+              type='text'
+              name='content'
+              value={formData.content}
               onChange={(e) => onChange(e)}
             />
             <br />
