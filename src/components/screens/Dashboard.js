@@ -1,5 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianAxisProps, CartesianGrid, 
+  Legend, Tooltip, AreaChart, Area, BarChart,Bar} from "recharts";
 import {
   Container,
   Typography,
@@ -18,6 +20,46 @@ import Navbar from "../../common/Navbar";
 import "../CSS/mailer.css";
 import { CompaignList } from "../../redux/actionCreators/compaignsAction";
 import { clientList } from "../../redux/actionCreators/clientAction";
+
+
+
+const pdata = [
+  {
+      name:"python",
+      student:13,
+      fees: 10
+  },
+
+  {
+      name:"Java",
+      student: 10,
+      fees: 8
+  }, 
+
+  {
+      name:"javascript",
+      student: 5,
+      fees: 3
+  },
+
+  {
+      name:"php",
+      student: 16,
+      fees: 14
+  },
+
+  {
+      name:"react",
+      student:18,
+      fees:"16"
+  },
+
+
+
+
+
+
+]
 
 const Dashboard = (props) => {
   const dispatch = useDispatch();
@@ -69,6 +111,37 @@ const Dashboard = (props) => {
             </Paper>
           </Grid>
 
+
+          <Grid item lg={3}>
+            <Paper style={{ width: "250px" }}>
+              <div
+                style={{ display: "flex", marginTop: "20px", width: "300px" }}
+              >
+                <div>
+                  <img
+                    src="/img/Group.png"
+                    alt=""
+                    style={{
+                      marginTop: "16px",
+                      marginLeft: "20px",
+                      marginBottom: "8px",
+                    }}
+                  />
+                </div>
+
+                <div
+                  className=""
+                  style={{ marginTop: "24px", marginLeft: "16px" }}
+                >
+                  Total Gmail 
+                  <h3 className="" style={{ marginTop: "2px" }}>
+                    0
+                  </h3>
+                </div>
+              </div>
+            </Paper>
+          </Grid>
+
           <Grid item lg={3}>
             <Paper style={{ width: "250px" }}>
               <div
@@ -101,7 +174,59 @@ const Dashboard = (props) => {
             </Paper>
           </Grid>
         </Grid>
+        </Container>
+
+           
+      <Container style={{ marginTop: "75px" }}>
+      <Grid container spacing={1}>
+      <Grid item lg={6}>
+        <h3> Line Chart </h3>
+        <ResponsiveContainer width="150%" aspect={3}>
+            <LineChart data={pdata} width={500} height={300} margin={{top: 5, right: 300, left: 20, bottom: 5}}>
+                <CartesianGrid />
+                <XAxis dataKey="name" interval={"preserveStartEnd"}  />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+               
+                <Line margin={{left: 40, bottom: 5}} type="monotone" dataKey="student" stroke="green" />
+                <Line type="monotone" dataKey="fees" stroke="red" />
+               
+
+
+            </LineChart>
+
+        </ResponsiveContainer>
+        </Grid>
+        
+        <Grid item lg={6}>
+
+        <h3> Bar Chart </h3>
+        <ResponsiveContainer width="150%" aspect={3}>
+            <BarChart data={pdata} width={500} height={300} margin={{top: 5, right: 300, left: 20, bottom: 5}}>
+                <CartesianGrid />
+                <XAxis dataKey="name" interval={"preserveStartEnd"}  />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar type="monotone" dataKey="student" fill="#8884d8" />
+                <Bar type="monotone" dataKey="fees" fill="#82ca9d" />
+
+                
+
+
+            </BarChart>
+
+        </ResponsiveContainer>
+
+        </Grid>
+        </Grid>
+
+        
       </Container>
+     
+   
+       
     </div>
   );
 };

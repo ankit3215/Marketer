@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux'
 // import { useDispatch, useSelector } from 'react-redux'
 // import { sendMailer } from '../redux/actionCreators/mailerActions'
 import { Form } from 'react-bootstrap'
+import { uploadFile } from "../../services/fireStorage";
 import db from '../../services/firestoreServices'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -18,6 +19,9 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs'
 import Typography from '@material-ui/core/Typography'
 import Link from '@material-ui/core/Link'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
+import Avatar from '@material-ui/core/Avatar';
+import Paper from '@material-ui/core/Paper';
+
 import {
   Container,
   Radio,
@@ -73,14 +77,47 @@ const CreateCampaigns = (props) => {
   // }, [])
   // console.log(campaignId,selected);
 
-  const auth = useSelector((state) => state.auth.userInfo.userId)
+  // const auth = useSelector((state) => state.auth.userInfo.userId)
+  const auth = useSelector((state) => state.auth);
   const [name, setName] = useState('')
   const [subject, setSubject] = useState('')
   const [content, setContent] = useState('')
+  const [fileUrl, setFileUrl] = useState(null);
+  const [fileUrl1, setFileUrl1] = useState(null);
+  const userId = auth.userInfo.userId;
 
   const [loader, setLoader] = useState(false)
   const regexp = /[a-z]/gi
   // const ent=/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+  const onFileChange=async(e)=>{
+    const file = e.target.files[0];
+    if(!file) return;
+
+    const name = file.name;
+    const fileUrl = await uploadFile(file, `campaignPic/${name}`);
+
+    
+
+    const doc = db.collection("userInfo").doc(userId.toString());
+
+    await doc
+      .update({
+        imageUrl: fileUrl,
+      })
+      .then(() => {
+        setFileUrl(fileUrl);
+        console.log("url updated in database");
+      })
+      .catch(() => {
+        console.log("some error occured");
+      });
+
+      await doc.get().then((docRef) => {
+        setFileUrl1(docRef.data().url);
+      });
+
+  }
   const ent = /[a-z]/gi
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -108,13 +145,13 @@ const CreateCampaigns = (props) => {
     }
 
     if (name.match(regexp) && subject.match(ent) && content) {
-      db.collection('campaign')
+      db.collection('conti')
         .add({
           name: name,
           subject: subject,
           content: content,
           createdAt: Date(Date.now()).toString(),
-          auth,
+          auth
         })
         .then(() => {
           setLoader(false)
@@ -151,7 +188,7 @@ const CreateCampaigns = (props) => {
                 color='inherit'
                 href='/'
                 className='ras'
-                style={{ marginLeft: '44px' }}
+                style={{ marginLeft: '34px' }}
               >
                 All Campaigns
               </Link>
@@ -207,6 +244,15 @@ const CreateCampaigns = (props) => {
                 </Form.Group>
               </Grid>
               <Grid item>
+              
+                {/* <input type="file"  accept="image/*" onChange={onFileChange}/> */}
+                {/* {fileUrl1 && (
+            <img
+              src={fileUrl1}
+              alt="profile img"
+              style={{ width: "100px", height: "100px" }}
+            />
+          )} */}
                 <p>
                   <strong
                     style={{
@@ -242,6 +288,28 @@ const CreateCampaigns = (props) => {
                 </Form.Group>
               </Grid>
             </Grid>
+            <p style={{ marginTop: '24px' }}>
+                <strong
+                  style={{
+                    fontFamily: 'karla',
+                    fontSize: '14px',
+                    fontWeight: '400',
+                    marginTop: '134px',
+                    marginLeft: '12px',
+                    marginBottom: '8px',
+                  }}
+                >
+                  Image Upload
+                </strong>
+              </p>
+
+            <Grid item xs={12}>
+                 <input type="file"  accept="image/*" onChange={onFileChange} style={{marginLeft:"14px"}}/>
+           </Grid>
+
+           <Avatar  className={classes.large}
+    src = {fileUrl || auth.userInfo.imageUrl}/>
+
             <div>
               {/* <Grid item> */}
               <p style={{ marginTop: '24px' }}>
@@ -278,9 +346,16 @@ const CreateCampaigns = (props) => {
               </Form.Group>
               {/* </Grid> */}
             </div>
+            {/* <Avatar style={{backgroundColor:"#D1A402"}}>{fileUrl && (
+            <img
+              src={fileUrl || auth.userInfo.imageUrl}
+              alt="profile img"
+              style={{ width: "100px", height: "100px" }}
+            />
+          )}</Avatar> */}
             <Button
               style={{
-                marginTop: '140px',
+                marginTop: '80px',
                 borderRadius: '10px',
                 marginLeft: '10px',
               }}
@@ -295,6 +370,17 @@ const CreateCampaigns = (props) => {
             <ToastContainer />
           </form>
         </Container>
+        
+        {/* <Avatar style={{backgroundColor:"#D1A402"}}>{fileUrl && (
+            <img
+              src={fileUrl || auth.userInfo.imageUrl}
+              alt="profile img"
+              style={{ width: "100px", height: "100px" }}
+            />
+          )}</Avatar> */}
+
+
+
       </div>
     </div>
   )
