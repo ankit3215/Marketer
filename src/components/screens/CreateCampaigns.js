@@ -2,13 +2,6 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import Navbar from '../../common/Navbar'
 import { useSelector } from 'react-redux'
-// import MailerTable from './MailerTable'
-// import NativeSelect from '@material-ui/core/NativeSelect'
-// import './CSS/mailer.css'
-// import Modal from '../common/Modal'
-// import { campaignsList } from '../redux/actionCreators/campaignsActions'
-// import { useDispatch, useSelector } from 'react-redux'
-// import { sendMailer } from '../redux/actionCreators/mailerActions'
 import { Form } from 'react-bootstrap'
 import { uploadFile } from "../../services/fireStorage";
 import db from '../../services/firestoreServices'
@@ -21,6 +14,7 @@ import Link from '@material-ui/core/Link'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
+import firebase from '../../firebase'
 
 import {
   Container,
@@ -61,64 +55,48 @@ const useStyles = makeStyles({
 })
 
 const CreateCampaigns = (props) => {
-  // const [campaignId, setCampaignId] = useState('')
-  // const [selected, setSelected] = React.useState([])
-
-  // const dispatch = useDispatch()
-  // const sendMail = () => {
-  //   // console.log(campaignId,selected)
-  //   dispatch(sendMailer(campaignId, selected, window))
-  //   setCampaignId('')
-  //   setSelected([])
-  // }
-  // const campaign = useSelector((state) => state.CampaignReducer)
-  // useEffect(() => {
-  //   dispatch(campaignsList())
-  // }, [])
-  // console.log(campaignId,selected);
-
-  // const auth = useSelector((state) => state.auth.userInfo.userId)
   const auth = useSelector((state) => state.auth);
   const [name, setName] = useState('')
   const [subject, setSubject] = useState('')
   const [content, setContent] = useState('')
-  const [fileUrl, setFileUrl] = useState(null);
-  const [fileUrl1, setFileUrl1] = useState(null);
+  const [fileUrl, setFileUrl] = useState("");
+  const [fileUrl1, setFileUrl1] = useState("");
   const userId = auth.userInfo.userId;
 
   const [loader, setLoader] = useState(false)
   const regexp = /[a-z]/gi
-  // const ent=/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
   const onFileChange=async(e)=>{
     const file = e.target.files[0];
-    if(!file) return;
 
-    const name = file.name;
-    const fileUrl = await uploadFile(file, `campaignPic/${name}`);
+    const storageRef = firebase.storage().ref();
+    const fileRef = storageRef.child(`campaignPic/${name}`);
+    await fileRef.put(file);
+    setFileUrl(await fileRef.getDownloadURL());
 
-    
+    // if(!file) return;
+    // const name = file.name;
+    // const fileUrl = await uploadFile(file, `campaignPic/${name}`);
+    // const doc = db.collection("userInfo").doc(userId.toString());
+    // await doc
+    //   .update({
+    //     imageUrl: fileUrl,
+    //   })
+    //   .then(() => {
+    //     setFileUrl(fileUrl);
+    //     console.log("url updated in database");
+    //   })
+    //   .catch(() => {
+    //     console.log("some error occured");
+    //   });
 
-    const doc = db.collection("userInfo").doc(userId.toString());
-
-    await doc
-      .update({
-        imageUrl: fileUrl,
-      })
-      .then(() => {
-        setFileUrl(fileUrl);
-        console.log("url updated in database");
-      })
-      .catch(() => {
-        console.log("some error occured");
-      });
-
-      await doc.get().then((docRef) => {
-        setFileUrl1(docRef.data().url);
-      });
+    //   await doc.get().then((docRef) => {
+    //     setFileUrl1(docRef.data().url);
+    //   });
 
   }
   const ent = /[a-z]/gi
+
   const handleSubmit = (e) => {
     e.preventDefault()
     setLoader(true)
@@ -151,7 +129,8 @@ const CreateCampaigns = (props) => {
           subject: subject,
           content: content,
           createdAt: Date(Date.now()).toString(),
-          auth
+          auth,
+          imageURL:fileUrl
         })
         .then(() => {
           setLoader(false)
@@ -307,9 +286,6 @@ const CreateCampaigns = (props) => {
                  <input type="file"  accept="image/*" onChange={onFileChange} style={{marginLeft:"14px"}}/>
            </Grid>
 
-           <Avatar  className={classes.large}
-    src = {fileUrl || auth.userInfo.imageUrl}/>
-
             <div>
               {/* <Grid item> */}
               <p style={{ marginTop: '24px' }}>
@@ -355,7 +331,7 @@ const CreateCampaigns = (props) => {
           )}</Avatar> */}
             <Button
               style={{
-                marginTop: '80px',
+                marginTop: '25px',
                 borderRadius: '10px',
                 marginLeft: '10px',
               }}
@@ -379,7 +355,8 @@ const CreateCampaigns = (props) => {
             />
           )}</Avatar> */}
 
-
+{/* <Avatar  className={classes.large}
+    src = {fileUrl || auth.userInfo.imageUrl}/> */}
 
       </div>
     </div>

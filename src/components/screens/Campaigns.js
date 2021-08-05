@@ -9,7 +9,6 @@ import Button from '@material-ui/core/Button'
 import { Link } from 'react-router-dom'
 const Campaigns = (props) => {
   return (
-    // <div style={{ marginTop: '30px' }}>this is a campaign</div>
     <div className='mailer'>
       <Navbar page='Campaigns' />
       <div style={{ display: 'flex' }}>
@@ -18,10 +17,6 @@ const Campaigns = (props) => {
         </div>
         <div class='split right'>
           <span style={{ marginLeft: '250px' }}>
-            {/* Select Campaigns
-            <select style={{ marginLeft: '20px' }}>
-              <option value='volvo'>Choose a Campaigns</option>
-            </select> */}
             <Button
               variant='contained'
               style={{ backgroundColor: '#8e17c6', color: 'white' }}
@@ -38,6 +33,5 @@ const Campaigns = (props) => {
       </div>
     </div>
   )
-  // Campaigns.propTypes = {}
 }
 export default Campaigns

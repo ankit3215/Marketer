@@ -72,4 +72,54 @@ export const getClientEmailById = async (clientIds) => {
   return clientData
 }
 
+export const EditCampaign = async (userData) => {
+  // console.log(userData)
+  return await db.collection('campaign').doc(userData.id).update(userData.data)
+}
+
+export const DeleteCampaign = async (id) => {
+  // console.log(userData)
+  return await db.collection('campaign').doc(id).delete()
+}
+
+export const fetchHistory = async () => {
+  let history=[];
+  let querySnapshot = await db.collection('history').get()
+  querySnapshot.forEach((doc) => {
+      history.push({key:doc.id,...doc.data()})
+  })
+
+ 
+
+  return history
+}
+
+export const fetchHistoryByTime = async (startDate, endDate) => {
+  let history=[];
+  startDate = new Date(startDate)
+  endDate = new Date(endDate)
+  let querySnapshot = await db.collection('history').where("createdAt",">",startDate).where("createdAt","<",endDate)
+  .get()
+  querySnapshot.forEach((doc) => {
+      history.push({key:doc.id,...doc.data()})
+  })
+
+ 
+
+  return history
+}
+
+export const getClientDataByIds = async (clientIds) => {
+  let clientData = []
+  let querySnapshot = await db.collection('client').get()
+
+  querySnapshot.forEach((doc) => {
+    if (clientIds.includes(doc.id.toString()))
+      clientData.push({clientEmail:doc.data().client_email,clientName:doc.data().client_name})
+  })
+
+  return clientData
+}
+
+
 export default db

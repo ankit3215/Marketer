@@ -15,6 +15,7 @@ import { logOutUser } from '../redux/actionCreators/authActions'
 import CreateCampaigns from './screens/CreateCampaigns'
 import Campaigns from './screens/Campaigns'
 import Test from './screens/test'
+import History from './screens/History'
 
 const Sidebar = ({ history }) => {
   const auth = useSelector((state) => state.auth)
@@ -29,7 +30,7 @@ const Sidebar = ({ history }) => {
       <div>
         <div
           className='w3-sidebar w3-light-white w3-bar-block'
-          style={{ position: 'fixed', width: '20%', top: '0', left: '0' }}
+          style={{ position: 'fixed', width: '250px', top: '0', left: '0' }}
         >
           <h3 className='w3-bar-item ' style={{ top: '48px', left: '20px' }}>
             {' '}
@@ -108,12 +109,29 @@ const Sidebar = ({ history }) => {
               <img src='/img/mail.svg' alt='mail' /> Mailers
             </span>
           </Link>
+          <Link
+            to='/history'
+            className='w3-bar-item w3-button'
+            style={{ padding: '15px' }}
+          >
+            <span
+              style={{
+                margin: '3px',
+                padding: '10px',
+                fontSize: '16px',
+                fontFamily: 'karla',
+              }}
+            >
+              {' '}
+              <img src='/img/history.png' height='14px' width='14px' alt='mail' /> {" "}History
+            </span>
+          </Link>
           <button
             onClick={handleClick}
             className='w3-bar-item w3-button'
             style={{
               padding: '15px',
-              marginTop: '240px',
+              marginTop: '200px',
             }}
           >
             <span
@@ -138,6 +156,7 @@ const Sidebar = ({ history }) => {
               <Route path='/campaigns' component={Campaigns} />
               <Route path='/create' component={CreateCampaigns} />
               <Route path='/mailer' component={Mailer} />
+              <Route path='/history' component={History} />
               <Route path='*' component={Dashboard} />
             </Switch>
           </div>
