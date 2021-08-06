@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Navbar from '../../common/Navbar'
 import { useSelector } from 'react-redux'
 import { Form } from 'react-bootstrap'
-import { uploadFile } from "../../services/fireStorage";
+import { uploadFile } from '../../services/fireStorage'
 import db from '../../services/firestoreServices'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -12,8 +12,8 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs'
 import Typography from '@material-ui/core/Typography'
 import Link from '@material-ui/core/Link'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
-import Avatar from '@material-ui/core/Avatar';
-import Paper from '@material-ui/core/Paper';
+import Avatar from '@material-ui/core/Avatar'
+import Paper from '@material-ui/core/Paper'
 import firebase from '../../firebase'
 
 import {
@@ -55,24 +55,24 @@ const useStyles = makeStyles({
 })
 
 const CreateCampaigns = (props) => {
-  const auth = useSelector((state) => state.auth);
+  const auth = useSelector((state) => state.auth)
   const [name, setName] = useState('')
   const [subject, setSubject] = useState('')
   const [content, setContent] = useState('')
-  const [fileUrl, setFileUrl] = useState("");
-  const [fileUrl1, setFileUrl1] = useState("");
-  const userId = auth.userInfo.userId;
+  const [fileUrl, setFileUrl] = useState('')
+  const [fileUrl1, setFileUrl1] = useState('')
+  const userId = auth.userInfo.userId
 
   const [loader, setLoader] = useState(false)
   const regexp = /[a-z]/gi
 
-  const onFileChange=async(e)=>{
-    const file = e.target.files[0];
+  const onFileChange = async (e) => {
+    const file = e.target.files[0]
 
-    const storageRef = firebase.storage().ref();
-    const fileRef = storageRef.child(`campaignPic/${name}`);
-    await fileRef.put(file);
-    setFileUrl(await fileRef.getDownloadURL());
+    const storageRef = firebase.storage().ref()
+    const fileRef = storageRef.child(`campaignPic/${name}`)
+    await fileRef.put(file)
+    setFileUrl(await fileRef.getDownloadURL())
 
     // if(!file) return;
     // const name = file.name;
@@ -93,7 +93,6 @@ const CreateCampaigns = (props) => {
     //   await doc.get().then((docRef) => {
     //     setFileUrl1(docRef.data().url);
     //   });
-
   }
   const ent = /[a-z]/gi
 
@@ -123,14 +122,14 @@ const CreateCampaigns = (props) => {
     }
 
     if (name.match(regexp) && subject.match(ent) && content) {
-      db.collection('conti')
+      db.collection('campaign')
         .add({
           name: name,
           subject: subject,
           content: content,
           createdAt: Date(Date.now()).toString(),
           auth,
-          imageURL:fileUrl
+          imageURL: fileUrl,
         })
         .then(() => {
           setLoader(false)
@@ -223,7 +222,6 @@ const CreateCampaigns = (props) => {
                 </Form.Group>
               </Grid>
               <Grid item>
-              
                 {/* <input type="file"  accept="image/*" onChange={onFileChange}/> */}
                 {/* {fileUrl1 && (
             <img
@@ -268,23 +266,28 @@ const CreateCampaigns = (props) => {
               </Grid>
             </Grid>
             <p style={{ marginTop: '24px' }}>
-                <strong
-                  style={{
-                    fontFamily: 'karla',
-                    fontSize: '14px',
-                    fontWeight: '400',
-                    marginTop: '134px',
-                    marginLeft: '12px',
-                    marginBottom: '8px',
-                  }}
-                >
-                  Image Upload
-                </strong>
-              </p>
+              <strong
+                style={{
+                  fontFamily: 'karla',
+                  fontSize: '14px',
+                  fontWeight: '400',
+                  marginTop: '134px',
+                  marginLeft: '12px',
+                  marginBottom: '8px',
+                }}
+              >
+                Image Upload
+              </strong>
+            </p>
 
             <Grid item xs={12}>
-                 <input type="file"  accept="image/*" onChange={onFileChange} style={{marginLeft:"14px"}}/>
-           </Grid>
+              <input
+                type='file'
+                accept='image/*'
+                onChange={onFileChange}
+                style={{ marginLeft: '14px' }}
+              />
+            </Grid>
 
             <div>
               {/* <Grid item> */}
@@ -346,7 +349,7 @@ const CreateCampaigns = (props) => {
             <ToastContainer />
           </form>
         </Container>
-        
+
         {/* <Avatar style={{backgroundColor:"#D1A402"}}>{fileUrl && (
             <img
               src={fileUrl || auth.userInfo.imageUrl}
@@ -355,9 +358,8 @@ const CreateCampaigns = (props) => {
             />
           )}</Avatar> */}
 
-{/* <Avatar  className={classes.large}
+        {/* <Avatar  className={classes.large}
     src = {fileUrl || auth.userInfo.imageUrl}/> */}
-
       </div>
     </div>
   )
