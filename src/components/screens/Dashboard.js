@@ -20,7 +20,7 @@ import Navbar from "../../common/Navbar";
 import "../CSS/mailer.css";
 import { CompaignList } from "../../redux/actionCreators/compaignsAction";
 import { clientList } from "../../redux/actionCreators/clientAction";
-
+import {getHistory} from '../../redux/actionCreators/mailerActions';
 
 
 const pdata = [
@@ -66,12 +66,15 @@ const Dashboard = (props) => {
 
   const client = useSelector((state) => state.ClientReducer);
   const { campaigns } = useSelector((state) => state.CampaignReducer);
+  const {history} = useSelector((state) => state.ClientReducer);
 
   React.useEffect(() => {
     dispatch(clientList());
-
+    dispatch(getHistory("",""))
     dispatch(CompaignList());
   }, []);
+
+  // console.log(history);
 
   return (
     <div>
@@ -133,9 +136,9 @@ const Dashboard = (props) => {
                   className=""
                   style={{ marginTop: "24px", marginLeft: "16px" }}
                 >
-                  Total Gmail 
+                  Total Mail Sent
                   <h3 className="" style={{ marginTop: "2px" }}>
-                    0
+                    {history?.length<=9 ? `0${history?.length}` : history?.length}
                   </h3>
                 </div>
               </div>

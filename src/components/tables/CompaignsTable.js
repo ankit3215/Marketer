@@ -166,7 +166,18 @@ export  const CompaignsTable = () => {
       ),
   });
   const columns = [
-    
+    {
+      title: "Name",
+      dataIndex: "imageURL",
+      key: "imageURL",
+      width: "20%",
+      render: (text,record) => (
+        <>
+          <img width="50px" height="50px" style={{borderRadius:"25px"}} src={text} />
+        </>
+      )
+      // ...getColumnSearchProps("name"),
+    },
     {
       title: "Name",
       dataIndex: "name",
