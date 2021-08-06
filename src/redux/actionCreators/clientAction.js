@@ -1,5 +1,9 @@
 import * as actionKeys from '../actionKeys'
-import { EditClient, FetchClient } from '../../services/firestoreServices'
+import {
+  EditClient,
+  FetchClient,
+  DeleteClient,
+} from '../../services/firestoreServices'
 
 export const clientList = () => async (dispatch) => {
   let data = await FetchClient()
@@ -8,7 +12,7 @@ export const clientList = () => async (dispatch) => {
   let client = []
   data.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
-    console.log(doc.id, ' => ', doc.data())
+    // console.log(doc.id, ' => ', doc.data())
     client.push({ id: doc.id, data: doc.data() })
   })
 
@@ -43,6 +47,20 @@ export const editClient = (userData) => (dispatch) => {
         payload: userData,
       })
       dispatch(clientList())
+    })
+    .catch((err) => {})
+
+  // console.log(data)
+}
+
+export const deleteClient = (id) => (dispatch) => {
+  // console.log(userData)
+  DeleteClient(id)
+    .then(() => {
+      dispatch({
+        type: actionKeys.DELETE_CLIENT,
+        payload: id,
+      })
     })
     .catch((err) => {})
 

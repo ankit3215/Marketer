@@ -22,21 +22,34 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import FilterListIcon from '@material-ui/icons/FilterList'
 import EditIcon from '@material-ui/icons/Edit'
 import { useDispatch, useSelector } from 'react-redux'
-import { clientList,editClient } from '../redux/actionCreators/clientAction'
-import Modal from '../common/Modal'
+import { CompaignList } from '../../redux/actionCreators/compaignsAction'
+import {editCampaign,deleteCampaign} from '../../redux/actionCreators/campaignsActions';
+import Modal from '../../common/Modal'
 
 const headCells = [
   {
-    id: 'client_name',
+    id: 'compaign_image',
     numeric: false,
     disablePadding: true,
-    label: 'Client Name',
+    label: 'Compaign Pic',
   },
   {
-    id: 'client_email',
+    id: 'compaign_name',
+    numeric: false,
+    disablePadding: true,
+    label: 'Compaign Name',
+  },
+  {
+    id: 'compaign_subject',
     numeric: true,
     disablePadding: false,
-    label: 'EmailID',
+    label: 'Subject',
+  },
+  {
+    id: 'compaign_content',
+    numeric: true,
+    disablePadding: false,
+    label: 'Content',
   },
   { id: 'actions', numeric: true, disablePadding: false, label: 'Actions' },
 ]
@@ -58,7 +71,7 @@ function EnhancedTableHead(props) {
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
+            align='left'
             padding={headCell.disablePadding ? 'none' : 'normal'}
           >
             <TableSortLabel>{headCell.label}</TableSortLabel>
@@ -103,21 +116,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function MailerTable() {
-  const classes = useStyles();
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
-  const [selected, setSelected] = React.useState([]);
-  const [isModal, setIsModal] = React.useState(false);
+export default function CompaignsTable() {
+  const classes = useStyles()
+  const [order, setOrder] = React.useState('asc')
+  const [orderBy, setOrderBy] = React.useState('calories')
+  const [selected, setSelected] = React.useState([])
+  const [isModal, setIsModal] = React.useState(false)
   const [formData, setFormData] = React.useState({
-    client_name: '',
-    client_email: '',
+    name: '',
+   subject: '',
+   content: '',
   })
   const [UserID, setUserID] = React.useState('')
 
-
-  const dispatch = useDispatch();
-  const client = useSelector((state) => state.ClientReducer);
+  const dispatch = useDispatch()
+  const { campaigns } = useSelector((state) => state.CampaignReducer)
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc'
     setOrder(isAsc ? 'desc' : 'asc')
@@ -125,12 +138,13 @@ export default function MailerTable() {
   }
 
   useEffect(() => {
-    dispatch(clientList())
+    dispatch(CompaignList())
   }, [])
+  // console.log("bbbb",campaigns)
 
   const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = client.clients.map((n) => n.data.client_name)
+    if (event?.target?.checked) {
+      const newSelecteds = campaigns?.map((n) => n?.data?.name)
       // debugger
       setSelected(newSelecteds)
       return
@@ -145,7 +159,7 @@ export default function MailerTable() {
   const onSubmit = (e) => {
     e.preventDefault()
     console.log(formData)
-    dispatch(editClient({ id: UserID, data: formData }))
+    dispatch(editCampaign({ id: UserID, data: formData }))
     toggle()
   }
 
@@ -153,7 +167,7 @@ export default function MailerTable() {
     setIsModal(!isModal)
   }
   const openModal = (row) => {
-    setFormData({ ...formData, client_name: row.data.client_name, client_email: row.data.client_email })
+    setFormData({ ...formData, name: row.data.name, subject: row.data.subject, content: row.data.content })
     setUserID(row.id)
     setIsModal(!isModal)
   }
@@ -178,15 +192,19 @@ export default function MailerTable() {
     setSelected(newSelected)
   }
 
+  const handleDelete =async (row) =>{
+    await dispatch(deleteCampaign(row.id))
+     
+   }
+
   const isSelected = (name) => selected.indexOf(name) !== -1
 
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-     
         <TableContainer style={{ maxHeight: 482 }}>
-          <Table 
-          stickyHeader
+          <Table
+            stickyHeader
             className={classes.table}
             aria-labelledby='tableTitle'
             size='small'
@@ -199,66 +217,49 @@ export default function MailerTable() {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={client && client.clients && client.clients.length}
+              rowCount={campaigns && campaigns.length}
             />
             <TableBody>
               {
                 //   stableSort(client.clients, getComparator(order, orderBy))
                 //     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                client &&
-                  client.clients &&
-                  client.clients.map((row, index) => {
-                    const isItemSelected = isSelected(row.data.client_name)
-                    const labelId = `enhanced-table-checkbox-${index}`
+                campaigns?.map((row, index) => {
+                  const isItemSelected = isSelected(row.data.name)
+                  const labelId = `enhanced-table-checkbox-${index}`
 
                     return (
-                      <TableRow
-                        hover
-                        style={{ height: 5 }}
-                        role='checkbox'
-                        aria-checked={isItemSelected}
-                        tabIndex={-1}
-                        key={row.data.client_name}
-                        selected={isItemSelected}
-                      >
+                      <TableRow key={row.id} hover style={{ height: 5 }} role='checkbox' aria-checked={isItemSelected} tabIndex={-1} selected={isItemSelected} >
                         <TableCell padding='checkbox'>
-                          <Checkbox
-                            checked={isItemSelected}
-                            onClick={(event) =>
-                              handleClick(event, row.data.client_name)
-                            }
-                            inputProps={{ 'aria-labelledby': labelId }}
-                          />
+                          <Checkbox checked={isItemSelected} onClick={(event) => handleClick(event, row?.data?.client_name) } inputProps={{ 'aria-labelledby': labelId }} />
                         </TableCell>
-                        <TableCell
-                          component='th'
-                          id={labelId}
-                          scope='row'
-                          padding='none'
-                        >
-                          {row.data.client_name}
+                        <TableCell align='left'><img width="50px" height="50px" style={{borderRadius:"25px"}} src={row?.data?.imageURL}/></TableCell>
+                        <TableCell component='th' id={labelId} scope='row' padding='none' >
+                          {row?.data?.name}
                         </TableCell>
-                        <TableCell align='right'>{row.data.client_email}</TableCell>
-                        <TableCell align='right'>
+                        <TableCell align='left'>{row?.data?.subject}</TableCell>
+                        <TableCell align='left'>{row?.data?.content}</TableCell>
+                        <TableCell align='left'>
                           <IconButton onClick={() => openModal(row)}>
-                            {' '}
+                            {/* {' '} */}
                             <EditIcon />
                           </IconButton>
 
-                          <IconButton>
+                        
+                          <IconButton onClick={() =>handleDelete(row)}>
                             {' '}
                             <DeleteIcon />
+                    
                           </IconButton>
                         </TableCell>
                       </TableRow>
                     )
                   })
               }
-              {client && client.clients && client.clients.length > 0 && (
+              {/* {client && client.clients && client.clients.length > 0 && (
                 <TableRow style={{ height: 33 * client.clients.length }}>
                   <TableCell colSpan={3} />
                 </TableRow>
-              )}
+              )} */}
             </TableBody>
           </Table>
         </TableContainer>
@@ -268,21 +269,30 @@ export default function MailerTable() {
         {isModal && (
           <form onSubmit={(e) => onSubmit(e)}>
             {/* <span>Edit client</span> */}
-            <label>Client Name:</label>
+            <label>Campaign Name:</label>
             <br />
             <input
               type='text'
-              name='client_name'
-              value={formData.client_name}
+              name='name'
+              value={formData.name}
               onChange={(e) => onChange(e)}
             />
             <br />
-            <label>Last name:</label>
+            <label>Subject:</label>
             <br />
             <input
               type='text'
-              name='client_email'
-              value={formData.client_email}
+              name='subject'
+              value={formData.subject}
+              onChange={(e) => onChange(e)}
+            />
+            <br />
+            <label>Content:</label>
+            <br />
+            <input
+              type='text'
+              name='content'
+              value={formData.content}
               onChange={(e) => onChange(e)}
             />
             <br />
@@ -294,3 +304,4 @@ export default function MailerTable() {
     </div>
   )
 }
+

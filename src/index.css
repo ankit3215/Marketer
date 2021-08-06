@@ -1,8 +1,5 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: hsl(143, 100%, 93%);
@@ -10,8 +7,8 @@ body {
 
 body,html{
   height: 100%;
-  background-color: #E5E5E5;
-
+  background-color: #E5E5E5 !important;
+  font-family: 'Karla', sans- serif;
 }
 
 code {
@@ -28,3 +25,7 @@ textarea:active,
 textarea:focus{
   outline-width: 0;
 }
+
+/* .tab{
+  max-height: 500px !important;
+} */

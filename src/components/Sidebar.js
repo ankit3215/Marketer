@@ -8,11 +8,14 @@ import {
   withRouter,
 } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import Dashboard from './Dashboard'
-import Client from './Client'
-import Campaigns from './Campaigns'
-import Mailer from './Mailer'
+import Dashboard from './screens/Dashboard'
+import Client from './screens/Client'
+import Mailer from './screens/Mailer'
 import { logOutUser } from '../redux/actionCreators/authActions'
+import CreateCampaigns from './screens/CreateCampaigns'
+import Campaigns from './screens/Campaigns'
+import Test from './screens/test'
+import History from './screens/History'
 
 const Sidebar = ({ history }) => {
   const auth = useSelector((state) => state.auth)
@@ -26,10 +29,10 @@ const Sidebar = ({ history }) => {
     <Router>
       <div>
         <div
-          class='w3-sidebar w3-light-white w3-bar-block'
-          style={{ position: 'fixed', width: '20%', top: '0', left: '0' }}
+          className='w3-sidebar w3-light-white w3-bar-block'
+          style={{ position: 'fixed', width: '250px', top: '0', left: '0' }}
         >
-          <h3 class='w3-bar-item ' style={{ top: '48px', left: '20px' }}>
+          <h3 className='w3-bar-item ' style={{ top: '48px', left: '20px' }}>
             {' '}
             <img
               width='200px'
@@ -39,8 +42,8 @@ const Sidebar = ({ history }) => {
             />{' '}
           </h3>
           <Link
-            to='/'
-            class='w3-bar-item w3-button'
+            to='/Dashboard'
+            className='w3-bar-item w3-button'
             style={{ marginTop: '20px', padding: '15px' }}
           >
             <span
@@ -57,7 +60,7 @@ const Sidebar = ({ history }) => {
 
           <Link
             to='/client'
-            class='w3-bar-item w3-button'
+            className='w3-bar-item w3-button'
             style={{ padding: '15px' }}
           >
             <span
@@ -74,7 +77,7 @@ const Sidebar = ({ history }) => {
           </Link>
           <Link
             to='/campaigns'
-            class='w3-bar-item w3-button'
+            className='w3-bar-item w3-button'
             style={{ padding: '15px' }}
           >
             <span
@@ -91,7 +94,7 @@ const Sidebar = ({ history }) => {
           </Link>
           <Link
             to='/mailer'
-            class='w3-bar-item w3-button'
+            className='w3-bar-item w3-button'
             style={{ padding: '15px' }}
           >
             <span
@@ -106,26 +109,55 @@ const Sidebar = ({ history }) => {
               <img src='/img/mail.svg' alt='mail' /> Mailers
             </span>
           </Link>
-          <button onClick={handleClick} class="w3-bar-item w3-button"
-          style={{
-            margin:"5px" ,
-             padding:"15px",
-             marginTop:"360px",
-          
-             bottom:"0",
-             left:"0",
-             }}>
-            <img src="/img/log-out.svg" alt="log"/> Logout
+          <Link
+            to='/history'
+            className='w3-bar-item w3-button'
+            style={{ padding: '15px' }}
+          >
+            <span
+              style={{
+                margin: '3px',
+                padding: '10px',
+                fontSize: '16px',
+                fontFamily: 'karla',
+              }}
+            >
+              {' '}
+              <img src='/img/history.png' height='14px' width='14px' alt='mail' /> {" "}History
+            </span>
+          </Link>
+          <button
+            onClick={handleClick}
+            className='w3-bar-item w3-button'
+            style={{
+              padding: '15px',
+              marginTop: '200px',
+            }}
+          >
+            <span
+              style={{
+                margin: '3px',
+                padding: '10px',
+                fontSize: '16px',
+                fontFamily: 'karla',
+              }}
+            >
+              {' '}
+              <img src='/img/log-out.svg' alt='log' /> Logout
+            </span>
           </button>
         </div>
 
         <div style={{ marginLeft: '20%' }}>
           <div style={{ marginTop: '0px' }}>
             <Switch>
-              <Route exact path='/' component={Dashboard} />
+              <Route exact path='/Dashboard' component={Dashboard} />
               <Route path='/client' component={Client} />
               <Route path='/campaigns' component={Campaigns} />
+              <Route path='/create' component={CreateCampaigns} />
               <Route path='/mailer' component={Mailer} />
+              <Route path='/history' component={History} />
+              <Route path='*' component={Dashboard} />
             </Switch>
           </div>
         </div>

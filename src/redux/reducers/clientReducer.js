@@ -1,7 +1,8 @@
 import * as actionKeys from '../actionKeys'
 const initialState = {
   clients: [],
-  // clients1: [],
+  history: [],
+  // search: '',
 }
 
 const ClientReducer = (state = initialState, action) => {
@@ -25,6 +26,16 @@ const ClientReducer = (state = initialState, action) => {
           item.id === payload.id ? payload : item
         ),
       }
+    case actionKeys.DELETE_CLIENT:
+      return {
+        ...state,
+        clients: state.clients.filter((client) => client.id !== payload),
+      }
+      case actionKeys.GET_HISTORY:
+        return{
+          ...state,
+          history: payload
+        }
     default:
       return state
   }
