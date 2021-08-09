@@ -35,38 +35,6 @@ import { CompaignList } from '../../redux/actionCreators/compaignsAction'
 import { clientList } from '../../redux/actionCreators/clientAction'
 import { getHistory } from '../../redux/actionCreators/mailerActions'
 
-const pdata = [
-  {
-    name: 'python',
-    student: 13,
-    fees: 10,
-  },
-
-  {
-    name: 'Java',
-    student: 10,
-    fees: 8,
-  },
-
-  {
-    name: 'javascript',
-    student: 5,
-    fees: 3,
-  },
-
-  {
-    name: 'php',
-    student: 16,
-    fees: 14,
-  },
-
-  {
-    name: 'react',
-    student: 18,
-    fees: '16',
-  },
-]
-
 const Dashboard = (props) => {
   const dispatch = useDispatch()
 
@@ -80,7 +48,48 @@ const Dashboard = (props) => {
     dispatch(CompaignList())
   }, [])
 
-  // console.log(history);
+  let obj
+  const data = history.map(
+    (item, i, arr) =>
+      (obj = {
+        date: item.createdAt.toDate().toISOString().substr(0, 10),
+        mails: history.filter(
+          (ele) =>
+            ele.createdAt.toDate().toISOString().substr(0, 10) ===
+            item.createdAt.toDate().toISOString().substr(0, 10)
+        ).length,
+      })
+  )
+
+  let pData = Array.from(new Set(data.map((x) => x.date))).map((date) => {
+    return {
+      name: date,
+      mails: data.find((s) => s.date === date).mails,
+    }
+  })
+
+  // let obj1;
+  const data1 = history.map(
+    (item, i, arr) =>
+      (obj = {
+        time:
+          item.createdAt.toDate().getHours() > 12
+            ? item.createdAt.toDate().getHours() - 12
+            : item.createdAt.toDate().getHours(),
+        mails: history.filter(
+          (ele) =>
+            ele.createdAt.toDate().getHours() ===
+            item.createdAt.toDate().getHours()
+        ).length,
+      })
+  )
+
+  let pdata = Array.from(new Set(data1.map((x) => x.time))).map((hour) => {
+    return {
+      name: hour,
+      mails: data1.find((s) => s.time === hour).mails,
+    }
+  })
 
   return (
     <div>
@@ -192,7 +201,7 @@ const Dashboard = (props) => {
             <h3> Line Chart </h3>
             <ResponsiveContainer width='150%' aspect={3}>
               <LineChart
-                data={pdata}
+                data={pData}
                 width={500}
                 height={300}
                 margin={{ top: 5, right: 300, left: 20, bottom: 5 }}
@@ -202,6 +211,14 @@ const Dashboard = (props) => {
                 <YAxis />
                 <Tooltip />
                 <Legend />
+
+                <Line
+                  margin={{ left: 40, bottom: 5 }}
+                  type='monotone'
+                  dataKey='mails'
+                  stroke='red'
+                />
+                {/* <Line type="monotone" dataKey="fees" stroke="red" /> */}
 
                 <Line
                   margin={{ left: 40, bottom: 5 }}
@@ -228,8 +245,8 @@ const Dashboard = (props) => {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar type='monotone' dataKey='student' fill='#8884d8' />
-                <Bar type='monotone' dataKey='fees' fill='#82ca9d' />
+                <Bar type='monotone' dataKey='mails' fill='#82ca9d' />
+                {/* <Bar type="monotone" dataKey="fees" fill="#82ca9d" /> */}
               </BarChart>
             </ResponsiveContainer>
           </Grid>
