@@ -123,7 +123,13 @@ const Sidebar = ({ history }) => {
               }}
             >
               {' '}
-              <img src='/img/history.png' height='14px' width='14px' alt='mail' /> {" "}History
+              <img
+                src='/img/history.png'
+                height='14px'
+                width='14px'
+                alt='mail'
+              />{' '}
+              History
             </span>
           </Link>
           <button
