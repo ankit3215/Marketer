@@ -180,7 +180,7 @@ const Dashboard = (props) => {
       <Container style={{ marginTop: "75px" }}>
       <Grid container spacing={1}>
       <Grid item lg={6}>
-        <h3> Total Mail Send </h3>
+        <h3> Total Mail Sent </h3>
         <ResponsiveContainer width="150%" aspect={3}>
             <LineChart data={pData} width={500} height={300} margin={{top: 5, right: 300, left: 20, bottom: 5}}>
                 <CartesianGrid />
@@ -201,7 +201,7 @@ const Dashboard = (props) => {
         
         <Grid item lg={6}>
 
-        <h3>Total Mail send by Date  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; <DatePicker  onChange={(date, dateString)=>handleDate(dateString) } /> </h3>
+        <h3>Total Mail sent by Date  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; <DatePicker  onChange={(date, dateString)=>handleDate(dateString) } /> </h3>
         
         <ResponsiveContainer width="150%" aspect={3}>
             <BarChart data={pdata} width={500} height={300} margin={{top: 5, right: 300, left: 20, bottom: 5}}>

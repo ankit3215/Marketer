@@ -41,7 +41,7 @@ export const sendMailer =
 
 
 
-     toast.success("Mail Send")
+     toast.success("Mail Sent")
      setOn(false) 
 
     } catch (error) {
