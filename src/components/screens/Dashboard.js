@@ -201,7 +201,7 @@ const Dashboard = (props) => {
         
         <Grid item lg={6}>
 
-        <h3>Total Mail sent by Date  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; <DatePicker  onChange={(date, dateString)=>handleDate(dateString) } /> </h3>
+        <h3>Total Mail sent by Date  &nbsp;  <DatePicker  onChange={(date, dateString)=>handleDate(dateString) } /> </h3>
         
         <ResponsiveContainer width="150%" aspect={3}>
             <BarChart data={pdata} width={500} height={300} margin={{top: 5, right: 300, left: 20, bottom: 5}}>
