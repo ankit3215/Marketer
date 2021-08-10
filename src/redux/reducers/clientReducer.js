@@ -2,6 +2,7 @@ import * as actionKeys from '../actionKeys'
 const initialState = {
   clients: [],
   history: [],
+  historyDate:[]
   // search: '',
 }
 
@@ -35,6 +36,11 @@ const ClientReducer = (state = initialState, action) => {
         return{
           ...state,
           history: payload
+        }
+        case actionKeys.GET_HISTORY_BY_DATE:
+        return{
+          ...state,
+          historyDate: payload
         }
     default:
       return state

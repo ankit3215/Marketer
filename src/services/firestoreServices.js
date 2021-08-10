@@ -104,6 +104,29 @@ export const fetchHistoryByTime = async (startDate, endDate) => {
       history.push({key:doc.id,...doc.data()})
   })
 
+
+
+ 
+
+  return history
+}
+
+export const fetchHistoryByDate = async (date) => {
+  let history=[];
+  date = new Date(date)
+  date.setHours(0)
+  let endDate = new Date(date)
+  endDate.setHours(23)
+  
+  let querySnapshot = await db.collection('history').where("createdAt","<=",endDate).where("createdAt",">=",date)
+  .get()
+  querySnapshot.forEach((doc) => {
+    
+      history.push({key:doc.id,...doc.data()})
+  })
+
+
+  
  
 
   return history

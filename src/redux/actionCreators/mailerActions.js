@@ -2,7 +2,7 @@ import  {
   getCampaignById,
   getClientEmailById,
   addDocument,
-  fetchHistory,getClientDataByIds,fetchHistoryByTime
+  fetchHistory,getClientDataByIds,fetchHistoryByTime,fetchHistoryByDate
 } from "../../services/firestoreServices";
 import sendEmail from "../../services/emailServices";
 import * as actionKeys from '../actionKeys'
@@ -61,4 +61,13 @@ export const sendMailer =
 
       
     }
+  }
+
+
+  export const getHistoryByDate = (date) => async (dispatch) => {
+    
+      let history = await fetchHistoryByDate(date?date: new Date())
+      dispatch({type:actionKeys.GET_HISTORY_BY_DATE,payload:history});
+  
+   
   }

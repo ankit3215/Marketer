@@ -1,4 +1,4 @@
-import React from "react";
+import React,{ useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianAxisProps, CartesianGrid, 
   Legend, Tooltip, AreaChart, Area, BarChart,Bar} from "recharts";
@@ -10,6 +10,8 @@ import {
   Box,
   Divider,
 } from "@material-ui/core";
+import { DatePicker, Space } from 'antd';
+
 import CallToActionIcon from "@material-ui/icons/CallToAction";
 import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
 // import Group from "../images/Group.png";
@@ -20,21 +22,29 @@ import Navbar from "../../common/Navbar";
 import "../CSS/mailer.css";
 import { CompaignList } from "../../redux/actionCreators/compaignsAction";
 import { clientList } from "../../redux/actionCreators/clientAction";
-import {getHistory} from '../../redux/actionCreators/mailerActions';
+import {getHistory,getHistoryByDate} from '../../redux/actionCreators/mailerActions';
 
 const Dashboard = (props) => {
   const dispatch = useDispatch();
-  
+  const [date, setDate] = useState(null)
   const client = useSelector((state) => state.ClientReducer);
   const { campaigns } = useSelector((state) => state.CampaignReducer);
-  const {history} = useSelector((state) => state.ClientReducer);
+  const {history,historyDate} = useSelector((state) => state.ClientReducer);
 
   React.useEffect(() => {
     dispatch(clientList());
     dispatch(getHistory("",""))
     dispatch(CompaignList());
+    
   }, []);
 
+  useEffect(() => {
+     dispatch(getHistoryByDate(date))
+  }, [date])
+ console.log(historyDate);
+  const handleDate = (dateString) =>{
+    setDate(dateString)
+  }
   let obj;
   const data = history.map((item,i,arr)=>
     obj={
@@ -50,10 +60,10 @@ const Dashboard = (props) => {
     
     
   // let obj1;
-  const data1 = history.map((item,i,arr)=>
+  const data1 = historyDate.map((item,i,arr)=>
     obj={
       time:item.createdAt.toDate().getHours()>12?item.createdAt.toDate().getHours()-12:item.createdAt.toDate().getHours(),
-      mails:history.filter(ele=>ele.createdAt.toDate().getHours()===item.createdAt.toDate().getHours()).length
+      mails:historyDate.filter(ele=>ele.createdAt.toDate().getHours()===item.createdAt.toDate().getHours()).length
     })
 
     let pdata = Array.from(new Set(data1.map(x=>x.time))).map(hour=>{
@@ -170,7 +180,7 @@ const Dashboard = (props) => {
       <Container style={{ marginTop: "75px" }}>
       <Grid container spacing={1}>
       <Grid item lg={6}>
-        <h3> Line Chart </h3>
+        <h3> Total Mail Send </h3>
         <ResponsiveContainer width="150%" aspect={3}>
             <LineChart data={pData} width={500} height={300} margin={{top: 5, right: 300, left: 20, bottom: 5}}>
                 <CartesianGrid />
@@ -191,7 +201,8 @@ const Dashboard = (props) => {
         
         <Grid item lg={6}>
 
-        <h3> Bar Chart </h3>
+        <h3>Total Mail send by Date  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; <DatePicker  onChange={(date, dateString)=>handleDate(dateString) } /> </h3>
+        
         <ResponsiveContainer width="150%" aspect={3}>
             <BarChart data={pdata} width={500} height={300} margin={{top: 5, right: 300, left: 20, bottom: 5}}>
                 <CartesianGrid />
